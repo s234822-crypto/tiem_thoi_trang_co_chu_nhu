@@ -1,10 +1,10 @@
 import { OwnerSkin } from '../types/game';
 
-export const OWNER_PORTRAIT_DEFAULT = '/src/assets/images/co_chu_nhu_portrait_1791010615970.jpg';
-export const SKIN_PINK_BOUTIQUE_IMG = '/src/assets/images/skin_pink_boutique_1791012316549.jpg';
-export const SKIN_KOREAN_STYLIST_IMG = '/src/assets/images/skin_korean_stylist_1791012331716.jpg';
-export const SKIN_LUXURY_OWNER_IMG = '/src/assets/images/skin_luxury_owner_1791012344195.jpg';
-export const SKIN_SUMMER_OUTFIT_IMG = '/src/assets/images/skin_summer_outfit_1791012355778.jpg';
+export const OWNER_PORTRAIT_DEFAULT = '/assets/images/co_chu_nhu_portrait_1791010615970.jpg';
+export const SKIN_PINK_BOUTIQUE_IMG = '/assets/images/skin_pink_boutique_1791012316549.jpg';
+export const SKIN_KOREAN_STYLIST_IMG = '/assets/images/skin_korean_stylist_1791012331716.jpg';
+export const SKIN_LUXURY_OWNER_IMG = '/assets/images/skin_luxury_owner_1791012344195.jpg';
+export const SKIN_SUMMER_OUTFIT_IMG = '/assets/images/skin_summer_outfit_1791012355778.jpg';
 
 export const INITIAL_SKINS: OwnerSkin[] = [
   {

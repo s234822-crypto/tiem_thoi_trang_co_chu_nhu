@@ -2,18 +2,18 @@ import { Customer, CustomerType, FashionColor, Occasion, SpecialRole, StyleTag }
 import { pickSpecialRole } from './events';
 import { STYLE_LABELS, COLOR_LABELS, OCCASION_LABELS } from './products';
 
-export const OWNER_PORTRAIT = '/src/assets/images/co_chu_nhu_portrait_1791010615970.jpg';
-export const SHOP_INTERIOR = '/src/assets/images/shop_boutique_interior_1791010626470.jpg';
+export const OWNER_PORTRAIT = '/assets/images/co_chu_nhu_portrait_1791010615970.jpg';
+export const SHOP_INTERIOR = '/assets/images/shop_boutique_interior_1791010626470.jpg';
 
 export const CUSTOMER_AVATARS: Record<string, string> = {
-  student: '/src/assets/images/customer_avatar_student_1791010637680.jpg',
-  office: '/src/assets/images/customer_avatar_office_1791010648067.jpg',
-  vip: '/src/assets/images/customer_avatar_vip_1791010658960.jpg',
-  genz: '/src/assets/images/customer_avatar_student_1791010637680.jpg',
-  party_goer: '/src/assets/images/customer_avatar_vip_1791010658960.jpg',
-  traveler: '/src/assets/images/customer_avatar_student_1791010637680.jpg',
-  fashionista: '/src/assets/images/customer_avatar_office_1791010648067.jpg',
-  regular: '/src/assets/images/customer_avatar_student_1791010637680.jpg',
+  student: '/assets/images/customer_avatar_student_1791010637680.jpg',
+  office: '/assets/images/customer_avatar_office_1791010648067.jpg',
+  vip: '/assets/images/customer_avatar_vip_1791010658960.jpg',
+  genz: '/assets/images/customer_avatar_student_1791010637680.jpg',
+  party_goer: '/assets/images/customer_avatar_vip_1791010658960.jpg',
+  traveler: '/assets/images/customer_avatar_student_1791010637680.jpg',
+  fashionista: '/assets/images/customer_avatar_office_1791010648067.jpg',
+  regular: '/assets/images/customer_avatar_student_1791010637680.jpg',
 };
 
 interface CustomerProfileTemplate {
