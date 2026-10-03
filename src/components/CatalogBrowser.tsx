@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Customer, Outfit, Product, StyleTag, FashionColor, Rarity } from '../types/game';
-import { CATEGORY_LABELS, STYLE_LABELS, COLOR_LABELS, RARITY_LABELS } from '../data/products';
+import { CATEGORY_LABELS, SUBCATEGORY_LABELS, STYLE_LABELS, COLOR_LABELS, RARITY_LABELS } from '../data/products';
 import { getOutfitItems } from '../utils/scoring';
 import { getRecommendedProducts } from '../utils/recommendations';
 import { Sparkles, Check, Lock, ShoppingBag, Filter, ChevronDown, Zap, Search, X } from 'lucide-react';
@@ -24,7 +24,7 @@ const CATEGORY_TABS = [
   { id: 'all',       label: 'Tất cả',   isSpecial: false },
   { id: 'tops',      label: 'Áo',       isSpecial: false },
   { id: 'bottoms',   label: 'Quần',     isSpecial: false },
-  { id: 'skirts',    label: 'Váy',      isSpecial: false },
+  { id: 'skirts',    label: 'Chân váy', isSpecial: false },
   { id: 'dresses',   label: 'Đầm',      isSpecial: false },
   { id: 'shoes',     label: 'Giày',     isSpecial: false },
   { id: 'bags',      label: 'Túi',      isSpecial: false },
@@ -44,6 +44,7 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
   onSelectCategory,
 }) => {
   const [internalCategory, setInternalCategory] = useState<string>('suggested');
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
   const [selectedStyle, setSelectedStyle]       = useState<string>('all');
   const [selectedColor, setSelectedColor]       = useState<string>('all');
   const [selectedRarity, setSelectedRarity]     = useState<string>('all');
@@ -54,6 +55,7 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
 
   const handleCategoryChange = (cat: string) => {
     setInternalCategory(cat);
+    setSelectedSubCategory('all');
     onSelectCategory?.(cat);
   };
 
@@ -64,8 +66,24 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
     [currentCustomer, products, playerLevel],
   );
 
+  // Available subCategories for current category tab
+  const availableSubCategories = useMemo(() => {
+    if (!selectedCategory || selectedCategory === 'suggested' || selectedCategory === 'all') return [];
+    const catProds = products.filter(p => {
+      if (selectedCategory === 'accessories') return p.category === 'accessories' || p.category === 'jackets';
+      return p.category === selectedCategory;
+    });
+    const subMap = new Map<string, string>();
+    catProds.forEach(p => {
+      if (p.subCategory) {
+        subMap.set(p.subCategory, SUBCATEGORY_LABELS[p.subCategory] || p.subCategory);
+      }
+    });
+    return Array.from(subMap.entries()).map(([id, label]) => ({ id, label }));
+  }, [selectedCategory, products]);
+
   // Active filter count for badge
-  const activeFilterCount = [selectedStyle, selectedColor, selectedRarity].filter((v) => v !== 'all').length
+  const activeFilterCount = [selectedSubCategory, selectedStyle, selectedColor, selectedRarity].filter((v) => v !== 'all').length
     + (searchQuery.trim() !== '' ? 1 : 0);
 
   const displayedProducts = useMemo(() => {
@@ -81,6 +99,9 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
       if (selectedCategory === 'bags'    && p.category !== 'bags')    return false;
       if (selectedCategory === 'accessories' && p.category !== 'accessories' && p.category !== 'jackets') return false;
 
+      // Sub-category filter
+      if (selectedSubCategory !== 'all' && p.subCategory !== selectedSubCategory) return false;
+
       // Sub-filters
       if (selectedStyle  !== 'all' && !p.styleTags.includes(selectedStyle as StyleTag))       return false;
       if (selectedColor  !== 'all' && !p.colors.includes(selectedColor as FashionColor))      return false;
@@ -94,9 +115,10 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
 
       return true;
     });
-  }, [selectedCategory, selectedStyle, selectedColor, selectedRarity, searchQuery, products, recommendedProducts]);
+  }, [selectedCategory, selectedSubCategory, selectedStyle, selectedColor, selectedRarity, searchQuery, products, recommendedProducts]);
 
   const clearFilters = () => {
+    setSelectedSubCategory('all');
     setSelectedStyle('all');
     setSelectedColor('all');
     setSelectedRarity('all');
@@ -259,6 +281,35 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
           );
         })}
       </div>
+
+      {/* ── SubCategory Filter Bar ────────────────────────────── */}
+      {availableSubCategories.length > 0 && (
+        <div className="flex items-center gap-1 px-2.5 py-1.5 overflow-x-auto no-scrollbar border-b border-[#F2E1CF]/40 bg-white/70 shrink-0">
+          <button
+            onClick={() => setSelectedSubCategory('all')}
+            className={`h-5.5 px-2 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${
+              selectedSubCategory === 'all'
+                ? 'bg-[#6F554A] text-white shadow-2xs font-black'
+                : 'bg-[#FFF5EE] text-[#6F554A] border border-[#F2E1CF]'
+            }`}
+          >
+            Tất cả
+          </button>
+          {availableSubCategories.map((sub) => (
+            <button
+              key={sub.id}
+              onClick={() => setSelectedSubCategory(sub.id)}
+              className={`h-5.5 px-2.5 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${
+                selectedSubCategory === sub.id
+                  ? 'bg-[#D87C9B] text-white shadow-2xs font-black'
+                  : 'bg-white text-[#6F554A] border border-[#F2E1CF] hover:border-[#D87C9B]'
+              }`}
+            >
+              {sub.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* ── Product Grid ──────────────────────────────────────── */}
       <div className="p-2 space-y-2">

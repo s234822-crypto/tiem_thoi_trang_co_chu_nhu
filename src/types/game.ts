@@ -10,11 +10,19 @@ export type ClothingCategory =
 
 export type SubCategory =
   // tops
-  | 'tshirt' | 'croptop' | 'blouse' | 'shirt' | 'hoodie' | 'sweater' | 'cardigan' | 'jacket_top' | 'blazer'
+  | 'basic_tshirt' | 'oversize_tshirt' | 'croptop' | 'camisole' | 'tank_top' | 'blouse' | 'shirt'
+  | 'turtleneck' | 'polo' | 'peplum' | 'off_shoulder' | 'knit_top' | 'sweater' | 'hoodie'
+  | 'short_cardigan' | 'long_cardigan' | 'corset' | 'baby_tee' | 'babydoll_top' | 'lace_top'
+  | 'tshirt' | 'cardigan' | 'jacket_top' | 'blazer'
   // bottoms
-  | 'jeans' | 'trousers' | 'shorts' | 'wide_leg' | 'cargo' | 'legging'
+  | 'skinny_jeans' | 'straight_jeans' | 'wide_jeans' | 'baggy_jeans' | 'denim_shorts' | 'kaki_shorts'
+  | 'trousers' | 'straight_pants' | 'wide_pants' | 'cargo_pants' | 'jogger_pants' | 'legging'
+  | 'culottes' | 'linen_pants' | 'high_waist_pants' | 'y2k_pants' | 'sporty_pants' | 'leather_pants'
+  | 'jeans' | 'shorts' | 'wide_leg' | 'cargo'
   // skirts
-  | 'aline_skirt' | 'tennis_skirt' | 'midi_skirt' | 'long_skirt' | 'denim_skirt'
+  | 'aline_skirt' | 'tennis_skirt' | 'pleated_skirt' | 'denim_skirt' | 'midi_skirt' | 'maxi_skirt'
+  | 'pencil_skirt' | 'mermaid_skirt' | 'satin_skirt' | 'lace_skirt' | 'caro_skirt' | 'cargo_skirt'
+  | 'mini_skirt' | 'tiered_skirt' | 'vintage_skirt' | 'long_skirt'
   // dresses
   | 'office_dress' | 'party_dress' | 'floral_dress' | 'body_dress' | 'maxi_dress' | 'babydoll_dress'
   // shoes
