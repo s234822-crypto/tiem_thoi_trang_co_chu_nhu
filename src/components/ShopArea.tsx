@@ -1,6 +1,6 @@
 import React from 'react';
 import { Customer, DecorItem, OwnerState } from '../types/game';
-import { OWNER_PORTRAIT, SHOP_INTERIOR, formatCustomerRequestTags } from '../data/customers';
+import { OWNER_PORTRAIT, SHOP_INTERIOR, formatCustomerRequestTags, fixImagePath } from '../data/customers';
 import { Sparkles, Crown, Users, Moon, Sun, Play } from 'lucide-react';
 
 interface ShopAreaProps {
@@ -50,7 +50,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
     <div className="relative w-full h-[165px] sm:h-[190px] overflow-hidden rounded-2xl border border-[#F2E1CF] shadow-xs select-none shrink-0">
       {/* Background image & warm overlay */}
       <img
-        src={SHOP_INTERIOR}
+        src={fixImagePath(SHOP_INTERIOR)}
         alt="Boutique Shop"
         className={`absolute inset-0 w-full h-full object-cover object-center filter transition-all ${
           isShopOpen ? 'brightness-[0.97]' : 'brightness-[0.75] contrast-[0.9]'
@@ -127,7 +127,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
                   title={`${cust.name} (${cust.typeLabel})`}
                 >
                   <img
-                    src={cust.avatar}
+                    src={fixImagePath(cust.avatar)}
                     alt={cust.name}
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -158,7 +158,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
 
           <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#D87C9B] bg-[#FFF8F4] overflow-hidden shadow-md group-hover:border-[#F4C7D9] transition-colors">
             <img
-              src={ownerAvatar}
+              src={fixImagePath(ownerAvatar)}
               alt="Cô Chủ Như"
               className="w-full h-full object-cover object-top"
               referrerPolicy="no-referrer"
@@ -194,7 +194,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
               {/* Customer Avatar Circle (Matching Owner Icon Layout) */}
               <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#F4C7D9] bg-[#FFF8F4] overflow-hidden shadow-md group-hover:border-[#D87C9B] transition-colors">
                 <img
-                  src={currentCustomer.avatar}
+                  src={fixImagePath(currentCustomer.avatar)}
                   alt={currentCustomer.name}
                   className="w-full h-full object-cover object-top"
                   referrerPolicy="no-referrer"

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { OwnerSkin } from '../types/game';
 import { Sparkles, Check, Lock, X, Shirt, Crown } from 'lucide-react';
 import { playTapSound, playChimeSound, playSuccessFanfare } from '../utils/audio';
+import { fixImagePath } from '../data/customers';
 
 interface WardrobeModalProps {
   skins: OwnerSkin[];
@@ -60,7 +61,7 @@ export const WardrobeModal: React.FC<WardrobeModalProps> = ({
           {/* Avatar Preview */}
           <div className="relative w-20 h-20 rounded-full border-3 border-[#D87C9B] bg-white overflow-hidden shadow-md shrink-0 animate-gentle-bounce">
             <img
-              src={previewSkin.avatar}
+              src={fixImagePath(previewSkin.avatar)}
               alt={previewSkin.name}
               className={`w-full h-full object-cover object-top transition-all ${
                 !previewSkin.isUnlocked ? 'filter grayscale contrast-125' : ''
@@ -126,13 +127,13 @@ export const WardrobeModal: React.FC<WardrobeModalProps> = ({
                   className={`p-2.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
                     isSelected
                       ? 'bg-[#FFF0F5] border-[#D87C9B] shadow-xs ring-1 ring-[#D87C9B]'
-                      : 'bg-white border-[#F2E1CF] hover:border-[#F4C7D9] shadow-2xs'
+                      : 'bg-[#FFF8F4] border-[#F2E1CF] hover:border-[#F4C7D9] shadow-2xs'
                   }`}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <div className="relative w-11 h-11 rounded-full border border-[#F2E1CF] overflow-hidden shrink-0 bg-[#FFF8F4]">
                       <img
-                        src={skin.avatar}
+                        src={fixImagePath(skin.avatar)}
                         alt={skin.name}
                         className={`w-full h-full object-cover object-top ${
                           !skin.isUnlocked ? 'filter grayscale opacity-60' : ''

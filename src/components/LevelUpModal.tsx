@@ -1,5 +1,5 @@
 import React from 'react';
-import { OWNER_PORTRAIT } from '../data/customers';
+import { OWNER_PORTRAIT, fixImagePath } from '../data/customers';
 import { Sparkles, Star, Award, CheckCircle2, Crown } from 'lucide-react';
 import { Product } from '../types/game';
 import { STYLE_LABELS } from '../data/products';
@@ -38,7 +38,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
         <div className="relative w-24 h-24 mx-auto rounded-full p-1 bg-gradient-to-tr from-[#D9A441] via-[#F4C7D9] to-white shadow-lg mb-4">
           <div className="w-full h-full rounded-full overflow-hidden border-2 border-white bg-white">
             <img
-              src={OWNER_PORTRAIT}
+              src={fixImagePath(OWNER_PORTRAIT)}
               alt="Cô Chủ Như"
               className="w-full h-full object-cover object-top"
               referrerPolicy="no-referrer"

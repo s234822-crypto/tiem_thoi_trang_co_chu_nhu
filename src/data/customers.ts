@@ -2,6 +2,11 @@ import { Customer, CustomerType, FashionColor, Occasion, SpecialRole, StyleTag }
 import { pickSpecialRole } from './events';
 import { STYLE_LABELS, COLOR_LABELS, OCCASION_LABELS } from './products';
 
+export const fixImagePath = (url: string | undefined | null): string => {
+  if (!url) return '/assets/images/co_chu_nhu_portrait_1791010615970.jpg';
+  return url.replace(/^\/?src\/assets\/images\//, '/assets/images/');
+};
+
 export const OWNER_PORTRAIT = '/assets/images/co_chu_nhu_portrait_1791010615970.jpg';
 export const SHOP_INTERIOR = '/assets/images/shop_boutique_interior_1791010626470.jpg';
 

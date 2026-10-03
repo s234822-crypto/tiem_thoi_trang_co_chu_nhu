@@ -22,7 +22,7 @@ import {
   ToastType,
 } from './types/game';
 import { INITIAL_PRODUCTS } from './data/products';
-import { generateRandomCustomer, getUnlockedStyles } from './data/customers';
+import { generateRandomCustomer, getUnlockedStyles, fixImagePath } from './data/customers';
 import { INITIAL_UPGRADES, INITIAL_DECORS, SHOP_TIERS } from './data/upgrades';
 import { generateDailyMissions } from './data/missions';
 import { INITIAL_ACHIEVEMENTS } from './data/achievements';
@@ -106,7 +106,11 @@ export default function App() {
         localStorage.getItem('fashionShopSave_v3') ||
         localStorage.getItem('fashionShopSave_v2');
       if (saved) {
-        return JSON.parse(saved);
+        const sanitized = saved
+          .replace(/\/?src\/assets\/images\//g, '/assets/images/')
+          .replace(/customer_avatar_office_1791010620864\.jpg/g, 'customer_avatar_office_1791010648067.jpg')
+          .replace(/customer_avatar_student_1791010620138\.jpg/g, 'customer_avatar_student_1791010637680.jpg');
+        return JSON.parse(sanitized);
       }
     } catch {
       // ignore
@@ -307,7 +311,7 @@ export default function App() {
 
   // Active Owner Avatar from currently equipped skin
   const equippedSkin = skins.find((s) => s.isEquipped) || skins[0];
-  const ownerAvatar = equippedSkin ? equippedSkin.avatar : OWNER_PORTRAIT_DEFAULT;
+  const ownerAvatar = fixImagePath(equippedSkin ? equippedSkin.avatar : OWNER_PORTRAIT_DEFAULT);
 
   // Auto-Save whenever stats, products, upgrades, decors, missions, achievements, story, collections or skins update
   useEffect(() => {

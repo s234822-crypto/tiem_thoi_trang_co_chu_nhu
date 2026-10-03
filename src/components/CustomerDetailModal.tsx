@@ -1,5 +1,6 @@
 import React from 'react';
 import { Customer } from '../types/game';
+import { fixImagePath } from '../data/customers';
 import { STYLE_LABELS, OCCASION_LABELS, COLOR_LABELS } from '../data/products';
 import { Crown, Sparkles, Heart, DollarSign, Clock, ShieldCheck, Camera, Star, Award, AlertTriangle } from 'lucide-react';
 
@@ -69,7 +70,7 @@ export const CustomerDetailModal: React.FC<CustomerDetailModalProps> = ({
         <div className="flex items-center gap-3 mb-3 pb-3 border-b border-[#F2E1CF]">
           <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-[#D87C9B] shadow-xs">
             <img
-              src={customer.avatar}
+              src={fixImagePath(customer.avatar)}
               alt={customer.name}
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Customer, Outfit, OutfitScoreResult } from '../types/game';
+import { fixImagePath } from '../data/customers';
 import { getOutfitItems, getOutfitTotalPrice } from '../utils/scoring';
 import { playCoinSound, playSuccessFanfare, playAlertSound } from '../utils/audio';
 import { Star, CheckCircle, XCircle, ArrowRight } from 'lucide-react';
@@ -66,7 +67,7 @@ export const FittingModal: React.FC<FittingModalProps> = ({
         {/* Customer Avatar & Stars */}
         <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-[#D87C9B] shadow-md mb-2">
           <img
-            src={customer.avatar}
+            src={fixImagePath(customer.avatar)}
             alt={customer.name}
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"

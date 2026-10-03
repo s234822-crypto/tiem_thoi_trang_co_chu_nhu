@@ -1,5 +1,6 @@
 import React from 'react';
 import { OWNER_PORTRAIT_DEFAULT } from '../data/skins';
+import { fixImagePath } from '../data/customers';
 import { Sparkles, Play, BookOpen, Star, Heart } from 'lucide-react';
 
 interface StartScreenProps {
@@ -45,7 +46,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
         <div className="relative w-40 h-40 xs:w-44 xs:h-44 rounded-full p-1.5 bg-gradient-to-tr from-[#D87C9B] via-[#F4C7D9] to-white shadow-xl animate-float-chibi">
           <div className="w-full h-full rounded-full overflow-hidden border-2 border-white bg-[#FFF8F4]">
             <img
-              src={equippedAvatar}
+              src={fixImagePath(equippedAvatar)}
               alt="Cô Chủ Như"
               className="w-full h-full object-cover object-top"
               referrerPolicy="no-referrer"
