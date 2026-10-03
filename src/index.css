@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    height: 100%;
+    height: 100dvh; /* dynamic viewport height for mobile browsers */
+  }
+
+  body {
+    height: 100%;
+  }
+
+  #root {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :root {
+    --cream: #FFF8F4;
+    --soft-pink: #F4C7D9;
+    --rose: #D87C9B;
+    --beige: #F2E1CF;
+    --brown: #6F554A;
+    --dark: #3E3431;
+    --gold: #D9A441;
+    --shop-bg: #FFF7F1;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #3E3431;
+    background-color: #27201E;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, .font-heading {
+    font-family: 'Quicksand', 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+/* Custom prominent, cute scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FCEFEA;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb {
+  background: #D87C9B;
+  border-radius: 9999px;
+  border: 1px solid #FFF7F1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C96C8A;
+}
+
+/* Firefox & Custom Scrollbar utilities */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #D87C9B #FCEFEA;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #D87C9B #FCEFEA;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #FCEFEA;
+  border-radius: 9999px;
+  border: 1px solid #F2E1CF;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #D87C9B;
+  border-radius: 9999px;
+  border: 1.5px solid #FFF8F4;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #C96C8A;
+}
+
+
+@keyframes gentle-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes soft-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes float-chibi {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+}
+
+.animate-gentle-bounce {
+  animation: gentle-bounce 2s ease-in-out infinite;
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 2.5s ease-in-out infinite;
+}
+
+.animate-float-chibi {
+  animation: float-chibi 3s ease-in-out infinite;
+}
+
+/* Smooth native scroll for iOS */
+.overflow-y-auto,
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

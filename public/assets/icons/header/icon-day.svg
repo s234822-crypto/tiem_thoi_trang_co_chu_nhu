@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Sun outer glow -->
+  <circle cx="32" cy="32" r="14" fill="#F0C040" opacity="0.3"/>
+  <!-- Sun body -->
+  <circle cx="32" cy="32" r="11" fill="#D9A441" stroke="#C8911E" stroke-width="2"/>
+  <!-- Sun shine inner -->
+  <circle cx="32" cy="32" r="8" fill="#F0C040"/>
+  <!-- Sun rays -->
+  <line x1="32" y1="8" x2="32" y2="14" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <line x1="32" y1="50" x2="32" y2="56" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <line x1="8" y1="32" x2="14" y2="32" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <line x1="50" y1="32" x2="56" y2="32" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <line x1="14.9" y1="14.9" x2="19.1" y2="19.1" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <line x1="44.9" y1="44.9" x2="49.1" y2="49.1" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <line x1="49.1" y1="14.9" x2="44.9" y2="19.1" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <line x1="19.1" y1="44.9" x2="14.9" y2="49.1" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <!-- Sun face - cute -->
+  <circle cx="28" cy="30" r="1.5" fill="#C8911E"/>
+  <circle cx="36" cy="30" r="1.5" fill="#C8911E"/>
+  <path d="M27 35 Q32 39 37 35" stroke="#C8911E" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+</svg>

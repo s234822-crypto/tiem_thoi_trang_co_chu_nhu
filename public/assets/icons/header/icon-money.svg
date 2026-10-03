@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Coin outer ring -->
+  <circle cx="32" cy="32" r="24" fill="#D9A441" stroke="#C8911E" stroke-width="2"/>
+  <!-- Coin shine inner -->
+  <circle cx="32" cy="32" r="20" fill="#F0C040" stroke="#D9A441" stroke-width="1.5"/>
+  <!-- Inner detail ring -->
+  <circle cx="32" cy="32" r="16" fill="none" stroke="#C8911E" stroke-width="1" opacity="0.5"/>
+  <!-- Dong/currency symbol ₫ -->
+  <path d="M26 22 L26 42" stroke="#C8911E" stroke-width="3" stroke-linecap="round"/>
+  <path d="M26 22 Q26 18 33 18 Q40 18 40 26 Q40 34 33 34 Q26 34 26 26" stroke="#C8911E" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <line x1="22" y1="29" x2="32" y2="29" stroke="#C8911E" stroke-width="2" stroke-linecap="round"/>
+  <line x1="22" y1="33" x2="32" y2="33" stroke="#C8911E" stroke-width="2" stroke-linecap="round"/>
+  <!-- Shine sparkle top-left -->
+  <path d="M14 14 L15.5 11 L17 14 L20 15.5 L17 17 L15.5 20 L14 17 L11 15.5Z" fill="white" opacity="0.8"/>
+</svg>

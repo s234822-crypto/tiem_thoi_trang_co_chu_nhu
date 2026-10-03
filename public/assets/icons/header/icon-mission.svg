@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Scroll body -->
+  <rect x="14" y="12" width="36" height="44" rx="4" fill="#FFF8F4" stroke="#D87C9B" stroke-width="2.5"/>
+  <!-- Scroll top roll -->
+  <ellipse cx="32" cy="12" rx="18" ry="4" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2"/>
+  <!-- Scroll bottom roll -->
+  <ellipse cx="32" cy="56" rx="18" ry="4" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2"/>
+  <!-- Check item 1 (done) -->
+  <circle cx="22" cy="24" r="5" fill="#D87C9B"/>
+  <path d="M19 24 L21.5 26.5 L25 22" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="30" y1="24" x2="44" y2="24" stroke="#D87C9B" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Check item 2 (done) -->
+  <circle cx="22" cy="36" r="5" fill="#D87C9B"/>
+  <path d="M19 36 L21.5 38.5 L25 34" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="30" y1="36" x2="44" y2="36" stroke="#D87C9B" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Check item 3 (pending) -->
+  <circle cx="22" cy="48" r="5" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2"/>
+  <line x1="30" y1="48" x2="44" y2="48" stroke="#F4C7D9" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Sparkle top right -->
+  <path d="M52 6 L53 4 L54 6 L56 7 L54 8 L53 10 L52 8 L50 7Z" fill="#D9A441"/>
+</svg>

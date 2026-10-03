@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Level up arrow hexagon base -->
+  <path d="M32 6 L54 18 L54 46 L32 58 L10 46 L10 18Z" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Inner glow -->
+  <path d="M32 12 L50 22 L50 42 L32 52 L14 42 L14 22Z" fill="#D87C9B" opacity="0.2"/>
+  <!-- Up arrow big -->
+  <path d="M32 42 L32 22" stroke="#D87C9B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M20 32 L32 18 L44 32" stroke="#D87C9B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Stars burst around arrow -->
+  <path d="M52 14 L53.5 11 L55 14 L58 15.5 L55 17 L53.5 20 L52 17 L49 15.5Z" fill="#D9A441"/>
+  <path d="M8 40 L9 38 L10 40 L12 41 L10 42 L9 44 L8 42 L6 41Z" fill="#D9A441"/>
+  <circle cx="52" cy="44" r="3" fill="#D9A441" opacity="0.7"/>
+  <circle cx="12" cy="18" r="2" fill="#D87C9B" opacity="0.6"/>
+</svg>

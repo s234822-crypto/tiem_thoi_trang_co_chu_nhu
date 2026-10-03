@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Bow left wing -->
+  <path d="M8 28 Q8 16 20 20 Q28 24 32 32 Q24 32 16 30 Q8 28 8 28Z" fill="#D87C9B" stroke="#C06080" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Bow right wing -->
+  <path d="M56 28 Q56 16 44 20 Q36 24 32 32 Q40 32 48 30 Q56 28 56 28Z" fill="#D87C9B" stroke="#C06080" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Bow left bottom wing -->
+  <path d="M8 36 Q8 48 20 44 Q28 40 32 32 Q24 32 16 34 Q8 36 8 36Z" fill="#D87C9B" stroke="#C06080" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Bow right bottom wing -->
+  <path d="M56 36 Q56 48 44 44 Q36 40 32 32 Q40 32 48 34 Q56 36 56 36Z" fill="#D87C9B" stroke="#C06080" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Center knot -->
+  <ellipse cx="32" cy="32" rx="6" ry="7" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2.5"/>
+  <ellipse cx="32" cy="32" rx="3" ry="3.5" fill="#D9A441"/>
+  <!-- Ribbon tails -->
+  <path d="M27 37 Q22 44 24 52" stroke="#D87C9B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M37 37 Q42 44 40 52" stroke="#D87C9B" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Sparkle -->
+  <path d="M48 8 L49 6 L50 8 L52 9 L50 10 L49 12 L48 10 L46 9Z" fill="#D9A441" opacity="0.8"/>
+  <path d="M14 52 L15 50 L16 52 L18 53 L16 54 L15 56 L14 54 L12 53Z" fill="#D9A441" opacity="0.6"/>
+</svg>

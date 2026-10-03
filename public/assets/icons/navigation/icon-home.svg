@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- House body -->
+  <rect x="12" y="28" width="40" height="28" rx="4" fill="#FFF8F4" stroke="#D87C9B" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Roof -->
+  <path d="M6 30 L32 8 L58 30" stroke="#D87C9B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="#F4C7D9"/>
+  <!-- Chimney -->
+  <rect x="40" y="12" width="7" height="14" rx="2" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2"/>
+  <!-- Smoke puff -->
+  <circle cx="41" cy="10" r="2" fill="#F4C7D9" opacity="0.7"/>
+  <circle cx="45" cy="8" r="2.5" fill="#F4C7D9" opacity="0.5"/>
+  <!-- Door -->
+  <path d="M26 56 L26 43 Q26 40 32 40 Q38 40 38 43 L38 56Z" fill="#D87C9B"/>
+  <!-- Door knob -->
+  <circle cx="36" cy="49" r="1.5" fill="#D9A441"/>
+  <!-- Window left with heart -->
+  <rect x="14" y="34" width="13" height="12" rx="2.5" fill="white" stroke="#D87C9B" stroke-width="1.8"/>
+  <path d="M17.5 38.5 Q17.5 37 19.5 38 Q21 37 21 38.5 Q21 40.5 19.5 42 Q18 40.5 17.5 38.5Z" fill="#D87C9B"/>
+  <!-- Window right with flower -->
+  <rect x="37" y="34" width="13" height="12" rx="2.5" fill="white" stroke="#D87C9B" stroke-width="1.8"/>
+  <circle cx="43.5" cy="40" r="2" fill="#F4C7D9"/>
+  <circle cx="43.5" cy="37.5" r="1.5" fill="#F4C7D9"/>
+  <circle cx="43.5" cy="42.5" r="1.5" fill="#F4C7D9"/>
+  <circle cx="41" cy="39" r="1.5" fill="#F4C7D9"/>
+  <circle cx="46" cy="39" r="1.5" fill="#F4C7D9"/>
+  <circle cx="43.5" cy="40" r="1.2" fill="#D9A441"/>
+  <!-- Ground line -->
+  <line x1="8" y1="56" x2="56" y2="56" stroke="#F2E1CF" stroke-width="2" stroke-linecap="round"/>
+</svg>

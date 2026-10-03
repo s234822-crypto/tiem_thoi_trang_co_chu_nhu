@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Trophy cup body -->
+  <path d="M20 10 L44 10 L44 34 Q44 46 32 48 Q20 46 20 34Z" fill="#D9A441" stroke="#C8911E" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Trophy handles -->
+  <path d="M20 16 Q10 16 10 26 Q10 34 20 34" stroke="#D9A441" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M44 16 Q54 16 54 26 Q54 34 44 34" stroke="#D9A441" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Trophy stem -->
+  <rect x="28" y="48" width="8" height="8" rx="1" fill="#C8911E"/>
+  <!-- Trophy base -->
+  <rect x="20" y="54" width="24" height="6" rx="3" fill="#D9A441" stroke="#C8911E" stroke-width="2"/>
+  <!-- Trophy inner shine -->
+  <ellipse cx="32" cy="26" rx="10" ry="12" fill="#F0C040" opacity="0.4"/>
+  <!-- Star on trophy -->
+  <path d="M32 18 L33.5 23 L38.5 23 L34.5 26 L36 31 L32 28 L28 31 L29.5 26 L25.5 23 L30.5 23Z" fill="white" opacity="0.9"/>
+  <!-- Sparkle left -->
+  <path d="M8 8 L9 6 L10 8 L12 9 L10 10 L9 12 L8 10 L6 9Z" fill="#D9A441" opacity="0.8"/>
+  <!-- Sparkle right -->
+  <path d="M54 10 L55 8 L56 10 L58 11 L56 12 L55 14 L54 12 L52 11Z" fill="#D9A441" opacity="0.8"/>
+</svg>

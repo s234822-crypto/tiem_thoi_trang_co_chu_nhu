@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Dress bodice -->
+  <path d="M22 10 Q14 14 12 20 L20 26 Q22 20 26 18 L26 28 L38 28 L38 18 Q42 20 44 26 L52 20 Q50 14 42 10" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dress neckline -->
+  <path d="M22 10 Q32 20 42 10" stroke="#D87C9B" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <!-- Dress skirt - flowing -->
+  <path d="M26 28 Q18 36 14 56 L50 56 Q46 36 38 28Z" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Waist ribbon/belt -->
+  <path d="M20 30 L44 30" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+  <!-- Bow at waist center -->
+  <path d="M26 30 Q32 26 38 30 Q32 34 26 30Z" fill="#D9A441"/>
+  <circle cx="32" cy="30" r="2" fill="#C8911E"/>
+  <!-- Dress layer details -->
+  <path d="M17 42 Q32 47 47 42" stroke="#D87C9B" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M15 50 Q32 56 49 50" stroke="#D87C9B" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <!-- Sparkle top -->
+  <path d="M32 6 L33 4 L34 6 L36 7 L34 8 L33 10 L32 8 L30 7Z" fill="#D9A441"/>
+</svg>

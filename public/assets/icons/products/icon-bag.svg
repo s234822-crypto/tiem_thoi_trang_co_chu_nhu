@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Bag body -->
+  <rect x="10" y="24" width="44" height="34" rx="8" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2.5"/>
+  <!-- Bag handle -->
+  <path d="M20 24 Q20 10 32 10 Q44 10 44 24" stroke="#D87C9B" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Bag flap -->
+  <path d="M10 24 Q10 38 32 40 Q54 38 54 24" fill="#D87C9B" stroke="#C06080" stroke-width="2"/>
+  <!-- Flap clasp -->
+  <circle cx="32" cy="36" r="5" fill="#D9A441" stroke="#C8911E" stroke-width="2"/>
+  <circle cx="32" cy="36" r="2.5" fill="#C8911E"/>
+  <!-- Bag texture lines -->
+  <line x1="20" y1="44" x2="44" y2="44" stroke="#D87C9B" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <line x1="16" y1="50" x2="48" y2="50" stroke="#D87C9B" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <!-- Bag side stitch -->
+  <line x1="10" y1="30" x2="10" y2="52" stroke="#C06080" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <line x1="54" y1="30" x2="54" y2="52" stroke="#C06080" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <!-- Sparkle charm -->
+  <path d="M50 12 L51 10 L52 12 L54 13 L52 14 L51 16 L50 14 L48 13Z" fill="#D9A441"/>
+  <line x1="51" y1="16" x2="51" y2="22" stroke="#D9A441" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Gift box body -->
+  <rect x="10" y="30" width="44" height="28" rx="5" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2.5"/>
+  <!-- Gift box lid -->
+  <rect x="8" y="22" width="48" height="10" rx="4" fill="#D87C9B" stroke="#C06080" stroke-width="2.5"/>
+  <!-- Vertical ribbon -->
+  <rect x="28" y="22" width="8" height="36" rx="2" fill="#D9A441" stroke="#C8911E" stroke-width="1.5"/>
+  <!-- Horizontal ribbon -->
+  <rect x="8" y="28" width="48" height="8" rx="2" fill="#D9A441" stroke="#C8911E" stroke-width="1.5"/>
+  <!-- Bow left wing -->
+  <path d="M28 22 Q16 14 20 22" fill="#D9A441" stroke="#C8911E" stroke-width="1.5"/>
+  <!-- Bow right wing -->
+  <path d="M36 22 Q48 14 44 22" fill="#D9A441" stroke="#C8911E" stroke-width="1.5"/>
+  <!-- Bow center -->
+  <circle cx="32" cy="22" r="4" fill="#C8911E"/>
+  <circle cx="32" cy="22" r="2" fill="#D9A441"/>
+  <!-- Sparkles -->
+  <path d="M54 10 L55 8 L56 10 L58 11 L56 12 L55 14 L54 12 L52 11Z" fill="#D9A441"/>
+  <path d="M8 14 L9 12 L10 14 L12 15 L10 16 L9 18 L8 16 L6 15Z" fill="#D87C9B" opacity="0.8"/>
+  <circle cx="52" cy="46" r="2" fill="#D87C9B" opacity="0.5"/>
+</svg>

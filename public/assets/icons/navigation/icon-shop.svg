@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Store building -->
+  <rect x="8" y="24" width="48" height="34" rx="4" fill="#FFF8F4" stroke="#D87C9B" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Awning -->
+  <path d="M6 18 Q10 26 16 24 Q20 18 26 24 Q30 18 38 24 Q42 18 48 24 Q54 18 58 24 L58 18 Q32 8 6 18Z" fill="#D87C9B"/>
+  <!-- Awning scallops -->
+  <path d="M6 24 Q9 28 12 24 Q15 28 18 24 Q21 28 24 24 Q27 28 30 24 Q33 28 36 24 Q39 28 42 24 Q45 28 48 24 Q51 28 54 24 Q57 28 58 24" stroke="#D87C9B" stroke-width="1.5" fill="#F4C7D9"/>
+  <!-- Store sign -->
+  <rect x="14" y="28" width="36" height="10" rx="3" fill="#F4C7D9" stroke="#D87C9B" stroke-width="1.5"/>
+  <!-- Sign dots decoration -->
+  <circle cx="22" cy="33" r="1.5" fill="#D87C9B"/>
+  <circle cx="32" cy="33" r="1.5" fill="#D87C9B"/>
+  <circle cx="42" cy="33" r="1.5" fill="#D87C9B"/>
+  <!-- Door -->
+  <rect x="26" y="42" width="12" height="16" rx="3" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2"/>
+  <!-- Door knob -->
+  <circle cx="35" cy="50" r="1.5" fill="#D9A441"/>
+  <!-- Windows -->
+  <rect x="10" y="42" width="12" height="10" rx="2" fill="white" stroke="#D87C9B" stroke-width="1.5"/>
+  <rect x="42" y="42" width="12" height="10" rx="2" fill="white" stroke="#D87C9B" stroke-width="1.5"/>
+  <!-- Window cross -->
+  <line x1="16" y1="42" x2="16" y2="52" stroke="#F4C7D9" stroke-width="1.2"/>
+  <line x1="10" y1="47" x2="22" y2="47" stroke="#F4C7D9" stroke-width="1.2"/>
+  <line x1="48" y1="42" x2="48" y2="52" stroke="#F4C7D9" stroke-width="1.2"/>
+  <line x1="42" y1="47" x2="54" y2="47" stroke="#F4C7D9" stroke-width="1.2"/>
+  <!-- Star sparkle on awning -->
+  <path d="M32 12 L33 15 L36 15 L33.5 17 L34.5 20 L32 18 L29.5 20 L30.5 17 L28 15 L31 15Z" fill="#D9A441"/>
+</svg>

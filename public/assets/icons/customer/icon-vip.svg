@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Crown base band -->
+  <rect x="10" y="42" width="44" height="10" rx="5" fill="#D9A441" stroke="#C8911E" stroke-width="2.5"/>
+  <!-- Crown points -->
+  <path d="M10 42 L10 20 L22 34 L32 10 L42 34 L54 20 L54 42Z" fill="#D9A441" stroke="#C8911E" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Crown inner glow -->
+  <path d="M14 42 L14 26 L22 36 L32 16 L42 36 L50 26 L50 42Z" fill="#F0C040" opacity="0.4"/>
+  <!-- Crown gems -->
+  <circle cx="32" cy="44" r="5" fill="#D87C9B" stroke="#C06080" stroke-width="1.5"/>
+  <circle cx="32" cy="44" r="2.5" fill="#F4C7D9"/>
+  <circle cx="18" cy="44" r="4" fill="#D87C9B" stroke="#C06080" stroke-width="1.5"/>
+  <circle cx="46" cy="44" r="4" fill="#D87C9B" stroke="#C06080" stroke-width="1.5"/>
+  <!-- Top gem sparkles -->
+  <circle cx="32" cy="10" r="3" fill="white" opacity="0.8"/>
+  <path d="M11 19 L12.5 16 L14 19 L17 20.5 L14 22 L12.5 25 L11 22 L8 20.5Z" fill="white" opacity="0.7"/>
+  <path d="M50 19 L51.5 16 L53 19 L56 20.5 L53 22 L51.5 25 L50 22 L47 20.5Z" fill="white" opacity="0.7"/>
+  <!-- VIP stars around crown -->
+  <path d="M4 38 L5 36 L6 38 L8 39 L6 40 L5 42 L4 40 L2 39Z" fill="#D9A441"/>
+  <path d="M56 38 L57 36 L58 38 L60 39 L58 40 L57 42 L56 40 L54 39Z" fill="#D9A441"/>
+</svg>

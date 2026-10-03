@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Open box body -->
+  <path d="M8 30 L8 56 Q8 58 10 58 L54 58 Q56 58 56 56 L56 30Z" fill="#FFF8F4" stroke="#D87C9B" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Box lid left flap -->
+  <path d="M8 30 L8 24 Q8 22 10 22 L32 22 L32 30Z" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Box lid right flap -->
+  <path d="M32 22 L54 22 Q56 22 56 24 L56 30 L32 30Z" fill="#F4C7D9" stroke="#D87C9B" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Box front stripe -->
+  <path d="M8 30 L56 30" stroke="#D87C9B" stroke-width="2"/>
+  <!-- Clothes/items inside - cute dress -->
+  <path d="M24 38 Q24 35 27 35 L37 35 Q40 35 40 38 L42 54 L22 54Z" fill="#F4C7D9" stroke="#D87C9B" stroke-width="1.8"/>
+  <!-- Dress straps -->
+  <path d="M27 35 L25 30 L22 28" stroke="#D87C9B" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M37 35 L39 30 L42 28" stroke="#D87C9B" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Dress bow -->
+  <path d="M28 40 Q32 42 36 40" stroke="#D9A441" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Sparkle top left -->
+  <path d="M14 22 L15 19 L16 22 L19 23 L16 24 L15 27 L14 24 L11 23Z" fill="#D9A441" opacity="0.8"/>
+  <!-- Box tape cross -->
+  <line x1="32" y1="22" x2="32" y2="58" stroke="#D87C9B" stroke-width="1.5" stroke-dasharray="2,2"/>
+</svg>

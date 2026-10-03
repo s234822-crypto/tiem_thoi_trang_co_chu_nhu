@@ -1,0 +1,6 @@
+{
+  "name": "Tiệm Thời Trang Cô Chủ Như",
+  "description": "Game quản lý tiệm thời trang nữ casual, phối đồ phong cách anime chibi xinh xắn trên mobile",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
