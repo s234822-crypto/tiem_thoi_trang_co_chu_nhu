@@ -135,17 +135,17 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
         </div>
       )}
 
-      {/* Floating Waiting Queue (Top Center to prevent overlap with characters) */}
+      {/* Floating Waiting Queue (Compact Top Center) */}
       {isShopOpen && (
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border border-[#F4C7D9] shadow-sm">
-          <Users className="w-3.5 h-3.5 text-[#D87C9B]" />
-          <span className="text-[10px] font-bold text-[#6F554A]">Hàng chờ:</span>
-          <div className="flex items-center -space-x-1.5">
+        <div className="absolute top-1.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded-full border border-[#F4C7D9] shadow-2xs">
+          <Users className="w-3 h-3 text-[#D87C9B]" />
+          <span className="text-[9px] font-bold text-[#6F554A]">Hàng chờ:</span>
+          <div className="flex items-center -space-x-1">
             {waitingQueue.length > 0 ? (
               waitingQueue.map((cust) => (
                 <div
                   key={cust.id}
-                  className="w-5 h-5 rounded-full border border-white overflow-hidden bg-[#F4C7D9] relative shadow-2xs"
+                  className="w-4 h-4 rounded-full border border-white overflow-hidden bg-[#F4C7D9] relative shadow-2xs"
                   title={`${cust.name} (${cust.typeLabel})`}
                 >
                   <img
@@ -155,12 +155,12 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
                     referrerPolicy="no-referrer"
                   />
                   {cust.isVip && (
-                    <span className="absolute -top-0.5 -right-0.5 text-[7px] text-[#D9A441]">👑</span>
+                    <span className="absolute -top-0.5 -right-0.5 text-[6px] text-[#D9A441]">👑</span>
                   )}
                 </div>
               ))
             ) : (
-              <span className="text-[9px] text-[#8D6E63] italic pl-1">Trống</span>
+              <span className="text-[8.5px] text-[#8D6E63] italic pl-0.5">Trống</span>
             )}
           </div>
         </div>
