@@ -1,10 +1,6 @@
-/**
- * ProductIcon — Renders the original emoji icon for a product.
- * Uses product.visualEmoji directly as originally designed in the game.
- */
-
 import React from 'react';
 import { Product } from '../types/game';
+import { ClothesIcon } from './ClothesIcon';
 
 interface ProductIconProps {
   product: Product;
@@ -13,21 +9,16 @@ interface ProductIconProps {
 }
 
 export const ProductIcon: React.FC<ProductIconProps> = ({ product, size = 32, className = '' }) => {
-  const emoji = product.visualEmoji || '👚';
+  const iconName = product.subCategory || product.category;
 
   return (
-    <span
-      className={`inline-flex items-center justify-center leading-none select-none transition-transform ${className}`}
-      style={{
-        fontSize: `${Math.round(size * 0.72)}px`,
-        width: `${size}px`,
-        height: `${size}px`,
-      }}
-      role="img"
-      aria-label={product.name}
-    >
-      {emoji}
-    </span>
+    <ClothesIcon
+      name={iconName}
+      size={size}
+      color={product.accentColor}
+      fallbackEmoji={product.visualEmoji}
+      className={className}
+    />
   );
 };
 
