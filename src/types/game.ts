@@ -20,8 +20,8 @@ export type SubCategory =
   | 'culottes' | 'linen_pants' | 'high_waist_pants' | 'y2k_pants' | 'sporty_pants' | 'leather_pants'
   | 'jeans' | 'shorts' | 'wide_leg' | 'cargo'
   // skirts
-  | 'aline_skirt' | 'tennis_skirt' | 'pleated_skirt' | 'denim_skirt' | 'midi_skirt' | 'maxi_skirt'
-  | 'pencil_skirt' | 'mermaid_skirt' | 'satin_skirt' | 'lace_skirt' | 'caro_skirt' | 'cargo_skirt'
+  | 'a_line_skirt' | 'aline_skirt' | 'tennis_skirt' | 'pleated_skirt' | 'denim_skirt' | 'midi_skirt' | 'maxi_skirt'
+  | 'pencil_skirt' | 'mermaid_skirt' | 'satin_skirt' | 'lace_skirt' | 'plaid_skirt' | 'caro_skirt' | 'cargo_skirt'
   | 'mini_skirt' | 'tiered_skirt' | 'vintage_skirt' | 'long_skirt'
   // dresses
   | 'office_dress' | 'party_dress' | 'floral_dress' | 'body_dress' | 'maxi_dress' | 'babydoll_dress'

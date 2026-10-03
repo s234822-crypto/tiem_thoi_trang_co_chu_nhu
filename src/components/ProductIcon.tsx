@@ -26,6 +26,7 @@ export const ProductIcon: React.FC<ProductIconProps> = ({ product, size = 32, cl
             width: '100%',
             height: '100%',
             objectFit: 'contain',
+            objectPosition: 'center',
             filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
           }}
         />
