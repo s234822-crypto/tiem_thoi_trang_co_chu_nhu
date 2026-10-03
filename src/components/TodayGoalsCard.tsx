@@ -1,9 +1,9 @@
 import React from 'react';
-import { ShopStats } from '../types/game';
-import { Target, Star, DollarSign, Users, Award, ChevronRight } from 'lucide-react';
+import { ShopStats, DailyMission } from '../types/game';
 
 interface TodayGoalsCardProps {
   stats: ShopStats;
+  missions?: DailyMission[];
   targetRevenue?: number;
   targetFiveStars?: number;
   onOpenMissions?: () => void;
@@ -11,95 +11,95 @@ interface TodayGoalsCardProps {
 
 export const TodayGoalsCard: React.FC<TodayGoalsCardProps> = ({
   stats,
+  missions = [],
   targetRevenue = Math.max(1000000, stats.day * 500000),
   targetFiveStars = 3,
   onOpenMissions,
 }) => {
   const servedCount = stats.successfulSalesToday || 0;
   const maxCust = stats.maxCustomersToday || 5;
-  const custPercent = Math.min(100, Math.round((servedCount / maxCust) * 100));
-
   const fiveStars = stats.fiveStarToday || 0;
-  const starPercent = Math.min(100, Math.round((fiveStars / targetFiveStars) * 100));
-
   const revenue = stats.todayRevenue || 0;
-  const revPercent = Math.min(100, Math.round((revenue / targetRevenue) * 100));
+
+  // Format revenue display e.g. 405k/1M or 405k/1000k
+  const formatK = (val: number) => {
+    if (val >= 1000000) {
+      const m = val / 1000000;
+      return m % 1 === 0 ? `${m}M` : `${m.toFixed(1)}M`;
+    }
+    return `${Math.round(val / 1000)}k`;
+  };
+
+  const revCurrentStr = formatK(revenue);
+  const revTargetStr = formatK(targetRevenue);
+
+  const goalsList = [
+    {
+      id: 'g-customers',
+      title: `Phục vụ ${maxCust} khách`,
+      currentStr: `${servedCount}/${maxCust}`,
+      isCompleted: servedCount >= maxCust,
+    },
+    {
+      id: 'g-outfits',
+      title: 'Outfit từ 4★ trở lên',
+      currentStr: `${fiveStars}/${targetFiveStars}`,
+      isCompleted: fiveStars >= targetFiveStars,
+    },
+    {
+      id: 'g-revenue',
+      title: `Doanh thu ${(targetRevenue / 1000).toLocaleString('vi-VN')}k`,
+      currentStr: `${revCurrentStr}/${revTargetStr}`,
+      isCompleted: revenue >= targetRevenue,
+    },
+  ];
 
   return (
-    <div className="w-full bg-[#FFF8F4] border-2 border-[#F4C7D9] rounded-2xl p-3 shadow-xs select-none">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-1.5 text-xs font-black text-[#D87C9B] font-heading uppercase tracking-wide">
-          <Target className="w-4 h-4 text-[#D87C9B]" />
-          <span>MỤC TIÊU HÔM NAY (NGÀY {stats.day})</span>
-        </div>
-        {onOpenMissions && (
-          <button
-            onClick={onOpenMissions}
-            className="flex items-center gap-0.5 text-[10px] font-bold text-[#8D6E63] hover:text-[#D87C9B] transition-colors"
-          >
-            <span>Tất cả nhiệm vụ</span>
-            <ChevronRight className="w-3 h-3" />
-          </button>
-        )}
+    <div
+      onClick={onOpenMissions}
+      className="w-full bg-[#FFFDF9] border-2 border-[#C8D6B9] rounded-2xl p-3.5 shadow-2xs select-none space-y-2 cursor-pointer transition-all hover:border-[#B5C7A3]"
+    >
+      {/* Title Header */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-xs font-black text-[#4A3E38] font-heading tracking-tight">
+          Mục tiêu hôm nay
+        </h3>
+        <span className="text-[10px] font-bold text-[#8D7F75] hover:underline">
+          Chi tiết ›
+        </span>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
-        {/* Goal 1: Serviced Customers */}
-        <div className="bg-white p-2 rounded-xl border border-[#F2E1CF] flex flex-col justify-between shadow-2xs">
-          <div className="flex items-center justify-between text-[10px] font-bold text-[#6F554A] mb-1">
-            <div className="flex items-center gap-1">
-              <Users className="w-3 h-3 text-[#D87C9B]" />
-              <span className="truncate">Phục vụ</span>
+      {/* Rows of Goals */}
+      <div className="space-y-1.5 pt-0.5">
+        {goalsList.map((goal) => (
+          <div
+            key={goal.id}
+            className="flex items-center justify-between text-[11.5px] font-bold text-[#5A4D45] leading-snug"
+          >
+            {/* Left: Check / Circle Icon + Task Title */}
+            <div className="flex items-center gap-2 min-w-0 pr-2">
+              {goal.isCompleted ? (
+                <div className="w-4 h-4 rounded-full bg-[#81C784] text-white flex items-center justify-center text-[10px] font-black shrink-0 shadow-2xs">
+                  ✓
+                </div>
+              ) : (
+                <div className="w-4 h-4 rounded-full border-2 border-[#B0C59F] bg-white shrink-0" />
+              )}
+              <span className={`text-wrap break-words ${goal.isCompleted ? 'text-[#3E3431] font-extrabold' : 'text-[#5A4D45]'}`}>
+                {goal.title}
+              </span>
             </div>
-            <span className="text-[#3E3431] font-extrabold tabular-nums">
-              {servedCount}/{maxCust}
-            </span>
-          </div>
-          <div className="w-full bg-[#F2E1CF]/60 h-1.5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-[#F4C7D9] to-[#D87C9B] rounded-full transition-all duration-300"
-              style={{ width: `${custPercent}%` }}
-            />
-          </div>
-        </div>
 
-        {/* Goal 2: 4-5 Star Outfits */}
-        <div className="bg-white p-2 rounded-xl border border-[#F2E1CF] flex flex-col justify-between shadow-2xs">
-          <div className="flex items-center justify-between text-[10px] font-bold text-[#6F554A] mb-1">
-            <div className="flex items-center gap-1">
-              <Star className="w-3 h-3 text-[#D9A441] fill-[#D9A441]" />
-              <span className="truncate">Outfit ≥4★</span>
-            </div>
-            <span className="text-[#3E3431] font-extrabold tabular-nums">
-              {fiveStars}/{targetFiveStars}
+            {/* Right: Progress */}
+            <span
+              className={`font-black tabular-nums shrink-0 text-right ${
+                goal.isCompleted ? 'text-[#4CAF50]' : 'text-[#4A3E38]'
+              }`}
+            >
+              {goal.currentStr}
             </span>
           </div>
-          <div className="w-full bg-[#F2E1CF]/60 h-1.5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-[#F50057] to-[#D9A441] rounded-full transition-all duration-300"
-              style={{ width: `${starPercent}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Goal 3: Revenue Target */}
-        <div className="bg-white p-2 rounded-xl border border-[#F2E1CF] flex flex-col justify-between shadow-2xs">
-          <div className="flex items-center justify-between text-[10px] font-bold text-[#6F554A] mb-1">
-            <div className="flex items-center gap-1">
-              <DollarSign className="w-3 h-3 text-emerald-600" />
-              <span className="truncate">Doanh thu</span>
-            </div>
-            <span className="text-emerald-700 font-extrabold text-[9px] tabular-nums truncate">
-              {(revenue / 1000).toFixed(0)}k/{(targetRevenue / 1000).toFixed(0)}k
-            </span>
-          </div>
-          <div className="w-full bg-[#F2E1CF]/60 h-1.5 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full transition-all duration-300"
-              style={{ width: `${revPercent}%` }}
-            />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
