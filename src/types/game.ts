@@ -24,13 +24,27 @@ export type SubCategory =
   | 'pencil_skirt' | 'mermaid_skirt' | 'satin_skirt' | 'lace_skirt' | 'plaid_skirt' | 'caro_skirt' | 'cargo_skirt'
   | 'mini_skirt' | 'tiered_skirt' | 'vintage_skirt' | 'long_skirt'
   // dresses
-  | 'office_dress' | 'party_dress' | 'floral_dress' | 'body_dress' | 'maxi_dress' | 'babydoll_dress'
+  | 'office_dress' | 'bodycon_dress' | 'party_dress' | 'floral_dress' | 'babydoll_dress' | 'maxi_dress'
+  | 'midi_dress' | 'shirt_dress' | 'slip_dress' | 'off_shoulder_dress' | 'square_neck_dress' | 'lace_dress'
+  | 'satin_dress' | 'sequin_dress' | 'vintage_dress' | 'korean_dress' | 'y2k_dress' | 'luxury_dress' | 'body_dress'
+  // jackets
+  | 'blazer' | 'denim_jacket' | 'leather_jacket' | 'bomber_jacket' | 'varsity_jacket' | 'trench_coat'
+  | 'wool_coat' | 'fur_jacket' | 'outer_cardigan' | 'tweed_jacket' | 'cropped_jacket' | 'oversized_jacket'
+  | 'windbreaker' | 'varsity_coat' | 'sporty_jacket'
   // shoes
-  | 'sneaker' | 'heels' | 'sandal' | 'boots' | 'loafer' | 'mary_jane'
+  | 'white_sneakers' | 'chunky_sneakers' | 'platform_sneakers' | 'pointed_heels' | 'strap_heels' | 'kitten_heels'
+  | 'sandals' | 'platform_sandals' | 'ankle_boots' | 'knee_high_boots' | 'chelsea_boots' | 'loafers'
+  | 'mary_jane' | 'ballet_flats' | 'mules' | 'oxford_shoes' | 'sport_shoes' | 'luxury_shoes'
+  | 'sneaker' | 'heels' | 'sandal' | 'boots' | 'loafer'
   // bags
-  | 'tote' | 'mini_bag' | 'shoulder_bag' | 'office_bag' | 'luxury_bag'
+  | 'tote_bag' | 'mini_bag' | 'shoulder_bag' | 'crossbody_bag' | 'baguette_bag' | 'bucket_bag'
+  | 'office_bag' | 'clutch_bag' | 'box_bag' | 'leather_bag' | 'canvas_bag' | 'pastel_bag'
+  | 'vintage_bag' | 'y2k_bag' | 'luxury_bag' | 'bow_bag' | 'pearl_bag' | 'tote'
   // accessories
-  | 'glasses' | 'hat' | 'earrings' | 'necklace' | 'bracelet' | 'belt' | 'hair_clip';
+  | 'sunglasses' | 'round_glasses' | 'baseball_cap' | 'beret' | 'bucket_hat' | 'straw_hat'
+  | 'earrings' | 'necklace' | 'bracelet' | 'ring' | 'belt' | 'hair_clip' | 'hair_bow'
+  | 'scrunchie' | 'headband' | 'scarf' | 'watch' | 'brooch' | 'pearl_necklace' | 'high_socks'
+  | 'glasses' | 'hat';
 
 export type StyleTag =
   | 'casual'   | 'cute'       | 'korean'    | 'minimal'  | 'elegant'
