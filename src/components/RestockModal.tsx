@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Product } from '../types/game';
-import { CATEGORY_LABELS } from '../data/products';
+import { CATEGORY_LABELS, SUBCATEGORY_LABELS } from '../data/products';
 import { playTapSound, playCoinSound, playAlertSound } from '../utils/audio';
 import { ShoppingCart, Plus, Check, AlertCircle, Sparkles, AlertTriangle } from 'lucide-react';
 import { ProductIcon } from './ProductIcon';
@@ -18,6 +18,7 @@ export const RestockModal: React.FC<RestockModalProps> = ({
   onRestockItem,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
   const [feedbackMsg, setFeedbackMsg] = useState<{ text: string; isError: boolean } | null>(null);
 
   const categories = [
@@ -32,6 +33,24 @@ export const RestockModal: React.FC<RestockModalProps> = ({
     { id: 'accessories', label: 'Phụ kiện' },
   ];
 
+  const handleCategoryChange = (catId: string) => {
+    setSelectedCategory(catId);
+    setSelectedSubCategory('all');
+  };
+
+  // Available subCategories for current category tab
+  const availableSubCategories = useMemo(() => {
+    if (!selectedCategory || selectedCategory === 'all') return [];
+    const catProds = products.filter(p => p.category === selectedCategory);
+    const subMap = new Map<string, string>();
+    catProds.forEach(p => {
+      if (p.subCategory) {
+        subMap.set(p.subCategory, SUBCATEGORY_LABELS[p.subCategory] || p.subCategory);
+      }
+    });
+    return Array.from(subMap.entries()).map(([id, label]) => ({ id, label }));
+  }, [selectedCategory, products]);
+
   const showFeedback = (text: string, isError = false) => {
     setFeedbackMsg({ text, isError });
     setTimeout(() => {
@@ -41,6 +60,7 @@ export const RestockModal: React.FC<RestockModalProps> = ({
 
   const filteredProducts = products.filter((p) => {
     if (selectedCategory !== 'all' && p.category !== selectedCategory) return false;
+    if (selectedSubCategory !== 'all' && p.subCategory !== selectedSubCategory) return false;
     return true;
   });
 
@@ -112,10 +132,10 @@ export const RestockModal: React.FC<RestockModalProps> = ({
         {categories.map((cat) => (
           <button
             key={cat.id}
-            onClick={() => setSelectedCategory(cat.id)}
+            onClick={() => handleCategoryChange(cat.id)}
             className={`h-6 px-2.5 rounded-full text-[10px] font-bold whitespace-nowrap transition-all ${
               selectedCategory === cat.id
-                ? 'bg-[#D87C9B] text-white shadow-xs'
+                ? 'bg-[#D87C9B] text-white shadow-xs font-black'
                 : 'bg-white text-[#6F554A] border border-[#F2E1CF] hover:bg-[#FFF0F5]'
             }`}
           >
@@ -123,6 +143,35 @@ export const RestockModal: React.FC<RestockModalProps> = ({
           </button>
         ))}
       </div>
+
+      {/* SubCategory Pills */}
+      {availableSubCategories.length > 0 && (
+        <div className="flex items-center gap-1 px-3 py-1.5 overflow-x-auto no-scrollbar border-b border-[#F2E1CF]/40 bg-white/70">
+          <button
+            onClick={() => setSelectedSubCategory('all')}
+            className={`h-5.5 px-2 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${
+              selectedSubCategory === 'all'
+                ? 'bg-[#6F554A] text-white shadow-2xs font-black'
+                : 'bg-[#FFF5EE] text-[#6F554A] border border-[#F2E1CF]'
+            }`}
+          >
+            Tất cả
+          </button>
+          {availableSubCategories.map((sub) => (
+            <button
+              key={sub.id}
+              onClick={() => setSelectedSubCategory(sub.id)}
+              className={`h-5.5 px-2.5 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${
+                selectedSubCategory === sub.id
+                  ? 'bg-[#D87C9B] text-white shadow-2xs font-black'
+                  : 'bg-white text-[#6F554A] border border-[#F2E1CF] hover:border-[#D87C9B]'
+              }`}
+            >
+              {sub.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Product Restock Items List */}
       <div className="flex-1 overflow-y-auto custom-scrollbar p-2.5 space-y-2">

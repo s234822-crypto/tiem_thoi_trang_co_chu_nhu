@@ -168,10 +168,34 @@ export default function App() {
   // Products Database
   const [products, setProducts] = useState<Product[]>(() => {
     if (parsedData?.products && Array.isArray(parsedData.products)) {
-      return parsedData.products.map((p: Product) => ({
-        ...p,
-        maxStock: p.maxStock || 10,
-      }));
+      const initialMap = new Map(INITIAL_PRODUCTS.map((p) => [p.id, p]));
+      const savedMap   = new Map(parsedData.products.map((p: Product) => [p.id, p]));
+
+      // Merge latest definitions (images, subCategories, tags) into saved state items
+      const mergedSaved = parsedData.products.map((savedProd: Product) => {
+        const initProd = initialMap.get(savedProd.id);
+        if (initProd) {
+          return {
+            ...initProd,
+            ...savedProd,
+            name: initProd.name || savedProd.name,
+            image: initProd.image || savedProd.image,
+            subCategory: initProd.subCategory || savedProd.subCategory,
+            styleTags: initProd.styleTags || savedProd.styleTags,
+            colors: initProd.colors || savedProd.colors,
+            occasions: initProd.occasions || savedProd.occasions,
+            maxStock: savedProd.maxStock || initProd.maxStock || 10,
+          };
+        }
+        return {
+          ...savedProd,
+          maxStock: savedProd.maxStock || 10,
+        };
+      });
+
+      // Append any newly added products from INITIAL_PRODUCTS missing in save file
+      const newProducts = INITIAL_PRODUCTS.filter((initP) => !savedMap.has(initP.id));
+      return [...mergedSaved, ...newProducts];
     }
     return INITIAL_PRODUCTS;
   });
