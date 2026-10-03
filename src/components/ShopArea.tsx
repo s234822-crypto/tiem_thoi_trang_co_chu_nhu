@@ -135,9 +135,9 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
         </div>
       )}
 
-      {/* Floating Waiting Queue (Top Left) */}
+      {/* Floating Waiting Queue (Top Center to prevent overlap with characters) */}
       {isShopOpen && (
-        <div className="absolute top-2 left-2 z-20 flex items-center gap-1.5 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-full border border-[#F2E1CF] shadow-xs">
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border border-[#F4C7D9] shadow-sm">
           <Users className="w-3.5 h-3.5 text-[#D87C9B]" />
           <span className="text-[10px] font-bold text-[#6F554A]">Hàng chờ:</span>
           <div className="flex items-center -space-x-1.5">
