@@ -41,6 +41,7 @@ import {
   playAchievementSound,
   isAudioMuted,
   toggleAudio,
+  startBGM,
 } from './utils/audio';
 import { calculateOutfitScore, getOutfitItems } from './utils/scoring';
 import { generateAutoOutfit } from './utils/recommendations';
@@ -1678,6 +1679,7 @@ export default function App() {
           <StartScreen
             onStartGame={() => {
               playTapSound();
+              startBGM();
               setGameState('PLAYING');
               if (!stats.isShopOpen) {
                 handleOpenShop();

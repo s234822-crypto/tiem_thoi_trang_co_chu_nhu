@@ -2,6 +2,9 @@
 
 let audioCtx: AudioContext | null = null;
 let soundMuted = false;
+let bgmInterval: number | null = null;
+let bgmStep = 0;
+let isBgmPlaying = false;
 
 if (typeof window !== 'undefined') {
   try {
@@ -20,6 +23,11 @@ export function isAudioMuted(): boolean {
 
 export function setAudioMuted(muted: boolean) {
   soundMuted = muted;
+  if (muted) {
+    stopBGM();
+  } else if (typeof window !== 'undefined') {
+    startBGM();
+  }
   try {
     localStorage.setItem('fashionShop_soundMuted', JSON.stringify(muted));
   } catch {
@@ -47,6 +55,128 @@ function getAudioContext(): AudioContext | null {
   }
   return audioCtx;
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Cozy Lo-Fi Web Audio Background Music (BGM) Synthesizer
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Chord Frequencies (Cmaj7 - Am7 - Fmaj7 - G7)
+const CHORDS = [
+  // Cmaj7
+  { bass: 130.81, notes: [261.63, 329.63, 392.00, 493.88], melody: [523.25, 659.25, 783.99] },
+  // Am7
+  { bass: 110.00, notes: [220.00, 261.63, 329.63, 392.00], melody: [440.00, 523.25, 659.25] },
+  // Fmaj7
+  { bass: 87.31,  notes: [174.61, 220.00, 261.63, 329.63], melody: [349.23, 440.00, 523.25] },
+  // G7
+  { bass: 98.00,  notes: [196.00, 246.94, 293.66, 349.23], melody: [392.00, 493.88, 587.33] },
+];
+
+function playBgmMeasure() {
+  if (soundMuted) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const chord = CHORDS[bgmStep % CHORDS.length];
+    bgmStep++;
+
+    const now = ctx.currentTime;
+    const duration = 3.2; // ~75 BPM, 4 beats per measure
+
+    // Low-pass filter for cozy warm lofi sound
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1100, now);
+
+    const masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0.04, now);
+
+    filter.connect(masterGain);
+    masterGain.connect(ctx.destination);
+
+    // 1. Warm Sub Bass
+    const bassOsc = ctx.createOscillator();
+    const bassGain = ctx.createGain();
+    bassOsc.type = 'sine';
+    bassOsc.frequency.setValueAtTime(chord.bass, now);
+
+    bassGain.gain.setValueAtTime(0.001, now);
+    bassGain.gain.linearRampToValueAtTime(0.2, now + 0.15);
+    bassGain.gain.exponentialRampToValueAtTime(0.001, now + duration - 0.1);
+
+    bassOsc.connect(bassGain);
+    bassGain.connect(filter);
+    bassOsc.start(now);
+    bassOsc.stop(now + duration);
+
+    // 2. Soft Electric Piano Chords (sine waves with gentle attack)
+    chord.notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + i * 0.04);
+
+      gain.gain.setValueAtTime(0.001, now + i * 0.04);
+      gain.gain.linearRampToValueAtTime(0.1, now + i * 0.04 + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + duration - 0.2);
+
+      osc.connect(gain);
+      gain.connect(filter);
+      osc.start(now + i * 0.04);
+      osc.stop(now + duration);
+    });
+
+    // 3. Arpeggiated Lofi Melody Notes (Marimba / Musicbox style)
+    chord.melody.forEach((freq, idx) => {
+      const delay = 0.8 + idx * 0.7; // Arpeggio spread across the measure
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + delay);
+
+      gain.gain.setValueAtTime(0.001, now + delay);
+      gain.gain.linearRampToValueAtTime(0.08, now + delay + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.6);
+
+      osc.connect(gain);
+      gain.connect(filter);
+      osc.start(now + delay);
+      osc.stop(now + delay + 0.6);
+    });
+  } catch {
+    // ignore audio failures
+  }
+}
+
+export function startBGM() {
+  if (isBgmPlaying || soundMuted) return;
+  isBgmPlaying = true;
+  playBgmMeasure();
+  bgmInterval = window.setInterval(playBgmMeasure, 3200);
+}
+
+export function stopBGM() {
+  isBgmPlaying = false;
+  if (bgmInterval !== null) {
+    clearInterval(bgmInterval);
+    bgmInterval = null;
+  }
+}
+
+export function toggleBGM(): boolean {
+  if (isBgmPlaying) {
+    stopBGM();
+    return false;
+  } else {
+    startBGM();
+    return true;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Sound Effects (SFX)
+// ─────────────────────────────────────────────────────────────────────────────
 
 export function playTapSound() {
   try {
@@ -245,4 +375,3 @@ export function playAchievementSound() {
     // ignore
   }
 }
-
