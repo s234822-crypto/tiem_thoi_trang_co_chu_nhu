@@ -10,6 +10,7 @@ interface ShopAreaProps {
   equippedDecors?: DecorItem[];
   isShopOpen?: boolean;
   ownerAvatar?: string;
+  customerAnimState?: 'entering' | 'arrived' | 'exiting';
   onCustomerClick: () => void;
   onOwnerClick: () => void;
   onOpenShop?: () => void;
@@ -22,6 +23,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
   equippedDecors = [],
   isShopOpen = true,
   ownerAvatar = OWNER_PORTRAIT,
+  customerAnimState = 'arrived',
   onCustomerClick,
   onOwnerClick,
   onOpenShop,
@@ -174,7 +176,13 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
           currentCustomer ? (
             <div
               onClick={onCustomerClick}
-              className="flex flex-col items-center cursor-pointer group active:scale-95 transition-transform animate-float-chibi shrink-0"
+              className={`flex flex-col items-center cursor-pointer group shrink-0 ${
+                customerAnimState === 'entering'
+                  ? 'animate-customer-walk-in'
+                  : customerAnimState === 'exiting'
+                  ? 'animate-customer-walk-out'
+                  : 'animate-float-chibi active:scale-95 transition-transform'
+              }`}
             >
               {/* Customer Request Speech Bubble Above Head */}
               <div className="mb-1 bg-white/95 text-[#6F554A] text-[9.5px] font-semibold px-2 py-1 rounded-xl border border-[#F4C7D9] shadow-xs max-w-[165px] text-center leading-snug animate-gentle-bounce flex flex-col items-center gap-0.5">
@@ -221,14 +229,14 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
             </div>
           ) : (
             /* Waiting Customer Placeholder Symmetrical Avatar */
-            <div className="flex flex-col items-center shrink-0">
-              <div className="mb-1 bg-white/90 text-[#8D6E63] text-[9.5px] font-medium px-2 py-0.5 rounded-lg border border-dashed border-[#F4C7D9] shadow-xs max-w-[145px] text-center leading-snug animate-pulse">
+            <div className="flex flex-col items-center shrink-0 animate-pulse">
+              <div className="mb-1 bg-white/90 text-[#8D6E63] text-[9.5px] font-medium px-2 py-0.5 rounded-lg border border-dashed border-[#F4C7D9] shadow-xs max-w-[145px] text-center leading-snug">
                 Đang đón khách mới... ✨
               </div>
-              <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-full border-2 border-dashed border-[#F4C7D9] bg-white/60 flex items-center justify-center text-2xl shadow-xs">
-                🛍️
+              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-dashed border-[#F4C7D9] bg-white/60 flex items-center justify-center text-2xl shadow-xs">
+                🚪
                 <div className="absolute bottom-0 inset-x-0 bg-[#8D6E63]/70 text-white text-[8px] font-bold text-center py-0.5 leading-none">
-                  Khách Mới
+                  Cửa Vào Tiệm
                 </div>
               </div>
             </div>

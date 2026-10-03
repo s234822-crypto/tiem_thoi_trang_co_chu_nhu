@@ -72,8 +72,9 @@ import { CollectionModal } from './components/CollectionModal';
 import { WardrobeModal } from './components/WardrobeModal';
 import { TutorialOverlay } from './components/TutorialOverlay';
 import { ResetConfirmModal } from './components/ResetConfirmModal';
+import { TodayGoalsCard } from './components/TodayGoalsCard';
 import { ActiveTab, BottomNav } from './components/BottomNav';
-import { Smartphone, CheckCircle2, AlertTriangle, Info, XCircle, Zap, Sun, Package, Wrench, Palette, Shirt } from 'lucide-react';
+import { Smartphone, CheckCircle2, AlertTriangle, Info, XCircle, Zap, Sun, Package, Wrench, Palette, Shirt, Sparkles, ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 
 const CURRENT_SAVE_VERSION = 5;
 const SAVE_KEY_V5 = 'fashionShopSave_v5';
@@ -259,6 +260,11 @@ export default function App() {
     }
     return false;
   });
+
+  // 2-Screen Gameplay Mode & Customer Animations
+  const [shopMode, setShopMode] = useState<'shop_view' | 'styling_mode'>('shop_view');
+  const [customerAnimState, setCustomerAnimState] = useState<'entering' | 'arrived' | 'exiting'>('arrived');
+  const animTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Current active customer & waiting queue
   const [currentCustomer, setCurrentCustomer] = useState<Customer | null>(null);
@@ -633,6 +639,7 @@ export default function App() {
 
   // Open Shop for the Day (Requirement 10 & 11: 3-5 minute daily cycle)
   const handleOpenShop = () => {
+    if (animTimerRef.current) clearTimeout(animTimerRef.current);
     playChimeSound();
     const baseCust =
       stats.day === 1 ? 5 :
@@ -649,6 +656,12 @@ export default function App() {
     setWaitingQueue(wait2 ? [wait1, wait2] : [wait1]);
     setOwnerState('greet');
     setOutfit({});
+    setShopMode('shop_view');
+    setCustomerAnimState('entering');
+
+    animTimerRef.current = setTimeout(() => {
+      setCustomerAnimState('arrived');
+    }, 1200);
 
     setStats((prev) => ({
       ...prev,
@@ -673,7 +686,9 @@ export default function App() {
 
   // Next customer or End Day
   const advanceToNextCustomer = (reason?: 'walkout' | 'served') => {
+    if (animTimerRef.current) clearTimeout(animTimerRef.current);
     setOutfit({});
+    setShopMode('shop_view');
 
     if (reason === 'walkout') {
       playAlertSound();
@@ -716,6 +731,12 @@ export default function App() {
       }
 
       setCurrentCustomer(nextCust);
+      setCustomerAnimState('entering');
+
+      animTimerRef.current = setTimeout(() => {
+        setCustomerAnimState('arrived');
+      }, 1200);
+
       if (nextCust.isVip || nextCust.specialRole === 'vip') {
         playVipFanfare();
         showToast(`KHÁCH VIP: ${nextCust.name} vừa bước vào tiệm!`, 'success');
@@ -845,7 +866,9 @@ export default function App() {
         if (!prev) return null;
         const newPatience = prev.currentPatience - 1;
         if (newPatience <= 0) {
-          setTimeout(() => advanceToNextCustomer('walkout'), 100);
+          setCustomerAnimState('exiting');
+          if (animTimerRef.current) clearTimeout(animTimerRef.current);
+          animTimerRef.current = setTimeout(() => advanceToNextCustomer('walkout'), 1100);
           return null;
         }
         return {
@@ -1239,7 +1262,12 @@ export default function App() {
     }
 
     setFittingResult(null);
-    advanceToNextCustomer('served');
+    setShopMode('shop_view');
+    setCustomerAnimState('exiting');
+    if (animTimerRef.current) clearTimeout(animTimerRef.current);
+    animTimerRef.current = setTimeout(() => {
+      advanceToNextCustomer('served');
+    }, 1100);
   };
 
   // Phase 13: Claim Mission Reward
@@ -1831,65 +1859,148 @@ export default function App() {
                     </button>
                   </div>
                 ) : (
-                  /* PLAY PHASE: FOCUSED CUSTOMER SERVICE (Requirement 12) */
-                  <>
-                    {/* Boutique Shop Scene & Characters */}
-                    <ShopArea
-                      currentCustomer={currentCustomer}
-                      waitingQueue={waitingQueue}
-                      ownerState={ownerState}
-                      equippedDecors={equippedDecors}
-                      isShopOpen={stats.isShopOpen}
-                      ownerAvatar={ownerAvatar}
-                      onCustomerClick={() => {
-                        playTapSound();
-                        setIsCustomerModalOpen(true);
-                      }}
-                      onOwnerClick={() => {
-                        playTapSound();
-                        setIsWardrobeOpen(true);
-                      }}
-                      onOpenShop={handleOpenShop}
-                    />
-
-                    {/* Customer Request Dialogue & Short Tags (Requirement 1) */}
-                    {currentCustomer && (
-                      <CustomerRequestBubble
-                        customer={currentCustomer}
-                        onInspectCustomer={() => {
+                  /* 2-SCREEN GAMEPLAY LOOP */
+                  shopMode === 'shop_view' ? (
+                    /* MÀN HÌNH 1: MÀN HÌNH CỬA HÀNG */
+                    <div className="space-y-3 animate-fade-in">
+                      {/* Boutique Shop Scene & Characters with Entrance/Exit Animation */}
+                      <ShopArea
+                        currentCustomer={currentCustomer}
+                        waitingQueue={waitingQueue}
+                        ownerState={ownerState}
+                        equippedDecors={equippedDecors}
+                        isShopOpen={stats.isShopOpen}
+                        ownerAvatar={ownerAvatar}
+                        customerAnimState={customerAnimState}
+                        onCustomerClick={() => {
                           playTapSound();
                           setIsCustomerModalOpen(true);
                         }}
+                        onOwnerClick={() => {
+                          playTapSound();
+                          setIsWardrobeOpen(true);
+                        }}
+                        onOpenShop={handleOpenShop}
                       />
-                    )}
 
-                    {/* Outfit Builder & Budget Tracker (Requirements 4, 5, 6) */}
-                    {currentCustomer && (
-                      <OutfitBuilder
-                        outfit={outfit}
-                        customer={currentCustomer}
-                        onRemoveItem={handleRemoveItem}
-                        onClearOutfit={handleClearOutfit}
-                        onTryOutfit={handleTryOutfit}
-                        onAutoOutfit={handleAutoOutfit}
-                        onSelectCategory={handleSelectCategoryFromOutfit}
-                      />
-                    )}
+                      {/* Customer Request Dialogue & Tags */}
+                      {currentCustomer && (
+                        <CustomerRequestBubble
+                          customer={currentCustomer}
+                          onInspectCustomer={() => {
+                            playTapSound();
+                            setIsCustomerModalOpen(true);
+                          }}
+                        />
+                      )}
 
-                    {/* Fashion Catalog Browser with Gợi ý tab (Requirements 2, 3) */}
-                    <div ref={catalogRef}>
-                      <CatalogBrowser
-                        products={products}
-                        currentCustomer={currentCustomer}
-                        outfit={outfit}
-                        playerLevel={stats.level}
-                        onToggleProduct={handleToggleProduct}
-                        onAutoOutfit={handleAutoOutfit}
-                        selectedCategory={selectedCatalogCategory}
-                        onSelectCategory={setSelectedCatalogCategory}
+                      {/* Mục tiêu hôm nay (Daily Goals Card) */}
+                      <TodayGoalsCard
+                        stats={stats}
+                        onOpenMissions={() => {
+                          playTapSound();
+                          setIsMissionsOpen(true);
+                        }}
                       />
+
+                      {/* Primary Action Button: CHỌN OUTFIT CHO [TÊN KHÁCH] */}
+                      {currentCustomer && customerAnimState === 'arrived' ? (
+                        <button
+                          onClick={() => {
+                            playTapSound();
+                            setShopMode('styling_mode');
+                          }}
+                          className="w-full h-13 rounded-2xl bg-gradient-to-r from-[#D87C9B] via-[#E91E63] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-xs font-black shadow-lg shadow-[#D87C9B]/35 flex items-center justify-center gap-2 active:scale-98 transition-all animate-soft-pulse uppercase tracking-wider cursor-pointer"
+                        >
+                          <Sparkles className="w-4 h-4 text-yellow-200 animate-spin" style={{ animationDuration: '3s' }} />
+                          <span>CHỌN OUTFIT CHO {currentCustomer.name}</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          className="w-full h-12 rounded-2xl bg-[#E0D5D0] text-[#8D6E63] text-xs font-bold shadow-xs flex items-center justify-center gap-2 cursor-not-allowed opacity-85"
+                        >
+                          <Clock className="w-4 h-4 animate-spin text-[#8D6E63]" />
+                          <span>
+                            {customerAnimState === 'entering'
+                              ? '🚶 KHÁCH ĐANG BƯỚC VÀO TIỆM...'
+                              : customerAnimState === 'exiting'
+                              ? '👋 KHÁCH ĐANG RỜI TIỆM...'
+                              : '✨ ĐANG ĐÓN KHÁCH MỚI...'}
+                          </span>
+                        </button>
+                      )}
                     </div>
-                  </>
+                  ) : (
+                    /* MÀN HÌNH 2: MÀN HÌNH CHỌN OUTFIT */
+                    <div className="space-y-3 animate-fade-in">
+                      {/* Top Header Bar & Customer Request Summary */}
+                      <div className="flex items-center justify-between bg-white/95 p-2 rounded-2xl border border-[#F4C7D9] shadow-2xs">
+                        <button
+                          onClick={() => {
+                            playTapSound();
+                            setShopMode('shop_view');
+                          }}
+                          className="flex items-center gap-1 text-[11px] font-extrabold text-[#D87C9B] hover:text-[#c96c8a] bg-[#FFF0F5] px-3 py-1.5 rounded-xl border border-[#F4C7D9] active:scale-95 transition-all cursor-pointer"
+                        >
+                          <ArrowLeft className="w-3.5 h-3.5" />
+                          <span>Quay lại cửa hàng</span>
+                        </button>
+                        <div className="text-[11px] font-black text-[#3E3431] flex items-center gap-1 pr-1">
+                          <span className="text-[#8D6E63]">Đang phục vụ:</span>
+                          <span className="text-[#D87C9B] font-extrabold">{currentCustomer?.name}</span>
+                        </div>
+                      </div>
+
+                      {/* Request Summary Card */}
+                      {currentCustomer && (
+                        <CustomerRequestBubble
+                          customer={currentCustomer}
+                          onInspectCustomer={() => {
+                            playTapSound();
+                            setIsCustomerModalOpen(true);
+                          }}
+                        />
+                      )}
+
+                      {/* Outfit Builder & Selected Slots Preview */}
+                      {currentCustomer && (
+                        <OutfitBuilder
+                          outfit={outfit}
+                          customer={currentCustomer}
+                          onRemoveItem={handleRemoveItem}
+                          onClearOutfit={handleClearOutfit}
+                          onTryOutfit={handleTryOutfit}
+                          onAutoOutfit={handleAutoOutfit}
+                          onSelectCategory={handleSelectCategoryFromOutfit}
+                        />
+                      )}
+
+                      {/* Catalog Browser Grid */}
+                      <div ref={catalogRef}>
+                        <CatalogBrowser
+                          products={products}
+                          currentCustomer={currentCustomer}
+                          outfit={outfit}
+                          playerLevel={stats.level}
+                          onToggleProduct={handleToggleProduct}
+                          onAutoOutfit={handleAutoOutfit}
+                          selectedCategory={selectedCatalogCategory}
+                          onSelectCategory={setSelectedCatalogCategory}
+                        />
+                      </div>
+
+                      {/* Action Button: CHO KHÁCH THỬ OUTFIT */}
+                      <button
+                        onClick={handleTryOutfit}
+                        className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#D87C9B] via-[#E91E63] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-xs font-black shadow-lg shadow-[#D87C9B]/35 flex items-center justify-center gap-2 active:scale-98 transition-all cursor-pointer uppercase tracking-wider"
+                      >
+                        <Sparkles className="w-4 h-4 text-yellow-200" />
+                        <span>CHO KHÁCH THỬ OUTFIT</span>
+                      </button>
+                    </div>
+                  )
                 )}
               </div>
             )}
