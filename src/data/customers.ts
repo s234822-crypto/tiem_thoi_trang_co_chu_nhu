@@ -8,6 +8,7 @@ export const fixImagePath = (url: string | undefined | null): string => {
 };
 
 export const OWNER_PORTRAIT = '/assets/images/co_chu_nhu_portrait_1791010615970.jpg';
+export const OWNER_FULLBODY = '/assets/images/co_chu_nhu_fullbody.png';
 export const SHOP_INTERIOR = '/assets/images/shop_boutique_interior_1791010626470.jpg';
 
 export const CUSTOMER_AVATARS: Record<string, string> = {
@@ -19,6 +20,25 @@ export const CUSTOMER_AVATARS: Record<string, string> = {
   traveler: '/assets/images/customer_avatar_student_1791010637680.jpg',
   fashionista: '/assets/images/customer_avatar_office_1791010648067.jpg',
   regular: '/assets/images/customer_avatar_student_1791010637680.jpg',
+};
+
+export const CUSTOMER_FULLBODY_AVATARS: Record<string, string> = {
+  student: '/assets/images/customer_student_fullbody.png',
+  office: '/assets/images/customer_office_fullbody.png',
+  vip: '/assets/images/customer_vip_fullbody.png',
+  genz: '/assets/images/customer_student_fullbody.png',
+  party_goer: '/assets/images/customer_vip_fullbody.png',
+  traveler: '/assets/images/customer_student_fullbody.png',
+  fashionista: '/assets/images/customer_office_fullbody.png',
+  regular: '/assets/images/customer_student_fullbody.png',
+};
+
+export const getCustomerFullBodyAvatar = (cust: Customer | null | undefined): string => {
+  if (!cust) return CUSTOMER_FULLBODY_AVATARS.student;
+  if (cust.isVip || cust.specialRole === 'vip') return CUSTOMER_FULLBODY_AVATARS.vip;
+  const found = CUSTOMER_FULLBODY_AVATARS[cust.type];
+  if (found) return found;
+  return CUSTOMER_FULLBODY_AVATARS.student;
 };
 
 interface CustomerProfileTemplate {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Customer, DecorItem, OwnerState } from '../types/game';
-import { OWNER_PORTRAIT, SHOP_INTERIOR, formatCustomerRequestTags, fixImagePath } from '../data/customers';
+import { OWNER_PORTRAIT, OWNER_FULLBODY, SHOP_INTERIOR, formatCustomerRequestTags, fixImagePath, getCustomerFullBodyAvatar } from '../data/customers';
 import { Sparkles, Crown, Users, Moon, Sun, Play } from 'lucide-react';
 
 interface ShopAreaProps {
@@ -49,7 +49,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[165px] sm:h-[190px] overflow-hidden rounded-2xl border border-[#F2E1CF] shadow-xs select-none shrink-0">
+    <div className="relative w-full h-[210px] sm:h-[235px] overflow-hidden rounded-3xl border-2 border-[#F2E1CF] shadow-md select-none shrink-0 bg-[#FFF7F1]">
       {/* Background image & warm overlay */}
       <img
         src={fixImagePath(SHOP_INTERIOR)}
@@ -91,7 +91,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
             }
             if (dec.id === 'decor-tulip-vase') {
               return (
-                <div key={dec.id} className="absolute bottom-3 left-20 text-xl filter drop-shadow-xs">
+                <div key={dec.id} className="absolute bottom-3 left-24 text-xl filter drop-shadow-xs">
                   🌷
                 </div>
               );
@@ -105,7 +105,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
             }
             if (dec.id === 'decor-gold-mannequin') {
               return (
-                <div key={dec.id} className="absolute bottom-2 right-20 text-2xl filter drop-shadow-xs">
+                <div key={dec.id} className="absolute bottom-2 right-24 text-2xl filter drop-shadow-xs">
                   👸
                 </div>
               );
@@ -117,7 +117,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
 
       {/* Floating Waiting Queue (Top Left) */}
       {isShopOpen && (
-        <div className="absolute top-2 left-2 z-10 flex items-center gap-1.5 bg-white/90 backdrop-blur-xs px-2 py-1 rounded-full border border-[#F2E1CF] shadow-xs">
+        <div className="absolute top-2 left-2 z-20 flex items-center gap-1.5 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-full border border-[#F2E1CF] shadow-xs">
           <Users className="w-3.5 h-3.5 text-[#D87C9B]" />
           <span className="text-[10px] font-bold text-[#6F554A]">Hàng chờ:</span>
           <div className="flex items-center -space-x-1.5">
@@ -125,7 +125,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
               waitingQueue.map((cust) => (
                 <div
                   key={cust.id}
-                  className="w-5 h-5 rounded-full border border-white overflow-hidden bg-[#F4C7D9] relative"
+                  className="w-5 h-5 rounded-full border border-white overflow-hidden bg-[#F4C7D9] relative shadow-2xs"
                   title={`${cust.name} (${cust.typeLabel})`}
                 >
                   <img
@@ -147,103 +147,123 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
       )}
 
       {/* Characters Stage Container */}
-      <div className="relative z-10 w-full h-full flex items-end justify-between px-3 pb-2 pt-6">
-        {/* Cô Chủ Như (Shop Owner) - Left Side */}
+      <div className="relative z-10 w-full h-full flex items-end justify-between px-3 sm:px-5 pb-2 pt-8">
+        {/* Cô Chủ Như (Shop Owner) - Full Body Character */}
         <div
           onClick={onOwnerClick}
-          className="flex flex-col items-center cursor-pointer group active:scale-95 transition-transform shrink-0"
+          className="relative flex flex-col items-center cursor-pointer group shrink-0 h-[145px] sm:h-[165px] justify-end"
+          title="Bấm để đổi trang phục Cô Chủ Như"
         >
           {/* Owner Speech Bubble */}
-          <div className="mb-1 bg-white/95 text-[#6F554A] text-[9.5px] font-semibold px-2 py-0.5 rounded-lg border border-[#F4C7D9] shadow-xs max-w-[140px] text-center leading-snug animate-gentle-bounce">
+          <div className="absolute -top-7 sm:-top-8 z-20 bg-white/95 text-[#6F554A] text-[9.5px] font-bold px-2 py-0.5 rounded-xl border border-[#F4C7D9] shadow-sm max-w-[130px] sm:max-w-[150px] text-center leading-snug animate-gentle-bounce">
             {getOwnerDialogue()}
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white border-r border-b border-[#F4C7D9] rotate-45" />
           </div>
 
-          <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#D87C9B] bg-[#FFF8F4] overflow-hidden shadow-md group-hover:border-[#F4C7D9] transition-colors">
+          {/* Full Body Standing Image */}
+          <div className="relative h-full w-auto flex items-end justify-center">
             <img
-              src={fixImagePath(ownerAvatar)}
+              src={fixImagePath(OWNER_FULLBODY)}
               alt="Cô Chủ Như"
-              className="w-full h-full object-cover object-top"
+              className="h-[125px] sm:h-[145px] w-auto object-contain object-bottom filter drop-shadow-md mix-blend-multiply transition-transform group-hover:scale-105"
               referrerPolicy="no-referrer"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = fixImagePath(ownerAvatar);
+              }}
             />
-            <div className="absolute bottom-0 inset-x-0 bg-[#D87C9B]/90 text-white text-[8px] font-bold text-center py-0.5 leading-none">
-              Cô Chủ Như
-            </div>
+            {/* Soft Shadow Base */}
+            <div className="absolute bottom-0 w-12 h-2 bg-black/15 rounded-full blur-[2px] pointer-events-none" />
+          </div>
+
+          {/* Name Badge */}
+          <div className="z-10 bg-[#D87C9B] text-white text-[8.5px] font-black px-2 py-0.5 rounded-full shadow-xs border border-white/80 -mt-1 flex items-center gap-0.5">
+            <span>🌸 Cô Chủ Như</span>
           </div>
         </div>
 
-        {/* Right Side: Active Customer Avatar & Request Bubble (Symmetrical to Owner) */}
+        {/* Right Side: Active Customer Full Body Character */}
         {isShopOpen ? (
           currentCustomer ? (
             <div
               onClick={onCustomerClick}
-              className={`flex flex-col items-center cursor-pointer group shrink-0 ${
+              className={`relative flex flex-col items-center cursor-pointer group shrink-0 h-[145px] sm:h-[165px] justify-end ${
                 customerAnimState === 'entering'
                   ? 'animate-customer-walk-in'
                   : customerAnimState === 'exiting'
                   ? 'animate-customer-walk-out'
                   : 'animate-float-chibi active:scale-95 transition-transform'
               }`}
+              title={`Bấm để xem chi tiết ${currentCustomer.name}`}
             >
               {/* Customer Request Speech Bubble Above Head */}
-              <div className="mb-1 bg-white/95 text-[#6F554A] text-[9.5px] font-semibold px-2 py-1 rounded-xl border border-[#F4C7D9] shadow-xs max-w-[165px] text-center leading-snug animate-gentle-bounce flex flex-col items-center gap-0.5">
-                <div className="text-[9px] font-black text-[#D87C9B] w-full break-words">
-                  💬 "{currentCustomer.dialogue}"
+              {customerAnimState === 'arrived' && (
+                <div className="absolute -top-12 sm:-top-13 z-20 bg-white/95 text-[#6F554A] text-[9.5px] font-semibold px-2 py-1 rounded-xl border border-[#F4C7D9] shadow-sm max-w-[160px] text-center leading-snug animate-gentle-bounce flex flex-col items-center gap-0.5">
+                  <div className="text-[9px] font-black text-[#D87C9B] w-full truncate">
+                    💬 "{currentCustomer.dialogue}"
+                  </div>
+                  <div className="flex items-center justify-center gap-1 text-[8px] font-extrabold text-[#3E3431]">
+                    <span className="text-[#D87C9B] bg-[#FFF0F5] px-1.5 py-0.2 rounded-md border border-[#F4C7D9]">
+                      {formatCustomerRequestTags(currentCustomer).styleTag}
+                    </span>
+                    <span className="bg-[#3E3431] text-white px-1.5 py-0.2 rounded-md tabular-nums">
+                      {formatCustomerRequestTags(currentCustomer).budgetTag}
+                    </span>
+                  </div>
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white border-r border-b border-[#F4C7D9] rotate-45" />
                 </div>
-                <div className="flex items-center justify-center gap-1 text-[8.5px] font-extrabold text-[#3E3431] flex-wrap">
-                  <span className="text-[#D87C9B] bg-[#FFF0F5] px-1.5 py-0.2 rounded-md border border-[#F4C7D9]">
-                    {formatCustomerRequestTags(currentCustomer).styleTag}
-                  </span>
-                  <span className="bg-[#3E3431] text-white px-1.5 py-0.2 rounded-md tabular-nums">
-                    {formatCustomerRequestTags(currentCustomer).budgetTag}
-                  </span>
-                </div>
-              </div>
+              )}
 
-              {/* Customer Avatar Circle (Matching Owner Icon Layout) */}
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#F4C7D9] bg-[#FFF8F4] overflow-hidden shadow-md group-hover:border-[#D87C9B] transition-colors">
+              {/* Customer Full Body Standing Image */}
+              <div className="relative h-full w-auto flex items-end justify-center">
                 <img
-                  src={fixImagePath(currentCustomer.avatar)}
+                  src={getCustomerFullBodyAvatar(currentCustomer)}
                   alt={currentCustomer.name}
-                  className="w-full h-full object-cover object-top"
+                  className="h-[125px] sm:h-[145px] w-auto object-contain object-bottom filter drop-shadow-md mix-blend-multiply transition-transform group-hover:scale-105"
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = fixImagePath(currentCustomer.avatar);
+                  }}
                 />
+                {/* Soft Shadow Base */}
+                <div className="absolute bottom-0 w-12 h-2 bg-black/15 rounded-full blur-[2px] pointer-events-none" />
+
+                {/* Role Icon Badge */}
                 {(currentCustomer.isVip || currentCustomer.specialRole === 'vip') && (
-                  <div className="absolute top-0 right-0 w-4 h-4 bg-[#D9A441] text-white rounded-full flex items-center justify-center text-[9px] shadow-xs z-10" title="Khách VIP">
+                  <div className="absolute top-1 right-0 w-5 h-5 bg-[#D9A441] text-white rounded-full flex items-center justify-center text-[10px] shadow-sm z-10 animate-bounce" title="Khách VIP">
                     👑
                   </div>
                 )}
                 {currentCustomer.specialRole === 'influencer' && (
-                  <div className="absolute top-0 right-0 w-4 h-4 bg-[#8E24AA] text-white rounded-full flex items-center justify-center text-[9px] shadow-xs z-10" title="Influencer">
+                  <div className="absolute top-1 right-0 w-5 h-5 bg-[#8E24AA] text-white rounded-full flex items-center justify-center text-[10px] shadow-sm z-10 animate-pulse" title="Influencer">
                     📸
                   </div>
                 )}
                 {currentCustomer.specialRole === 'reviewer' && (
-                  <div className="absolute top-0 right-0 w-4 h-4 bg-[#1E88E5] text-white rounded-full flex items-center justify-center text-[9px] shadow-xs z-10" title="Reviewer">
+                  <div className="absolute top-1 right-0 w-5 h-5 bg-[#1E88E5] text-white rounded-full flex items-center justify-center text-[10px] shadow-sm z-10 animate-pulse" title="Reviewer">
                     ⭐
                   </div>
                 )}
-                <div className="absolute bottom-0 inset-x-0 bg-[#3E3431]/90 text-white text-[8px] font-bold text-center py-0.5 leading-none truncate px-1">
-                  {currentCustomer.name}
-                </div>
+              </div>
+
+              {/* Customer Name Tag Pill */}
+              <div className="z-10 bg-[#3E3431]/90 text-white text-[8.5px] font-bold px-2 py-0.5 rounded-full shadow-xs border border-white/40 -mt-1 max-w-[120px] truncate">
+                {currentCustomer.name}
               </div>
             </div>
           ) : (
-            /* Waiting Customer Placeholder Symmetrical Avatar */
-            <div className="flex flex-col items-center shrink-0 animate-pulse">
-              <div className="mb-1 bg-white/90 text-[#8D6E63] text-[9.5px] font-medium px-2 py-0.5 rounded-lg border border-dashed border-[#F4C7D9] shadow-xs max-w-[145px] text-center leading-snug">
-                Đang đón khách mới... ✨
+            /* Door Entrance Spot when waiting for customer */
+            <div className="flex flex-col items-center justify-end shrink-0 h-[145px] sm:h-[165px] animate-pulse">
+              <div className="mb-1 bg-white/90 text-[#8D6E63] text-[9.5px] font-bold px-2 py-1 rounded-xl border border-dashed border-[#F4C7D9] shadow-xs text-center">
+                🚪 Cửa đón khách mới...
               </div>
-              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-dashed border-[#F4C7D9] bg-white/60 flex items-center justify-center text-2xl shadow-xs">
-                🚪
-                <div className="absolute bottom-0 inset-x-0 bg-[#8D6E63]/70 text-white text-[8px] font-bold text-center py-0.5 leading-none">
-                  Cửa Vào Tiệm
-                </div>
+              <div className="text-4xl opacity-80 filter drop-shadow-sm pb-2">
+                🛍️
               </div>
             </div>
           )
         ) : (
           /* Shop Closed Call to Action */
-          <div className="flex flex-col items-center justify-center p-2.5 bg-white/95 rounded-2xl border-2 border-[#D87C9B] text-center shadow-lg animate-soft-pulse max-w-[150px] shrink-0">
+          <div className="flex flex-col items-center justify-center p-3 bg-white/95 rounded-2xl border-2 border-[#D87C9B] text-center shadow-lg animate-soft-pulse max-w-[150px] shrink-0 mb-2">
             <div className="flex items-center gap-1 text-[10.5px] font-black text-[#6F554A] mb-0.5">
               <Moon className="w-3.5 h-3.5 text-[#D9A441]" />
               <span>Tiệm Đang Đóng Cửa</span>
@@ -254,7 +274,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
             {onOpenShop && (
               <button
                 onClick={onOpenShop}
-                className="w-full h-7 rounded-xl bg-gradient-to-r from-[#D87C9B] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-[10px] font-extrabold shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1"
+                className="w-full h-7 rounded-xl bg-gradient-to-r from-[#D87C9B] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-[10px] font-extrabold shadow-xs active:scale-95 transition-all flex items-center justify-center gap-1 cursor-pointer"
               >
                 <Sun className="w-3 h-3" />
                 <span>Mở Cửa Ngay</span>
@@ -266,5 +286,6 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
     </div>
   );
 };
+
 
 
