@@ -165,14 +165,14 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
             <img
               src={fixImagePath(OWNER_FULLBODY)}
               alt="Cô Chủ Như"
-              className="h-[125px] sm:h-[145px] w-auto object-contain object-bottom filter drop-shadow-md mix-blend-multiply transition-transform group-hover:scale-105"
+              className="h-[130px] sm:h-[150px] w-auto object-contain object-bottom filter drop-shadow-md transition-transform group-hover:scale-105"
               referrerPolicy="no-referrer"
               onError={(e) => {
                 (e.currentTarget as HTMLImageElement).src = fixImagePath(ownerAvatar);
               }}
             />
-            {/* Soft Shadow Base */}
-            <div className="absolute bottom-0 w-12 h-2 bg-black/15 rounded-full blur-[2px] pointer-events-none" />
+            {/* Soft Floor Shadow Base */}
+            <div className="absolute -bottom-1 w-14 h-3 bg-black/25 rounded-full blur-[3px] pointer-events-none z-0" />
           </div>
 
           {/* Name Badge */}
@@ -198,7 +198,7 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
               {/* Customer Request Speech Bubble Above Head */}
               {customerAnimState === 'arrived' && (
                 <div className="absolute -top-12 sm:-top-13 z-20 bg-white/95 text-[#6F554A] text-[9.5px] font-semibold px-2 py-1 rounded-xl border border-[#F4C7D9] shadow-sm max-w-[160px] text-center leading-snug animate-gentle-bounce flex flex-col items-center gap-0.5">
-                  <div className="text-[9px] font-black text-[#D87C9B] w-full truncate">
+                  <div className="text-[9px] font-black text-[#D87C9B] w-full text-wrap break-words">
                     💬 "{currentCustomer.dialogue}"
                   </div>
                   <div className="flex items-center justify-center gap-1 text-[8px] font-extrabold text-[#3E3431]">
@@ -218,14 +218,14 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
                 <img
                   src={getCustomerFullBodyAvatar(currentCustomer)}
                   alt={currentCustomer.name}
-                  className="h-[125px] sm:h-[145px] w-auto object-contain object-bottom filter drop-shadow-md mix-blend-multiply transition-transform group-hover:scale-105"
+                  className="h-[130px] sm:h-[150px] w-auto object-contain object-bottom filter drop-shadow-md transition-transform group-hover:scale-105"
                   referrerPolicy="no-referrer"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src = fixImagePath(currentCustomer.avatar);
                   }}
                 />
-                {/* Soft Shadow Base */}
-                <div className="absolute bottom-0 w-12 h-2 bg-black/15 rounded-full blur-[2px] pointer-events-none" />
+                {/* Soft Floor Shadow Base */}
+                <div className="absolute -bottom-1 w-14 h-3 bg-black/25 rounded-full blur-[3px] pointer-events-none z-0" />
 
                 {/* Role Icon Badge */}
                 {(currentCustomer.isVip || currentCustomer.specialRole === 'vip') && (
