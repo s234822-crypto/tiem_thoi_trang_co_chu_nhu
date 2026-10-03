@@ -48,6 +48,26 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
     }
   };
 
+  const getCustomerShortGreeting = (cust: Customer) => {
+    if (cust.isVip || cust.specialRole === 'vip') {
+      return 'Chào Như! Phối giúp mình set đồ sang xịn mịn nha~ 👑';
+    }
+    if (cust.specialRole === 'influencer') {
+      return 'Hi Như! Mình cần set đồ đẹp để quay video OOTD nè! 📸';
+    }
+    if (cust.specialRole === 'reviewer') {
+      return 'Chào Như! Mình ghé tiệm xem gợi ý outfit hôm nay nhé! ⭐';
+    }
+    switch (cust.type) {
+      case 'student':
+        return 'Chào Như! Chọn giúp mình set đồ xinh xắn nha~ ✨';
+      case 'office':
+        return 'Chào Như! Mình muốn nhờ bạn tư vấn outfit thanh lịch nhé! 💼';
+      default:
+        return 'Chào Như, mình muốn nhờ bạn phối đồ nhé! 🌸';
+    }
+  };
+
   return (
     <div className="relative w-full h-[210px] sm:h-[235px] overflow-hidden rounded-3xl border-2 border-[#F2E1CF] shadow-md select-none shrink-0 bg-[#FFF7F1]">
       {/* Background image & warm overlay */}
@@ -195,20 +215,10 @@ export const ShopArea: React.FC<ShopAreaProps> = ({
               }`}
               title={`Bấm để xem chi tiết ${currentCustomer.name}`}
             >
-              {/* Customer Request Speech Bubble Above Head */}
+              {/* Customer Short Greeting Speech Bubble Above Head */}
               {customerAnimState === 'arrived' && (
-                <div className="absolute -top-12 sm:-top-13 z-20 bg-white/95 text-[#6F554A] text-[9.5px] font-semibold px-2 py-1 rounded-xl border border-[#F4C7D9] shadow-sm max-w-[160px] text-center leading-snug animate-gentle-bounce flex flex-col items-center gap-0.5">
-                  <div className="text-[9px] font-black text-[#D87C9B] w-full text-wrap break-words">
-                    💬 "{currentCustomer.dialogue}"
-                  </div>
-                  <div className="flex items-center justify-center gap-1 text-[8px] font-extrabold text-[#3E3431]">
-                    <span className="text-[#D87C9B] bg-[#FFF0F5] px-1.5 py-0.2 rounded-md border border-[#F4C7D9]">
-                      {formatCustomerRequestTags(currentCustomer).styleTag}
-                    </span>
-                    <span className="bg-[#3E3431] text-white px-1.5 py-0.2 rounded-md tabular-nums">
-                      {formatCustomerRequestTags(currentCustomer).budgetTag}
-                    </span>
-                  </div>
+                <div className="absolute -top-7 sm:-top-8 z-20 bg-white/95 text-[#6F554A] text-[9.5px] font-bold px-2 py-0.5 rounded-xl border border-[#F4C7D9] shadow-sm max-w-[130px] sm:max-w-[150px] text-center leading-snug animate-gentle-bounce">
+                  <span>{getCustomerShortGreeting(currentCustomer)}</span>
                   <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white border-r border-b border-[#F4C7D9] rotate-45" />
                 </div>
               )}
