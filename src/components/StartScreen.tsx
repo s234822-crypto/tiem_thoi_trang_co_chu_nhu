@@ -82,7 +82,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
         </button>
 
         <div className="text-[10px] text-[#8D6E63] font-semibold tracking-wider pt-1">
-          Phiên bản 1.0.0 · AI Studio Build
+          Phiên bản 1.0.0 · Design by Ho Dai Vi
         </div>
       </div>
     </div>
