@@ -305,7 +305,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     description: 'Họa tiết ren hoa li ti phủ ngoài voan mỏng trắng trong ngần.',
     accentColor: '#FFFFFF', visualEmoji: '🌸' },
 
-  { id: 'caro-plaid-skirt', name: 'Chân Váy Caro Tím Vintage', category: 'skirts', subCategory: 'caro_skirt',
+  { id: 'caro-plaid-skirt', image: '/assets/outfits/skirts/plaid-skirt.png', name: 'Chân Váy Caro Tím Vintage', category: 'skirts', subCategory: 'caro_skirt',
     styleTags: ['vintage', 'preppy', 'korean'], colors: ['purple', 'pink'], occasions: ['school', 'coffee'],
     cost: 90000, price: 195000, stock: 5, maxStock: 10, unlockLevel: 1, rarity: 'common',
     description: 'Kẻ caro hoài cổ trẻ trung duyên dáng phối cùng sơ mi cực xinh.',
