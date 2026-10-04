@@ -1,5 +1,7 @@
 import React from 'react';
 import { Bug, Plus, RefreshCw, UserCheck, Crown, Sparkles, Trash2, Target, Trophy, Sun } from 'lucide-react';
+import { GAME_VERSION, SAVE_SCHEMA_VERSION, BUILD_ID } from '../constants/version';
+import { INITIAL_PRODUCTS } from '../data/products';
 
 interface DebugPanelProps {
   onClose: () => void;
@@ -42,6 +44,30 @@ export const DebugPanel: React.FC<DebugPanelProps> = ({
           >
             ✕
           </button>
+        </div>
+
+        {/* Build & Version Info Box */}
+        <div className="bg-white/5 rounded-xl p-2.5 mb-3 border border-white/10 text-[11px] space-y-1 text-white/80 font-mono">
+          <div className="flex justify-between">
+            <span>Version:</span>
+            <span className="font-bold text-emerald-400">v{GAME_VERSION}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Save Schema:</span>
+            <span className="font-bold text-amber-400">v{SAVE_SCHEMA_VERSION}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Build ID:</span>
+            <span className="font-bold text-blue-300">{BUILD_ID}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Domain:</span>
+            <span className="font-bold text-purple-300 truncate max-w-[120px]">{window.location.hostname}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Products Count:</span>
+            <span className="font-bold text-pink-300">{INITIAL_PRODUCTS.length} items</span>
+          </div>
         </div>
 
         <div className="space-y-2 text-xs">
@@ -142,3 +168,5 @@ export const DebugPanel: React.FC<DebugPanelProps> = ({
     </div>
   );
 };
+
+export default DebugPanel;

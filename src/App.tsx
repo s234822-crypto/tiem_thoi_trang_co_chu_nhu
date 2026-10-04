@@ -77,10 +77,10 @@ import { TodayGoalsCard } from './components/TodayGoalsCard';
 import { ActiveTab, BottomNav } from './components/BottomNav';
 import { Smartphone, CheckCircle2, AlertTriangle, Info, XCircle, Zap, Sun, Package, Wrench, Palette, Shirt, Sparkles, ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 
-import { GAME_VERSION } from './constants/version';
+import { GAME_VERSION, SAVE_SCHEMA_VERSION, BUILD_ID } from './constants/version';
 
-const CURRENT_SAVE_VERSION = 19;
-const SAVE_KEY_V19 = 'fashionShopSave_v19';
+const CURRENT_SAVE_VERSION = SAVE_SCHEMA_VERSION;
+const SAVE_KEY_CURRENT = `fashionShopSave_v${SAVE_SCHEMA_VERSION}`;
 
 const DEFAULT_PERMANENT_STATS: PermanentStats = {
   totalCustomersServed: 0,
@@ -101,34 +101,23 @@ export default function App() {
   const [gameState, setGameState] = useState<'START' | 'PLAYING'>('START');
   const [activeTab, setActiveTab] = useState<ActiveTab>('shop');
 
-  // Load Saved State with Version Migration (v12 <- v11 <- v10 <- v9 <- v8 <- v7 <- v6 <- v5 <- v4 <- v3 <- v2)
+  // Load Saved State with Dynamic Schema Migration
   const loadSavedData = () => {
     try {
-      const saved =
-        localStorage.getItem(SAVE_KEY_V19) ||
-        localStorage.getItem('fashionShopSave_v18') ||
-        localStorage.getItem('fashionShopSave_v17') ||
-        localStorage.getItem('fashionShopSave_v16') ||
-        localStorage.getItem('fashionShopSave_v15') ||
-        localStorage.getItem('fashionShopSave_v14') ||
-        localStorage.getItem('fashionShopSave_v13') ||
-        localStorage.getItem('fashionShopSave_v12') ||
-        localStorage.getItem('fashionShopSave_v11') ||
-        localStorage.getItem('fashionShopSave_v10') ||
-        localStorage.getItem('fashionShopSave_v9') ||
-        localStorage.getItem('fashionShopSave_v8') ||
-        localStorage.getItem('fashionShopSave_v7') ||
-        localStorage.getItem('fashionShopSave_v6') ||
-        localStorage.getItem('fashionShopSave_v5') ||
-        localStorage.getItem('fashionShopSave_v4') ||
-        localStorage.getItem('fashionShopSave_v3') ||
-        localStorage.getItem('fashionShopSave_v2');
-      if (saved) {
-        const sanitized = saved
-          .replace(/\/?src\/assets\/images\//g, '/assets/images/')
-          .replace(/customer_avatar_office_1791010620864\.jpg/g, 'customer_avatar_office_1791010648067.jpg')
-          .replace(/customer_avatar_student_1791010620138\.jpg/g, 'customer_avatar_student_1791010637680.jpg');
-        return JSON.parse(sanitized);
+      const keys = [
+        `fashionShopSave_v${SAVE_SCHEMA_VERSION}`,
+        ...Array.from({ length: SAVE_SCHEMA_VERSION - 1 }, (_, i) => `fashionShopSave_v${SAVE_SCHEMA_VERSION - 1 - i}`),
+      ];
+
+      for (const key of keys) {
+        const saved = localStorage.getItem(key);
+        if (saved) {
+          const sanitized = saved
+            .replace(/\/?src\/assets\/images\//g, '/assets/images/')
+            .replace(/customer_avatar_office_1791010620864\.jpg/g, 'customer_avatar_office_1791010648067.jpg')
+            .replace(/customer_avatar_student_1791010620138\.jpg/g, 'customer_avatar_student_1791010637680.jpg');
+          return JSON.parse(sanitized);
+        }
       }
     } catch {
       // ignore
@@ -207,18 +196,40 @@ export default function App() {
     return INITIAL_PRODUCTS;
   });
 
-  // Upgrades Database
+  // Upgrades Database — Master sync with INITIAL_UPGRADES
   const [upgrades, setUpgrades] = useState<ShopUpgradeItem[]>(() => {
     if (parsedData?.upgrades && Array.isArray(parsedData.upgrades)) {
-      return parsedData.upgrades;
+      const savedMap = new Map(parsedData.upgrades.map((u: any) => [u.id, u]));
+      return INITIAL_UPGRADES.map((masterItem) => {
+        const saved = savedMap.get(masterItem.id);
+        if (saved) {
+          return {
+            ...masterItem,
+            level: typeof saved.level === 'number' ? saved.level : masterItem.level,
+            unlocked: typeof saved.unlocked === 'boolean' ? saved.unlocked : masterItem.unlocked,
+          };
+        }
+        return masterItem;
+      });
     }
     return INITIAL_UPGRADES;
   });
 
-  // Decor Database
+  // Decor Database — Master sync with INITIAL_DECORS
   const [decors, setDecors] = useState<DecorItem[]>(() => {
     if (parsedData?.decors && Array.isArray(parsedData.decors)) {
-      return parsedData.decors;
+      const savedMap = new Map(parsedData.decors.map((d: any) => [d.id, d]));
+      return INITIAL_DECORS.map((masterItem) => {
+        const saved = savedMap.get(masterItem.id);
+        if (saved) {
+          return {
+            ...masterItem,
+            purchased: typeof saved.purchased === 'boolean' ? saved.purchased : masterItem.purchased,
+            equipped: typeof saved.equipped === 'boolean' ? saved.equipped : masterItem.equipped,
+          };
+        }
+        return masterItem;
+      });
     }
     return INITIAL_DECORS;
   });
@@ -367,7 +378,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(
-        SAVE_KEY_V19,
+        SAVE_KEY_CURRENT,
         JSON.stringify({
           version: CURRENT_SAVE_VERSION,
           gameVersion: GAME_VERSION,
@@ -1640,8 +1651,8 @@ export default function App() {
   };
 
   const handleConfirmReset = () => {
-    localStorage.removeItem(SAVE_KEY_V19);
-    for (let i = 1; i < 20; i++) {
+    localStorage.removeItem(SAVE_KEY_CURRENT);
+    for (let i = 1; i <= SAVE_SCHEMA_VERSION; i++) {
       localStorage.removeItem(`fashionShopSave_v${i}`);
     }
     localStorage.removeItem('fashionShop_tutorialCompleted');
