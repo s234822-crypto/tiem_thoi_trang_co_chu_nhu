@@ -156,16 +156,16 @@ export function getItemBadgeInfo(
   let badgeEmoji: string | undefined;
 
   if (isRecommended && isStyleMatch && isBudgetMatch) {
-    badgeLabel = '✨ Gợi ý';
+    badgeLabel = 'Gợi ý';
     badgeEmoji = '✨';
   } else if (isStyleMatch) {
-    badgeLabel = '💗 Hợp gu';
+    badgeLabel = 'Hợp gu';
     badgeEmoji = '💗';
   } else if (isBudgetMatch) {
-    badgeLabel = '💰 Hợp ngân sách';
+    badgeLabel = 'Hợp ngân sách';
     badgeEmoji = '💰';
   } else if (isRecommended) {
-    badgeLabel = '✨ Gợi ý';
+    badgeLabel = 'Gợi ý';
     badgeEmoji = '✨';
   }
 
@@ -343,7 +343,7 @@ export function generateAutoOutfit(
   const accessories = inStockProducts.filter((p) => p.category === 'accessories' || p.category === 'jackets').sort((a, b) => rankProduct(b) - rankProduct(a));
 
   const bestDress = dresses.find((d) => d.price <= budget * 0.85);
-  
+
   let bestTop: Product | undefined;
   let bestBottom: Product | undefined;
   let bestBottomIsSkirt = false;

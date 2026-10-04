@@ -2,6 +2,7 @@ import React from 'react';
 import { OWNER_PORTRAIT_DEFAULT } from '../data/skins';
 import { fixImagePath } from '../data/customers';
 import { Sparkles, Play, BookOpen, Star, Heart } from 'lucide-react';
+import { GAME_VERSION } from './ChangelogModal';
 
 interface StartScreenProps {
   onStartGame: () => void;
@@ -97,7 +98,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({
         </div>
 
         <div className="text-[10px] text-[#8D6E63] font-bold tracking-wider pt-1 flex items-center justify-center gap-1">
-          <span>Phiên bản v1.0.1</span>
+          <span>Phiên bản {GAME_VERSION}</span>
           <span>·</span>
           <span>Design by Ho Dai Vi</span>
         </div>
