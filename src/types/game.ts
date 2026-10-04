@@ -21,8 +21,8 @@ export type SubCategory =
   | 'blazer' | 'denim_jacket' | 'leather_jacket' | 'bomber_jacket' | 'varsity_jacket' | 'trench_coat' | 'wool_coat' | 'fur_jacket' | 'outer_cardigan' | 'tweed_jacket' | 'cropped_jacket' | 'oversized_jacket' | 'windbreaker' | 'varsity_coat' | 'sporty_jacket'
   // SHOES (18)
   | 'white_sneakers' | 'chunky_sneakers' | 'platform_sneakers' | 'pointed_heels' | 'strap_heels' | 'kitten_heels' | 'sandals' | 'platform_sandals' | 'ankle_boots' | 'knee_high_boots' | 'chelsea_boots' | 'loafers' | 'mary_jane' | 'ballet_flats' | 'mules' | 'oxford_shoes' | 'sport_shoes' | 'luxury_shoes'
-  // BAGS (17)
-  | 'tote_bag' | 'mini_bag' | 'shoulder_bag' | 'crossbody_bag' | 'baguette_bag' | 'bucket_bag' | 'office_bag' | 'clutch_bag' | 'box_bag' | 'leather_bag' | 'canvas_bag' | 'pastel_bag' | 'vintage_bag' | 'y2k_bag' | 'luxury_bag' | 'bow_bag' | 'pearl_bag'
+  // BAGS (19)
+  | 'tote_bag' | 'mini_bag' | 'shoulder_bag' | 'crossbody_bag' | 'baguette_bag' | 'bucket_bag' | 'office_bag' | 'clutch_bag' | 'box_bag' | 'saddle_bag' | 'canvas_bag' | 'pastel_bag' | 'vintage_bag' | 'y2k_bag' | 'luxury_bag' | 'bow_bag' | 'pearl_bag' | 'heart_bag' | 'chain_shoulder_bag'
   // ACCESSORIES (20)
   | 'sunglasses' | 'round_glasses' | 'baseball_cap' | 'beret' | 'bucket_hat' | 'straw_hat' | 'earrings' | 'necklace' | 'bracelet' | 'ring' | 'belt' | 'hair_clip' | 'hair_bow' | 'scrunchie' | 'headband' | 'scarf' | 'watch' | 'brooch' | 'pearl_necklace' | 'high_socks';
 

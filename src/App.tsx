@@ -182,35 +182,27 @@ export default function App() {
     };
   });
 
-  // Products Database — Whitelist master sync with INITIAL_PRODUCTS
+  // Products Database — Master sync with INITIAL_PRODUCTS
   const [products, setProducts] = useState<Product[]>(() => {
     if (parsedData?.products && Array.isArray(parsedData.products)) {
-      const initialMap = new Map(INITIAL_PRODUCTS.map((p) => [p.id, p]));
-      const mergedProducts: Product[] = [];
-      const processedIds = new Set<string>();
+      const savedStockMap = new Map<string, { stock?: number; maxStock?: number }>();
+      for (const p of parsedData.products) {
+        if (p && p.id) {
+          savedStockMap.set(p.id, { stock: p.stock, maxStock: p.maxStock });
+        }
+      }
 
-      // Keep user's stock and maxStock for whitelisted items, but strictly update all attributes from master INITIAL_PRODUCTS
-      for (const savedProd of parsedData.products) {
-        if (!savedProd || !savedProd.id) continue;
-        const masterProd = initialMap.get(savedProd.id);
-        if (masterProd && !processedIds.has(masterProd.id)) {
-          processedIds.add(masterProd.id);
-          mergedProducts.push({
+      return INITIAL_PRODUCTS.map((masterProd) => {
+        const saved = savedStockMap.get(masterProd.id);
+        if (saved) {
+          return {
             ...masterProd,
-            stock: typeof savedProd.stock === 'number' ? savedProd.stock : masterProd.stock,
-            maxStock: Math.max(savedProd.maxStock || 10, masterProd.maxStock || 10),
-          });
+            stock: typeof saved.stock === 'number' ? saved.stock : masterProd.stock,
+            maxStock: Math.max(saved.maxStock || 10, masterProd.maxStock || 10),
+          };
         }
-      }
-
-      // Add any whitelisted products missing from saved file
-      for (const masterProd of INITIAL_PRODUCTS) {
-        if (!processedIds.has(masterProd.id)) {
-          mergedProducts.push(masterProd);
-        }
-      }
-
-      return mergedProducts;
+        return masterProd;
+      });
     }
     return INITIAL_PRODUCTS;
   });

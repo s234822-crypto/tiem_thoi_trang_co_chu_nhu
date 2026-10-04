@@ -1319,7 +1319,7 @@ export const SUBCATEGORY_LABELS: Record<SubCategory, string> = {
   oxford_shoes: 'Oxford',
   sport_shoes: 'Giày thể thao',
   luxury_shoes: 'Giày luxury',
-  // BAGS (17)
+  // BAGS (19)
   tote_bag: 'Túi tote',
   mini_bag: 'Túi mini',
   shoulder_bag: 'Túi đeo vai',
@@ -1329,7 +1329,7 @@ export const SUBCATEGORY_LABELS: Record<SubCategory, string> = {
   office_bag: 'Túi công sở',
   clutch_bag: 'Túi clutch',
   box_bag: 'Túi hộp',
-  leather_bag: 'Túi da',
+  saddle_bag: 'Túi saddle',
   canvas_bag: 'Túi canvas',
   pastel_bag: 'Túi pastel',
   vintage_bag: 'Túi vintage',
@@ -1337,6 +1337,8 @@ export const SUBCATEGORY_LABELS: Record<SubCategory, string> = {
   luxury_bag: 'Túi luxury',
   bow_bag: 'Túi đính nơ',
   pearl_bag: 'Túi đính ngọc trai',
+  heart_bag: 'Túi trái tim',
+  chain_shoulder_bag: 'Túi dây xích',
   // ACCESSORIES (20)
   sunglasses: 'Kính râm',
   round_glasses: 'Kính gọng tròn',
