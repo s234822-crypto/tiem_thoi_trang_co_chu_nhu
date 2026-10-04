@@ -66,7 +66,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['pink', 'white', 'cream', 'blue'],
     occasions: ['school', 'coffee', 'picnic'],
     budgetRange: [2000000, 4000000],
-    basePatience: 35,
+    basePatience: 180,
     tipMultiplier: 1.0,
     specialTrait: 'Thích đồ trẻ trung, năng động, chụp ảnh check-in sống ảo.',
   },
@@ -79,7 +79,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['black', 'white', 'beige', 'cream', 'brown'],
     occasions: ['work', 'formal', 'coffee'],
     budgetRange: [4000000, 7000000],
-    basePatience: 32,
+    basePatience: 180,
     tipMultiplier: 1.15,
     specialTrait: 'Yêu cầu form dáng chuẩn, lịch sự, chất vải đứng form không nhăn.',
   },
@@ -92,7 +92,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['black', 'pink', 'gray', 'purple'],
     occasions: ['shopping', 'coffee', 'party'],
     budgetRange: [3500000, 6500000],
-    basePatience: 30,
+    basePatience: 180,
     tipMultiplier: 1.1,
     specialTrait: 'Bắt trend TikTok cực nhanh, thích phụ kiện ấn tượng và dáng croptop.',
   },
@@ -105,7 +105,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['red', 'black', 'white', 'pink'],
     occasions: ['party', 'formal', 'date'],
     budgetRange: [7000000, 12000000],
-    basePatience: 38,
+    basePatience: 180,
     tipMultiplier: 1.3,
     specialTrait: 'Cần sự nổi bật và tỏa sáng dưới ánh đèn sân khấu buổi tối.',
   },
@@ -118,7 +118,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['yellow', 'green', 'white', 'pink'],
     occasions: ['travel', 'picnic', 'coffee'],
     budgetRange: [2200000, 4200000],
-    basePatience: 34,
+    basePatience: 180,
     tipMultiplier: 1.1,
     specialTrait: 'Thích outfit thoải mái, chụp hình ngoài trời lên màu tươi tắn.',
   },
@@ -131,7 +131,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['beige', 'black', 'white', 'brown'],
     occasions: ['coffee', 'shopping', 'date'],
     budgetRange: [6000000, 10000000],
-    basePatience: 28,
+    basePatience: 180,
     tipMultiplier: 1.25,
     specialTrait: 'Rất khắt khe về phối màu hài hòa và phụ kiện ton-sur-ton.',
   },
@@ -144,7 +144,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['pink', 'cream', 'beige', 'white'],
     occasions: ['coffee', 'date', 'shopping'],
     budgetRange: [2500000, 4500000],
-    basePatience: 42,
+    basePatience: 180,
     tipMultiplier: 1.2,
     specialTrait: 'Tin tưởng mắt thẩm mỹ của Cô Chủ Như, dễ thương và hay để lại tip!',
   },
@@ -157,7 +157,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredColors: ['black', 'red', 'white', 'pink'],
     occasions: ['party', 'formal', 'shopping'],
     budgetRange: [10000000, 20000000],
-    basePatience: 40,
+    basePatience: 180,
     tipMultiplier: 1.8,
     isVip: true,
     specialTrait: 'Khách VIP siêu chịu chi! Nếu phối đẹp 5 sao sẽ tăng danh tiếng cho tiệm!',
@@ -348,11 +348,8 @@ export function generateRandomCustomer(
   if (specialRole === 'picky') rawBudget = Math.round(rawBudget * 1.2);
   const budget = Math.max(2000000, Math.round(rawBudget / 100000) * 100000);
 
-  // Requirement 9: Calibrated Patience
-  // - Khách thường: 35–45s
-  // - Khách khó: 25–30s
-  // - VIP: 20–25s
-  let basePatience = Math.floor(Math.random() * 11) + 35; // 35-45s default
+  // Customer Patience set to 180 seconds
+  let basePatience = 180;
 
   let tipMultiplier = template.tipMultiplier;
   let typeLabel = template.typeLabel;
@@ -362,34 +359,29 @@ export function generateRandomCustomer(
   if (specialRole === 'vip') {
     typeLabel = '✨ Khách VIP';
     tipMultiplier = 2.0;
-    basePatience = Math.floor(Math.random() * 6) + 20; // 20-25s
+    basePatience = 180;
     specialTrait = 'Khách VIP chịu chi! Nếu phối đẹp từ 5 sao sẽ tăng danh tiếng cho tiệm.';
   } else if (specialRole === 'influencer') {
     typeLabel = '📱 Influencer';
     tipMultiplier = 1.35;
-    basePatience = Math.floor(Math.random() * 6) + 20; // 20-25s
+    basePatience = 180;
     specialTrait = 'Nếu đạt điểm >= 90, tiệm sẽ viral và 3 khách tiếp theo tip thêm +20%!';
   } else if (specialRole === 'reviewer') {
     typeLabel = '⭐ Reviewer';
     tipMultiplier = 1.2;
-    basePatience = Math.floor(Math.random() * 6) + 22; // 22-27s
+    basePatience = 180;
     specialTrait = 'Bài đánh giá của Reviewer sẽ tác động rất mạnh đến số sao của tiệm!';
   } else if (specialRole === 'returning') {
     typeLabel = '❤️ Khách Quen';
     tipMultiplier = 1.25;
-    basePatience = Math.floor(Math.random() * 6) + 40; // 40-45s
+    basePatience = 180;
     specialTrait = 'Khách ruột cực kỳ kiên nhẫn và luôn tin tưởng thẩm mỹ của cô chủ.';
   } else if (specialRole === 'picky') {
     typeLabel = '💎 Sành Điệu';
     tipMultiplier = 1.6;
-    basePatience = Math.floor(Math.random() * 6) + 25; // 25-30s
+    basePatience = 180;
     minScoreRequired = 75; // Requires higher score to buy!
     specialTrait = 'Khách rất khó tính, phải đạt từ 75 điểm trở lên mới chịu mua.';
-  }
-
-  // Day 1-2 generous patience bonus (+10s) to learn without pressure
-  if (currentDay <= 2) {
-    basePatience += 10;
   }
 
   const dialogue = generateCustomerDialogue(name, template.type, specialRole, preferredStyle, occasion, preferredColor, budget);
