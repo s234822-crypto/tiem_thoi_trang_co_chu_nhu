@@ -19,12 +19,12 @@ export const BottomNav: React.FC<BottomNavProps> = ({
     label: string;
     badge?: number;
   }> = [
-    { id: 'shop',      label: 'Tiệm'     },
-    { id: 'inventory', label: 'Kho hàng', badge: lowStockCount > 0 ? lowStockCount : undefined },
-    { id: 'restock',   label: 'Nhập hàng' },
-    { id: 'upgrade',   label: 'Nâng cấp' },
-    { id: 'decor',     label: 'Trang trí' },
-  ];
+      { id: 'shop', label: 'Tiệm' },
+      { id: 'inventory', label: 'Kho hàng', badge: lowStockCount > 0 ? lowStockCount : undefined },
+      { id: 'restock', label: 'Nhập hàng' },
+      { id: 'upgrade', label: 'Nâng cấp' },
+      { id: 'decor', label: 'Trang trí' },
+    ];
 
   return (
     <nav className="w-full bg-[#FFF8F4] border-t border-[#F2E1CF] px-2 py-1.5 flex items-center justify-around shadow-lg z-30 select-none shrink-0">
@@ -35,11 +35,10 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`relative flex flex-col items-center justify-center min-w-[52px] py-1 rounded-xl transition-all active:scale-95 ${
-              isActive
-                ? 'text-[#D87C9B] font-extrabold scale-105'
-                : 'text-[#8D6E63] font-medium hover:text-[#3E3431]'
-            }`}
+            className={`relative flex flex-col items-center justify-center min-w-[52px] py-1 rounded-xl transition-all active:scale-95 ${isActive
+              ? 'text-[#D87C9B] font-extrabold scale-105'
+              : 'text-[#8D6E63] font-medium hover:text-[#3E3431]'
+              }`}
           >
             <div className="relative">
               {/* Active state: coloured SVG icon at 24px; inactive: slightly muted at 22px */}
@@ -58,9 +57,8 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             </div>
 
             <span
-              className={`text-[10px] mt-0.5 tracking-tight transition-colors ${
-                isActive ? 'text-[#D87C9B] font-black' : 'text-[#8D6E63]'
-              }`}
+              className={`text-[10px] mt-0.5 tracking-tight transition-colors ${isActive ? 'text-[#D87C9B] font-black' : 'text-[#8D6E63]'
+                }`}
             >
               {tab.label}
             </span>
