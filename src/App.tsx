@@ -21,7 +21,7 @@ import {
   StoryChapter,
   ToastType,
 } from './types/game';
-import { INITIAL_PRODUCTS } from './data/products';
+import { INITIAL_PRODUCTS, SUBCATEGORY_LABELS } from './data/products';
 import { generateRandomCustomer, getUnlockedStyles, fixImagePath } from './data/customers';
 import { INITIAL_UPGRADES, INITIAL_DECORS, SHOP_TIERS } from './data/upgrades';
 import { generateDailyMissions } from './data/missions';
@@ -172,26 +172,26 @@ export default function App() {
       const savedMap   = new Map(parsedData.products.map((p: Product) => [p.id, p]));
 
       // Merge latest definitions (images, subCategories, tags) into saved state items
-      const mergedSaved = parsedData.products.map((savedProd: Product) => {
-        const initProd = initialMap.get(savedProd.id);
-        if (initProd) {
-          return {
-            ...initProd,
-            ...savedProd,
-            name: initProd.name || savedProd.name,
-            image: initProd.image || savedProd.image,
-            subCategory: initProd.subCategory || savedProd.subCategory,
-            styleTags: initProd.styleTags || savedProd.styleTags,
-            colors: initProd.colors || savedProd.colors,
-            occasions: initProd.occasions || savedProd.occasions,
-            maxStock: savedProd.maxStock || initProd.maxStock || 10,
-          };
-        }
-        return {
-          ...savedProd,
-          maxStock: savedProd.maxStock || 10,
-        };
-      });
+      const mergedSaved = parsedData.products
+        .map((savedProd: Product) => {
+          const initProd = initialMap.get(savedProd.id);
+          if (initProd) {
+            return {
+              ...initProd,
+              ...savedProd,
+              name: initProd.name || savedProd.name,
+              image: initProd.image || savedProd.image,
+              category: initProd.category,
+              subCategory: initProd.subCategory,
+              styleTags: initProd.styleTags || savedProd.styleTags,
+              colors: initProd.colors || savedProd.colors,
+              occasions: initProd.occasions || savedProd.occasions,
+              maxStock: savedProd.maxStock || initProd.maxStock || 10,
+            };
+          }
+          return savedProd;
+        })
+        .filter((prod: Product) => prod && prod.subCategory in SUBCATEGORY_LABELS);
 
       // Append any newly added products from INITIAL_PRODUCTS missing in save file
       const newProducts = INITIAL_PRODUCTS.filter((initP) => !savedMap.has(initP.id));

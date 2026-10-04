@@ -7,7 +7,7 @@ export const INITIAL_COLLECTIONS: FashionCollection[] = [
     description: 'Những món đồ cơ bản tối giản, dễ phối và năng động hàng ngày.',
     theme: 'Casual & Minimal',
     unlockLevel: 1,
-    productIds: ['pink-crop-top', 'wide-linen-pants', 'canvas-tote-bag', 'mary-jane-shoes'],
+    productIds: ['pink-crop-top', 'pink-wide-pants', 'canvas-tote-bag', 'mary-jane-shoes'],
     reward: {
       type: 'money',
       value: 60000,
@@ -22,7 +22,7 @@ export const INITIAL_COLLECTIONS: FashionCollection[] = [
     description: 'Giấc mơ kẹo ngọt với tone hồng pastel và chân váy xếp ly nữ tính.',
     theme: 'Cute & Feminine',
     unlockLevel: 3,
-    productIds: ['pink-crop-top', 'tennis-pleated-skirt', 'french-tea-dress', 'baguette-shoulder-bag'],
+    productIds: ['pink-crop-top', 'tennis-white-skirt', 'french-tea-dress', 'baguette-shoulder-bag'],
     reward: {
       type: 'skin',
       value: 'skin-pink-boutique',
@@ -37,7 +37,7 @@ export const INITIAL_COLLECTIONS: FashionCollection[] = [
     description: 'Set đồ chuẩn gu Ulzzang dạo phố Hongdae thanh lịch và ấm áp.',
     theme: 'Korean Style',
     unlockLevel: 5,
-    productIds: ['knit-cardigan-top', 'vintage-straight-jeans', 'korean-minimal-shirtdress', 'french-beret-hat'],
+    productIds: ['short-cardigan', 'straight-denim-jeans', 'korean-minimal-shirtdress', 'french-beret-hat'],
     reward: {
       type: 'skin',
       value: 'skin-korean-stylist',
@@ -52,7 +52,7 @@ export const INITIAL_COLLECTIONS: FashionCollection[] = [
     description: 'Phong cách quý cô công sở hiện đại, sắc sảo và tự tin.',
     theme: 'Office & Elegant',
     unlockLevel: 7,
-    productIds: ['white-silk-shirt', 'tailored-slacks', 'slit-pencil-skirt', 'rose-blazer', 'stiletto-pumps', 'pearl-earrings'],
+    productIds: ['blue-casual-shirt', 'tailored-beige-trousers', 'red-pencil-skirt', 'rose-blazer', 'stiletto-pumps', 'pearl-earrings'],
     reward: {
       type: 'skin',
       value: 'skin-office-chic',
@@ -67,7 +67,7 @@ export const INITIAL_COLLECTIONS: FashionCollection[] = [
     description: 'Chất lừ và phá cách với áo da biker, form rộng và kính râm ngầu đét.',
     theme: 'Streetwear & Y2K',
     unlockLevel: 9,
-    productIds: ['oversize-street-tee', 'leather-biker-jacket', 'chunky-sneakers', 'cat-eye-sunglasses'],
+    productIds: ['oversize-white-tee', 'leather-biker-jacket', 'chunky-sneakers', 'cat-eye-sunglasses'],
     reward: {
       type: 'skin',
       value: 'skin-street-fashion',
@@ -97,7 +97,7 @@ export const INITIAL_COLLECTIONS: FashionCollection[] = [
     description: 'Bộ sưu tập mùa hè rực rỡ với chất liệu linen mát lành cho chuyến du lịch biển.',
     theme: 'Summer Breeze',
     unlockLevel: 12,
-    productIds: ['wide-linen-pants', 'french-tea-dress', 'canvas-tote-bag', 'cat-eye-sunglasses'],
+    productIds: ['pink-wide-pants', 'french-tea-dress', 'canvas-tote-bag', 'cat-eye-sunglasses'],
     reward: {
       type: 'skin',
       value: 'skin-summer-outfit',

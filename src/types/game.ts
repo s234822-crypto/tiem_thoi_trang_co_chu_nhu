@@ -9,42 +9,22 @@ export type ClothingCategory =
   | 'accessories';
 
 export type SubCategory =
-  // tops
-  | 'basic_tshirt' | 'oversize_tshirt' | 'croptop' | 'camisole' | 'tank_top' | 'blouse' | 'shirt'
-  | 'turtleneck' | 'polo' | 'peplum' | 'off_shoulder' | 'knit_top' | 'sweater' | 'hoodie'
-  | 'short_cardigan' | 'long_cardigan' | 'corset' | 'baby_tee' | 'babydoll_top' | 'lace_top'
-  | 'tshirt' | 'cardigan' | 'jacket_top' | 'blazer'
-  // bottoms
-  | 'skinny_jeans' | 'straight_jeans' | 'wide_jeans' | 'baggy_jeans' | 'denim_shorts' | 'kaki_shorts'
-  | 'trousers' | 'straight_pants' | 'wide_pants' | 'cargo_pants' | 'jogger_pants' | 'legging'
-  | 'culottes' | 'linen_pants' | 'high_waist_pants' | 'y2k_pants' | 'sporty_pants' | 'leather_pants'
-  | 'jeans' | 'shorts' | 'wide_leg' | 'cargo'
-  // skirts
-  | 'a_line_skirt' | 'aline_skirt' | 'tennis_skirt' | 'pleated_skirt' | 'denim_skirt' | 'midi_skirt' | 'maxi_skirt'
-  | 'pencil_skirt' | 'mermaid_skirt' | 'satin_skirt' | 'lace_skirt' | 'plaid_skirt' | 'caro_skirt' | 'cargo_skirt'
-  | 'mini_skirt' | 'tiered_skirt' | 'vintage_skirt' | 'long_skirt'
-  // dresses
-  | 'office_dress' | 'bodycon_dress' | 'party_dress' | 'floral_dress' | 'babydoll_dress' | 'maxi_dress'
-  | 'midi_dress' | 'shirt_dress' | 'slip_dress' | 'off_shoulder_dress' | 'square_neck_dress' | 'lace_dress'
-  | 'satin_dress' | 'sequin_dress' | 'vintage_dress' | 'korean_dress' | 'y2k_dress' | 'luxury_dress' | 'body_dress'
-  // jackets
-  | 'blazer' | 'denim_jacket' | 'leather_jacket' | 'bomber_jacket' | 'varsity_jacket' | 'trench_coat'
-  | 'wool_coat' | 'fur_jacket' | 'outer_cardigan' | 'tweed_jacket' | 'cropped_jacket' | 'oversized_jacket'
-  | 'windbreaker' | 'varsity_coat' | 'sporty_jacket'
-  // shoes
-  | 'white_sneakers' | 'chunky_sneakers' | 'platform_sneakers' | 'pointed_heels' | 'strap_heels' | 'kitten_heels'
-  | 'sandals' | 'platform_sandals' | 'ankle_boots' | 'knee_high_boots' | 'chelsea_boots' | 'loafers'
-  | 'mary_jane' | 'ballet_flats' | 'mules' | 'oxford_shoes' | 'sport_shoes' | 'luxury_shoes'
-  | 'sneaker' | 'heels' | 'sandal' | 'boots' | 'loafer'
-  // bags
-  | 'tote_bag' | 'mini_bag' | 'shoulder_bag' | 'crossbody_bag' | 'baguette_bag' | 'bucket_bag'
-  | 'office_bag' | 'clutch_bag' | 'box_bag' | 'leather_bag' | 'canvas_bag' | 'pastel_bag'
-  | 'vintage_bag' | 'y2k_bag' | 'luxury_bag' | 'bow_bag' | 'pearl_bag' | 'tote'
-  // accessories
-  | 'sunglasses' | 'round_glasses' | 'baseball_cap' | 'beret' | 'bucket_hat' | 'straw_hat'
-  | 'earrings' | 'necklace' | 'bracelet' | 'ring' | 'belt' | 'hair_clip' | 'hair_bow'
-  | 'scrunchie' | 'headband' | 'scarf' | 'watch' | 'brooch' | 'pearl_necklace' | 'high_socks'
-  | 'glasses' | 'hat';
+  // TOPS (20)
+  | 'basic_tshirt' | 'oversize_tshirt' | 'croptop' | 'camisole' | 'tank_top' | 'blouse' | 'shirt' | 'turtleneck' | 'polo' | 'peplum' | 'off_shoulder_top' | 'sweater' | 'sweatshirt' | 'hoodie' | 'short_cardigan' | 'long_cardigan' | 'corset' | 'baby_tee' | 'babydoll_top' | 'lace_top'
+  // BOTTOMS (18)
+  | 'skinny_jeans' | 'straight_jeans' | 'wide_jeans' | 'baggy_jeans' | 'denim_shorts' | 'kaki_shorts' | 'trousers' | 'straight_pants' | 'wide_pants' | 'cargo_pants' | 'jogger_pants' | 'leggings' | 'culottes' | 'linen_pants' | 'high_waist_pants' | 'y2k_pants' | 'sporty_pants' | 'leather_pants'
+  // SKIRTS (15)
+  | 'aline_skirt' | 'tennis_skirt' | 'pleated_skirt' | 'denim_skirt' | 'midi_skirt' | 'maxi_skirt' | 'pencil_skirt' | 'mermaid_skirt' | 'satin_skirt' | 'lace_skirt' | 'caro_skirt' | 'cargo_skirt' | 'mini_skirt' | 'tiered_skirt' | 'vintage_skirt'
+  // DRESSES (18)
+  | 'office_dress' | 'bodycon_dress' | 'party_dress' | 'floral_dress' | 'babydoll_dress' | 'maxi_dress' | 'midi_dress' | 'shirt_dress' | 'slip_dress' | 'off_shoulder_dress' | 'square_neck_dress' | 'lace_dress' | 'satin_dress' | 'sequin_dress' | 'vintage_dress' | 'korean_dress' | 'y2k_dress' | 'luxury_dress'
+  // JACKETS (15)
+  | 'blazer' | 'denim_jacket' | 'leather_jacket' | 'bomber_jacket' | 'varsity_jacket' | 'trench_coat' | 'wool_coat' | 'fur_jacket' | 'outer_cardigan' | 'tweed_jacket' | 'cropped_jacket' | 'oversized_jacket' | 'windbreaker' | 'varsity_coat' | 'sporty_jacket'
+  // SHOES (18)
+  | 'white_sneakers' | 'chunky_sneakers' | 'platform_sneakers' | 'pointed_heels' | 'strap_heels' | 'kitten_heels' | 'sandals' | 'platform_sandals' | 'ankle_boots' | 'knee_high_boots' | 'chelsea_boots' | 'loafers' | 'mary_jane' | 'ballet_flats' | 'mules' | 'oxford_shoes' | 'sport_shoes' | 'luxury_shoes'
+  // BAGS (17)
+  | 'tote_bag' | 'mini_bag' | 'shoulder_bag' | 'crossbody_bag' | 'baguette_bag' | 'bucket_bag' | 'office_bag' | 'clutch_bag' | 'box_bag' | 'leather_bag' | 'canvas_bag' | 'pastel_bag' | 'vintage_bag' | 'y2k_bag' | 'luxury_bag' | 'bow_bag' | 'pearl_bag'
+  // ACCESSORIES (20)
+  | 'sunglasses' | 'round_glasses' | 'baseball_cap' | 'beret' | 'bucket_hat' | 'straw_hat' | 'earrings' | 'necklace' | 'bracelet' | 'ring' | 'belt' | 'hair_clip' | 'hair_bow' | 'scrunchie' | 'headband' | 'scarf' | 'watch' | 'brooch' | 'pearl_necklace' | 'high_socks';
 
 export type StyleTag =
   | 'casual'   | 'cute'       | 'korean'    | 'minimal'  | 'elegant'
