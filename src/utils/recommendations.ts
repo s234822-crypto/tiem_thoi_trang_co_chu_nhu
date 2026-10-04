@@ -6,6 +6,26 @@ export interface RecommendedProduct {
   matchReason: string;
 }
 
+export interface ItemBadgeInfo {
+  isRecommended: boolean;
+  isStyleMatch: boolean;
+  isBudgetMatch: boolean;
+  badgeLabel?: string;
+  badgeEmoji?: string;
+}
+
+export interface RecommendedCombo {
+  id: string;
+  title: string;
+  outfit: Outfit;
+  items: Product[];
+  totalPrice: number;
+  customerBudget: number;
+  rating: 'RẤT PHÙ HỢP' | 'PHÙ HỢP' | 'TẠM ỔN';
+  ratingColor: string;
+  matchTags: string[];
+}
+
 /**
  * Returns 3-6 top recommended products for a customer.
  * Considers:
@@ -40,7 +60,7 @@ export function getRecommendedProducts(
     // 1. Style match (Highest weight: up to 35 points)
     if (product.styleTags.includes(customer.preferredStyle)) {
       score += 35;
-      reasons.push('Hợp phong cách');
+      reasons.push('Hợp gu');
     }
 
     // 2. Color match (Up to 25 points)
@@ -61,14 +81,15 @@ export function getRecommendedProducts(
     }
 
     // 4. Budget fit (Up to 15 points)
-    // A single piece shouldn't take more than 60% of budget unless it's a dress
     if (product.category === 'dresses') {
       if (product.price <= customer.budget * 0.9) {
         score += 15;
+        reasons.push('Hợp ngân sách');
       }
     } else {
       if (product.price <= customer.budget * 0.55) {
         score += 15;
+        reasons.push('Hợp ngân sách');
       }
     }
 
@@ -118,6 +139,174 @@ export function getRecommendedProducts(
 }
 
 /**
+ * Returns badge info for rendering badges like "✨ Gợi ý", "💗 Hợp gu", "💰 Hợp ngân sách" on product cards.
+ */
+export function getItemBadgeInfo(
+  product: Product,
+  customer: Customer | null,
+  recommendedList: Product[]
+): ItemBadgeInfo {
+  if (!customer) return { isRecommended: false, isStyleMatch: false, isBudgetMatch: false };
+
+  const isRecommended = recommendedList.some((p) => p.id === product.id);
+  const isStyleMatch = product.styleTags.includes(customer.preferredStyle);
+  const isBudgetMatch = product.price <= customer.budget * 0.5;
+
+  let badgeLabel: string | undefined;
+  let badgeEmoji: string | undefined;
+
+  if (isRecommended && isStyleMatch && isBudgetMatch) {
+    badgeLabel = '✨ Gợi ý';
+    badgeEmoji = '✨';
+  } else if (isStyleMatch) {
+    badgeLabel = '💗 Hợp gu';
+    badgeEmoji = '💗';
+  } else if (isBudgetMatch) {
+    badgeLabel = '💰 Hợp ngân sách';
+    badgeEmoji = '💰';
+  } else if (isRecommended) {
+    badgeLabel = '✨ Gợi ý';
+    badgeEmoji = '✨';
+  }
+
+  return {
+    isRecommended,
+    isStyleMatch,
+    isBudgetMatch,
+    badgeLabel,
+    badgeEmoji,
+  };
+}
+
+/**
+ * Generates 1-3 recommended combo outfits for a customer.
+ * Player can manually click to select a combo into Outfit Builder.
+ */
+export function generateRecommendedCombos(
+  customer: Customer | null,
+  products: Product[],
+  playerLevel: number
+): RecommendedCombo[] {
+  if (!customer) return [];
+
+  const inStock = products.filter((p) => p.unlockLevel <= playerLevel && p.stock > 0);
+  if (inStock.length === 0) return [];
+
+  const combos: RecommendedCombo[] = [];
+
+  const rank = (p: Product) => {
+    let s = 0;
+    if (p.styleTags.includes(customer.preferredStyle)) s += 40;
+    if (p.colors.includes(customer.preferredColor)) s += 30;
+    if (p.occasions.includes(customer.occasion)) s += 20;
+    return s;
+  };
+
+  const dresses = inStock.filter((p) => p.category === 'dresses').sort((a, b) => rank(b) - rank(a));
+  const tops = inStock.filter((p) => p.category === 'tops').sort((a, b) => rank(b) - rank(a));
+  const bottoms = inStock.filter((p) => p.category === 'bottoms').sort((a, b) => rank(b) - rank(a));
+  const skirts = inStock.filter((p) => p.category === 'skirts').sort((a, b) => rank(b) - rank(a));
+  const shoes = inStock.filter((p) => p.category === 'shoes').sort((a, b) => rank(b) - rank(a));
+  const bags = inStock.filter((p) => p.category === 'bags').sort((a, b) => rank(b) - rank(a));
+
+  // Combo 1: Best Separates
+  if (tops.length > 0 && (bottoms.length > 0 || skirts.length > 0)) {
+    const top = tops[0];
+    const bottom = skirts.length > 0 && rank(skirts[0]) >= rank(bottoms[0] || skirts[0]) ? skirts[0] : (bottoms[0] || skirts[0]);
+    const shoe = shoes.find((s) => top.price + bottom.price + s.price <= customer.budget);
+    const bag = bags.find((b) => top.price + bottom.price + (shoe?.price || 0) + b.price <= customer.budget);
+
+    const outfit: Outfit = {
+      top,
+      ...(bottom.category === 'skirts' ? { skirt: bottom } : { bottom }),
+      ...(shoe ? { shoes: shoe } : {}),
+      ...(bag ? { bag } : {}),
+    };
+
+    const items = [top, bottom, ...(shoe ? [shoe] : []), ...(bag ? [bag] : [])];
+    const totalPrice = items.reduce((sum, i) => sum + i.price, 0);
+
+    if (totalPrice <= customer.budget) {
+      combos.push({
+        id: 'combo-1',
+        title: `Combo 1 — Phong Cách Hợp Gu`,
+        outfit,
+        items,
+        totalPrice,
+        customerBudget: customer.budget,
+        rating: totalPrice >= customer.budget * 0.6 ? 'RẤT PHÙ HỢP' : 'PHÙ HỢP',
+        ratingColor: '#10B981',
+        matchTags: ['Hợp ngân sách', 'Hợp style', 'Hợp occasion'],
+      });
+    }
+  }
+
+  // Combo 2: Elegant Dress
+  if (dresses.length > 0) {
+    const dress = dresses[0];
+    const shoe = shoes.find((s) => dress.price + s.price <= customer.budget);
+    const bag = bags.find((b) => dress.price + (shoe?.price || 0) + b.price <= customer.budget);
+
+    const outfit: Outfit = {
+      dress,
+      ...(shoe ? { shoes: shoe } : {}),
+      ...(bag ? { bag } : {}),
+    };
+
+    const items = [dress, ...(shoe ? [shoe] : []), ...(bag ? [bag] : [])];
+    const totalPrice = items.reduce((sum, i) => sum + i.price, 0);
+
+    if (totalPrice <= customer.budget && !combos.some((c) => c.totalPrice === totalPrice)) {
+      combos.push({
+        id: 'combo-2',
+        title: `Combo 2 — Đầm Xinh Nổi Bật`,
+        outfit,
+        items,
+        totalPrice,
+        customerBudget: customer.budget,
+        rating: 'PHÙ HỢP',
+        ratingColor: '#EC4899',
+        matchTags: ['Hợp ngân sách', 'Đầm duyên dáng', 'Hợp occasion'],
+      });
+    }
+  }
+
+  // Combo 3: Smart Budget Saver
+  if (tops.length > 0 && (bottoms.length > 0 || skirts.length > 0)) {
+    const top = tops[1] || tops[0];
+    const bottom = bottoms[0] || skirts[0];
+    const shoe = shoes[0];
+
+    if (top && bottom) {
+      const outfit: Outfit = {
+        top,
+        ...(bottom.category === 'skirts' ? { skirt: bottom } : { bottom }),
+        ...(shoe && top.price + bottom.price + shoe.price <= customer.budget ? { shoes: shoe } : {}),
+      };
+
+      const items = [top, bottom, ...(outfit.shoes ? [outfit.shoes] : [])];
+      const totalPrice = items.reduce((sum, i) => sum + i.price, 0);
+
+      if (totalPrice <= customer.budget && !combos.some((c) => c.totalPrice === totalPrice)) {
+        combos.push({
+          id: 'combo-3',
+          title: `Combo 3 — Tiết Kiệm Xinh Xắn`,
+          outfit,
+          items,
+          totalPrice,
+          customerBudget: customer.budget,
+          rating: 'TẠM ỔN',
+          ratingColor: '#F59E0B',
+          matchTags: ['Giá mềm', 'Hợp gu nhẹ', 'Tối ưu chi phí'],
+        });
+      }
+    }
+  }
+
+  return combos.slice(0, 3);
+}
+
+/**
  * Automatically builds the best matching Outfit for a customer from in-stock products.
  */
 export function generateAutoOutfit(
@@ -127,7 +316,6 @@ export function generateAutoOutfit(
 ): Outfit {
   if (!customer) return {};
 
-  // Filter products: unlocked, in stock
   const inStockProducts = products.filter(
     (p) => p.unlockLevel <= playerLevel && p.stock > 0
   );
@@ -138,7 +326,6 @@ export function generateAutoOutfit(
   const outfit: Outfit = {};
   let currentCost = 0;
 
-  // Helper score for ranking single products for this customer
   const rankProduct = (p: Product) => {
     let score = 0;
     if (p.styleTags.includes(customer.preferredStyle)) score += 40;
@@ -147,7 +334,6 @@ export function generateAutoOutfit(
     return score;
   };
 
-  // Available by category sorted by rank
   const dresses = inStockProducts.filter((p) => p.category === 'dresses').sort((a, b) => rankProduct(b) - rankProduct(a));
   const tops = inStockProducts.filter((p) => p.category === 'tops').sort((a, b) => rankProduct(b) - rankProduct(a));
   const bottoms = inStockProducts.filter((p) => p.category === 'bottoms').sort((a, b) => rankProduct(b) - rankProduct(a));
@@ -156,7 +342,6 @@ export function generateAutoOutfit(
   const bags = inStockProducts.filter((p) => p.category === 'bags').sort((a, b) => rankProduct(b) - rankProduct(a));
   const accessories = inStockProducts.filter((p) => p.category === 'accessories' || p.category === 'jackets').sort((a, b) => rankProduct(b) - rankProduct(a));
 
-  // Determine if we should do Dress or Top + Bottom/Skirt
   const bestDress = dresses.find((d) => d.price <= budget * 0.85);
   
   let bestTop: Product | undefined;
@@ -203,21 +388,18 @@ export function generateAutoOutfit(
     currentCost += bestBottom.price;
   }
 
-  // Add shoes if fits budget
   const bestShoe = shoes.find((s) => currentCost + s.price <= budget);
   if (bestShoe) {
     outfit.shoes = bestShoe;
     currentCost += bestShoe.price;
   }
 
-  // Add bag if fits budget
   const bestBag = bags.find((b) => currentCost + b.price <= budget);
   if (bestBag) {
     outfit.bag = bestBag;
     currentCost += bestBag.price;
   }
 
-  // Add accessory/jacket if fits budget
   const bestAcc = accessories.find((a) => currentCost + a.price <= budget);
   if (bestAcc) {
     if (bestAcc.category === 'jackets') {
@@ -230,4 +412,3 @@ export function generateAutoOutfit(
 
   return outfit;
 }
-

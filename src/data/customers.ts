@@ -65,7 +65,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['casual', 'cute', 'korean', 'sporty'],
     preferredColors: ['pink', 'white', 'cream', 'blue'],
     occasions: ['school', 'coffee', 'picnic'],
-    budgetRange: [350000, 600000],
+    budgetRange: [2000000, 4000000],
     basePatience: 35,
     tipMultiplier: 1.0,
     specialTrait: 'Thích đồ trẻ trung, năng động, chụp ảnh check-in sống ảo.',
@@ -78,7 +78,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['office', 'elegant', 'minimal', 'korean'],
     preferredColors: ['black', 'white', 'beige', 'cream', 'brown'],
     occasions: ['work', 'formal', 'coffee'],
-    budgetRange: [600000, 1100000],
+    budgetRange: [4000000, 7000000],
     basePatience: 32,
     tipMultiplier: 1.15,
     specialTrait: 'Yêu cầu form dáng chuẩn, lịch sự, chất vải đứng form không nhăn.',
@@ -91,7 +91,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['streetwear', 'y2k', 'cute', 'sporty'],
     preferredColors: ['black', 'pink', 'gray', 'purple'],
     occasions: ['shopping', 'coffee', 'party'],
-    budgetRange: [450000, 800000],
+    budgetRange: [3500000, 6500000],
     basePatience: 30,
     tipMultiplier: 1.1,
     specialTrait: 'Bắt trend TikTok cực nhanh, thích phụ kiện ấn tượng và dáng croptop.',
@@ -104,7 +104,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['party', 'luxury', 'feminine', 'elegant'],
     preferredColors: ['red', 'black', 'white', 'pink'],
     occasions: ['party', 'formal', 'date'],
-    budgetRange: [850000, 1600000],
+    budgetRange: [7000000, 12000000],
     basePatience: 38,
     tipMultiplier: 1.3,
     specialTrait: 'Cần sự nổi bật và tỏa sáng dưới ánh đèn sân khấu buổi tối.',
@@ -117,7 +117,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['summer', 'vintage', 'casual', 'cute'],
     preferredColors: ['yellow', 'green', 'white', 'pink'],
     occasions: ['travel', 'picnic', 'coffee'],
-    budgetRange: [500000, 950000],
+    budgetRange: [2200000, 4200000],
     basePatience: 34,
     tipMultiplier: 1.1,
     specialTrait: 'Thích outfit thoải mái, chụp hình ngoài trời lên màu tươi tắn.',
@@ -130,7 +130,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['y2k', 'korean', 'minimal', 'luxury'],
     preferredColors: ['beige', 'black', 'white', 'brown'],
     occasions: ['coffee', 'shopping', 'date'],
-    budgetRange: [750000, 1400000],
+    budgetRange: [6000000, 10000000],
     basePatience: 28,
     tipMultiplier: 1.25,
     specialTrait: 'Rất khắt khe về phối màu hài hòa và phụ kiện ton-sur-ton.',
@@ -143,7 +143,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['cute', 'korean', 'feminine', 'casual'],
     preferredColors: ['pink', 'cream', 'beige', 'white'],
     occasions: ['coffee', 'date', 'shopping'],
-    budgetRange: [400000, 850000],
+    budgetRange: [2500000, 4500000],
     basePatience: 42,
     tipMultiplier: 1.2,
     specialTrait: 'Tin tưởng mắt thẩm mỹ của Cô Chủ Như, dễ thương và hay để lại tip!',
@@ -156,7 +156,7 @@ export const CUSTOMER_TEMPLATES: CustomerProfileTemplate[] = [
     preferredStyles: ['luxury', 'party', 'elegant', 'y2k'],
     preferredColors: ['black', 'red', 'white', 'pink'],
     occasions: ['party', 'formal', 'shopping'],
-    budgetRange: [1200000, 2500000],
+    budgetRange: [10000000, 20000000],
     basePatience: 40,
     tipMultiplier: 1.8,
     isVip: true,
@@ -173,7 +173,7 @@ export function generateCustomerDialogue(
   color: FashionColor,
   budget: number
 ): string {
-  const budgetFormatted = (budget / 1000).toLocaleString('vi-VN') + 'k';
+  const budgetFormatted = budget.toLocaleString('vi-VN') + 'đ';
 
   const styleDescriptions: Record<StyleTag, string> = {
     casual:     'năng động, thoải mái dễ mặc',
@@ -253,6 +253,7 @@ export function generateCustomerDialogue(
   }
 
   const templates = [
+    `“Em muốn một outfit phong cách ${STYLE_LABELS[style] || style}, ${colorPhrases[color]}, mặc ${occasionPhrases[occasion]} và tổng giá khoảng dưới ${budgetFormatted}.”`,
     `“Chào cô chủ Như! Mình đang tìm một set đồ ${styleDescriptions[style]} để ${occasionPhrases[occasion]}. Mình thích nhất ${colorPhrases[color]}, ngân sách khoảng ${budgetFormatted} nha!”`,
     `“Shop ơi tư vấn giúp mình với! Mình cần outfit để ${occasionPhrases[occasion]}, gu mình là ${styleDescriptions[style]} thiên về ${colorPhrases[color]}. Tầm ${budgetFormatted} trở lại nhé!”`,
     `“Hello Như! Hôm nay mình muốn đổi gió phong cách ${styleDescriptions[style]} một chút để ${occasionPhrases[occasion]}. Chọn giùm mình đồ ${colorPhrases[color]} với, ví mình có tầm ${budgetFormatted} nè.”`,
@@ -282,7 +283,7 @@ export function formatCustomerRequestTags(customer: Customer): {
   const styleTag = STYLE_LABELS[customer.preferredStyle] || customer.preferredStyle;
   const colorTag = COLOR_LABELS[customer.preferredColor]?.name || customer.preferredColor;
   const occasionTag = OCCASION_LABELS[customer.occasion] || customer.occasion;
-  const budgetTag = `≤${Math.round(customer.budget / 1000).toLocaleString('vi-VN')}K`;
+  const budgetTag = `≤${customer.budget.toLocaleString('vi-VN')}đ`;
   return {
     styleTag,
     colorTag,
@@ -337,7 +338,7 @@ export function generateRandomCustomer(
   let rawBudget = Math.floor(Math.random() * (template.budgetRange[1] - template.budgetRange[0]) + template.budgetRange[0]);
   if (currentDay <= 2) {
     // Day 1-2: Generous budget to make first sales very easy
-    rawBudget = Math.round(rawBudget * 1.25);
+    rawBudget = Math.round(rawBudget * 1.15);
   } else if (currentDay >= 6 && currentDay <= 10) {
     // Day 6-10: Tighter budget testing player optimization
     rawBudget = Math.round(rawBudget * 0.95);
@@ -345,7 +346,7 @@ export function generateRandomCustomer(
 
   if (specialRole === 'vip') rawBudget = Math.round(rawBudget * 1.3);
   if (specialRole === 'picky') rawBudget = Math.round(rawBudget * 1.2);
-  const budget = Math.max(350000, Math.round(rawBudget / 50000) * 50000);
+  const budget = Math.max(2000000, Math.round(rawBudget / 100000) * 100000);
 
   // Requirement 9: Calibrated Patience
   // - Khách thường: 35–45s

@@ -55,7 +55,7 @@ export function getOutfitTotalPrice(outfit: Outfit): number {
   return items.reduce((sum, item) => sum + (item.price || 0), 0);
 }
 
-export function validateOutfit(outfit: Outfit): { isValid: boolean; reason: string } {
+export function validateOutfit(outfit: Outfit, customer?: Customer | null): { isValid: boolean; reason: string } {
   const hasDress = Boolean(outfit.dress);
   const hasTop = Boolean(outfit.top);
   const hasBottom = Boolean(outfit.bottom);
@@ -71,29 +71,41 @@ export function validateOutfit(outfit: Outfit): { isValid: boolean; reason: stri
     return { isValid: false, reason: 'Chỉ chọn Quần hoặc Chân váy, không chọn cả hai.' };
   }
 
-  // Valid base check
+  // Base outfit check
+  let validBase = false;
   if (hasDress) {
-    return { isValid: true, reason: 'Outfit hợp lệ với Đầm liền xinh xắn!' };
-  }
-
-  if (hasTop && (hasBottom || hasSkirt)) {
-    return { isValid: true, reason: 'Outfit hợp lệ với Áo phối cùng Quần/Váy!' };
-  }
-
-  if (hasTop && !hasBottom && !hasSkirt) {
+    validBase = true;
+  } else if (hasTop && (hasBottom || hasSkirt)) {
+    validBase = true;
+  } else if (hasTop && !hasBottom && !hasSkirt) {
     return { isValid: false, reason: 'Cần chọn thêm Quần hoặc Chân váy.' };
-  }
-
-  if (!hasTop && (hasBottom || hasSkirt)) {
+  } else if (!hasTop && (hasBottom || hasSkirt)) {
     return { isValid: false, reason: 'Cần chọn thêm Áo cho bộ đồ.' };
+  } else {
+    return { isValid: false, reason: 'Vui lòng chọn Đầm liền hoặc Áo + Quần/Váy.' };
   }
 
-  return { isValid: false, reason: 'Vui lòng chọn Đầm liền hoặc Áo + Quần/Váy.' };
+  if (!validBase) {
+    return { isValid: false, reason: 'Vui lòng chọn Đầm liền hoặc Áo + Quần/Váy.' };
+  }
+
+  // Strict over-budget lock (players cannot submit outfit exceeding customer budget)
+  if (customer && customer.budget > 0) {
+    const totalPrice = getOutfitTotalPrice(outfit);
+    if (totalPrice > customer.budget) {
+      return {
+        isValid: false,
+        reason: `Vượt ngân sách (${totalPrice.toLocaleString('vi-VN')}đ > ${customer.budget.toLocaleString('vi-VN')}đ). Vui lòng chọn lại!`,
+      };
+    }
+  }
+
+  return { isValid: true, reason: 'Outfit hợp lệ với giá tiền phù hợp!' };
 }
 
 export function calculateOutfitScore(customer: Customer, outfit: Outfit): OutfitScoreResult {
   const items = getOutfitItems(outfit);
-  const validation = validateOutfit(outfit);
+  const validation = validateOutfit(outfit, customer);
 
   if (!validation.isValid || items.length === 0) {
     return {
@@ -104,7 +116,7 @@ export function calculateOutfitScore(customer: Customer, outfit: Outfit): Outfit
       budgetScore: 0,
       completenessScore: 0,
       stars: 1,
-      reactionDialogue: 'Bộ đồ này chưa hoàn chỉnh, mình không thể thử được.',
+      reactionDialogue: validation.reason || 'Bộ đồ này chưa hoàn chỉnh, mình không thể thử được.',
       isSuccess: false,
       tipAmount: 0,
       expEarned: 0,
@@ -182,18 +194,19 @@ export function calculateOutfitScore(customer: Customer, outfit: Outfit): Outfit
   const budget = customer.budget;
   let budgetScore = 20;
 
-  if (totalPrice > budget) {
-    const excessRatio = (totalPrice - budget) / budget;
-    if (excessRatio <= 0.10) {
-      budgetScore = 14;
-    } else if (excessRatio <= 0.25) {
-      budgetScore = 8;
+  if (totalPrice <= budget) {
+    if (totalPrice >= budget * 0.60) {
+      budgetScore = 20; // 60% - 100% budget -> 20/20
     } else {
-      budgetScore = 0; // Exceeded by > 25%
+      budgetScore = 15; // < 60% budget -> 15/20
     }
   } else {
-    // Within budget
-    budgetScore = 20;
+    const excessRatio = (totalPrice - budget) / budget;
+    if (excessRatio <= 0.10) {
+      budgetScore = 8; // Over <= 10% -> 8/20
+    } else {
+      budgetScore = Math.max(0, Math.round(5 - (excessRatio - 0.10) * 10)); // Over > 10% -> 0-5/20
+    }
   }
 
   // 5. Completeness (Max 10 points)
@@ -312,11 +325,14 @@ export function getOutfitMatchHints(customer: Customer | null, outfit: Outfit): 
   // 2. Budget Check
   let budgetHint: OutfitMatchHint;
   if (totalPrice <= customer.budget) {
-    budgetHint = { type: 'budget', status: 'match', message: '✓ Trong ngân sách' };
+    if (totalPrice >= customer.budget * 0.6) {
+      budgetHint = { type: 'budget', status: 'match', message: '✓ Hợp ngân sách' };
+    } else {
+      budgetHint = { type: 'budget', status: 'neutral', message: '~ Dưới 60% ngân sách' };
+    }
   } else {
     const over = totalPrice - customer.budget;
-    const overK = Math.round(over / 1000);
-    budgetHint = { type: 'budget', status: 'warning', message: `⚠ Vượt ngân sách (+${overK}k)` };
+    budgetHint = { type: 'budget', status: 'warning', message: `⚠ Vượt ngân sách (+${over.toLocaleString('vi-VN')}đ)` };
   }
 
   // 3. Color Check

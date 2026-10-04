@@ -43,7 +43,7 @@ import {
   toggleAudio,
   startBGM,
 } from './utils/audio';
-import { calculateOutfitScore, getOutfitItems } from './utils/scoring';
+import { calculateOutfitScore, getOutfitItems, validateOutfit } from './utils/scoring';
 import { generateAutoOutfit } from './utils/recommendations';
 import { Header } from './components/Header';
 import { ShopArea } from './components/ShopArea';
@@ -1078,6 +1078,16 @@ export default function App() {
     showToast(`⚡ Đã tự động chọn set đồ hợp gu cho ${currentCustomer.name} (${autoItems.length} món)!`, 'success');
   };
 
+  // Apply Recommended Combo Handler
+  const handleApplyCombo = (comboOutfit: Outfit) => {
+    if (!currentCustomer) return;
+    const comboItems = getOutfitItems(comboOutfit);
+    playChimeSound();
+    setOutfit(comboOutfit);
+    setOwnerState('help');
+    showToast(`✨ Đã áp dụng Combo gợi ý (${comboItems.length} món) cho ${currentCustomer.name}!`, 'success');
+  };
+
   // Try Outfit & Calculate Score with Mirror & Mannequin bonus
   const handleTryOutfit = () => {
     if (!currentCustomer) return;
@@ -2026,19 +2036,34 @@ export default function App() {
                           playerLevel={stats.level}
                           onToggleProduct={handleToggleProduct}
                           onAutoOutfit={handleAutoOutfit}
+                          onApplyCombo={handleApplyCombo}
                           selectedCategory={selectedCatalogCategory}
                           onSelectCategory={setSelectedCatalogCategory}
                         />
                       </div>
 
                       {/* Action Button: CHO KHÁCH THỬ OUTFIT */}
-                      <button
-                        onClick={handleTryOutfit}
-                        className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#D87C9B] via-[#E91E63] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-xs font-black shadow-lg shadow-[#D87C9B]/35 flex items-center justify-center gap-2 active:scale-98 transition-all cursor-pointer uppercase tracking-wider"
-                      >
-                        <Sparkles className="w-4 h-4 text-yellow-200" />
-                        <span>CHO KHÁCH THỬ OUTFIT</span>
-                      </button>
+                      {(() => {
+                        const mainValidation = validateOutfit(outfit, currentCustomer);
+                        return (
+                          <button
+                            onClick={handleTryOutfit}
+                            disabled={!mainValidation.isValid}
+                            className={`w-full h-12 rounded-2xl text-xs font-black shadow-lg flex items-center justify-center gap-2 transition-all uppercase tracking-wider ${
+                              mainValidation.isValid
+                                ? 'bg-gradient-to-r from-[#D87C9B] via-[#E91E63] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white cursor-pointer active:scale-98 shadow-[#D87C9B]/35'
+                                : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                            }`}
+                          >
+                            <Sparkles className="w-4 h-4 text-yellow-200" />
+                            <span>
+                              {mainValidation.isValid
+                                ? 'CHO KHÁCH THỬ OUTFIT'
+                                : mainValidation.reason}
+                            </span>
+                          </button>
+                        );
+                      })()}
                     </div>
                   )
                 )}

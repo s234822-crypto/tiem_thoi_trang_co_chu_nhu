@@ -27,7 +27,7 @@ export const OutfitBuilder: React.FC<OutfitBuilderProps> = ({
 }) => {
   const items = getOutfitItems(outfit);
   const totalPrice = getOutfitTotalPrice(outfit);
-  const validation = validateOutfit(outfit);
+  const validation = validateOutfit(outfit, customer);
   const hints = getOutfitMatchHints(customer, outfit);
 
   const budget = customer?.budget || 0;

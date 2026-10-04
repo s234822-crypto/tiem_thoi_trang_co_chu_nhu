@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Customer, Outfit, Product, StyleTag, FashionColor, Rarity } from '../types/game';
 import { CATEGORY_LABELS, SUBCATEGORY_LABELS, STYLE_LABELS, COLOR_LABELS, RARITY_LABELS } from '../data/products';
 import { getOutfitItems } from '../utils/scoring';
-import { getRecommendedProducts } from '../utils/recommendations';
+import { getRecommendedProducts, getItemBadgeInfo, generateRecommendedCombos } from '../utils/recommendations';
 import { Sparkles, Check, Lock, ShoppingBag, Filter, ChevronDown, Zap, Search, X } from 'lucide-react';
 import { GameIcon } from './GameIcon';
 import { ProductIcon } from './ProductIcon';
@@ -14,6 +14,7 @@ interface CatalogBrowserProps {
   playerLevel: number;
   onToggleProduct: (product: Product) => void;
   onAutoOutfit?: () => void;
+  onApplyCombo?: (outfit: Outfit) => void;
   selectedCategory?: string;
   onSelectCategory?: (category: string) => void;
 }
@@ -40,6 +41,7 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
   playerLevel,
   onToggleProduct,
   onAutoOutfit,
+  onApplyCombo,
   selectedCategory: propCategory,
   onSelectCategory,
 }) => {
@@ -63,6 +65,10 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
   const outfitProductIds = useMemo(() => new Set(outfitItems.map((i) => i.id)), [outfitItems]);
   const recommendedProducts = useMemo(
     () => getRecommendedProducts(currentCustomer, products, playerLevel),
+    [currentCustomer, products, playerLevel],
+  );
+  const recommendedCombos = useMemo(
+    () => generateRecommendedCombos(currentCustomer, products, playerLevel),
     [currentCustomer, products, playerLevel],
   );
 
@@ -311,6 +317,78 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
         </div>
       )}
 
+      {/* ── Combo Gợi Ý Section (Requirement 3 & 6) ───────────── */}
+      {currentCustomer && recommendedCombos.length > 0 && selectedCategory === 'suggested' && (
+        <div className="mx-2 mt-2 p-2.5 rounded-2xl bg-gradient-to-br from-[#FFF0F5] via-white to-[#FFF8F4] border border-[#F4C7D9] shadow-xs space-y-2 select-none">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-[#D87C9B] fill-current" />
+              <h4 className="text-xs font-black text-[#3E3431] uppercase tracking-wider font-heading">
+                Combo Gợi Ý Cho Khách ({recommendedCombos.length} set)
+              </h4>
+            </div>
+            <span className="text-[9.5px] font-bold text-[#8D6E63] bg-white px-2 py-0.5 rounded-full border border-[#F2E1CF]">
+              💡 Chọn combo phù hợp nhất
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            {recommendedCombos.map((combo) => (
+              <div
+                key={combo.id}
+                className="bg-white/95 rounded-xl p-2 border border-[#F2E1CF] hover:border-[#D87C9B] transition-all shadow-2xs space-y-1.5"
+              >
+                <div className="flex items-center justify-between gap-1">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    <span className="text-xs font-black text-[#3E3431] font-heading truncate">
+                      {combo.title}
+                    </span>
+                    <span
+                      className="text-[8px] font-black px-1.5 py-0.3 rounded-md text-white shadow-2xs shrink-0"
+                      style={{ backgroundColor: combo.ratingColor }}
+                    >
+                      {combo.rating}
+                    </span>
+                  </div>
+                  <span className="text-[10.5px] font-extrabold text-[#D87C9B] tabular-nums shrink-0">
+                    {combo.totalPrice.toLocaleString('vi-VN')}đ
+                  </span>
+                </div>
+
+                {/* Items preview list */}
+                <div className="text-[9px] font-medium text-[#6F554A] flex flex-wrap gap-1 leading-relaxed">
+                  {combo.items.map((item) => (
+                    <span key={item.id} className="bg-[#FFF5EE] px-1.5 py-0.5 rounded border border-[#F2E1CF]">
+                      {item.name}: <strong className="text-[#3E3431]">{item.price.toLocaleString('vi-VN')}đ</strong>
+                    </span>
+                  ))}
+                </div>
+
+                {/* Bottom row: Match tags + Apply button */}
+                <div className="flex items-center justify-between pt-1 border-t border-[#F2E1CF]/60">
+                  <div className="flex items-center gap-1 text-[8.5px] font-bold text-emerald-700">
+                    {combo.matchTags.map((tag, idx) => (
+                      <span key={idx} className="bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-100">
+                        ✓ {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {onApplyCombo && (
+                    <button
+                      onClick={() => onApplyCombo(combo.outfit)}
+                      className="px-2.5 py-1 bg-gradient-to-r from-[#D87C9B] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-[9.5px] font-black rounded-lg shadow-2xs active:scale-95 transition-all flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>👉 Áp dụng Combo</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ── Product Grid ──────────────────────────────────────── */}
       <div className="p-2 space-y-2">
         {displayedProducts.length === 0 ? (
@@ -331,8 +409,8 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
               const isLocked      = prod.unlockLevel > playerLevel;
               const isOutOfStock  = prod.stock <= 0;
               const isDisabled    = isLocked || isOutOfStock;
-              const isStyleMatch  = currentCustomer && prod.styleTags.includes(currentCustomer.preferredStyle);
               const rarityInfo    = RARITY_LABELS[prod.rarity];
+              const badgeInfo     = getItemBadgeInfo(prod, currentCustomer, recommendedProducts);
 
               return (
                 <div
@@ -381,11 +459,11 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
                       />
                     )}
 
-                    {/* HỢP GU badge */}
-                    {isStyleMatch && !isDisabled && (
-                      <div className="absolute top-1 left-1 bg-[#D87C9B] text-white text-[7px] font-black px-1 py-0.5 rounded-sm flex items-center gap-0.5 shadow-2xs">
-                        <Sparkles className="w-2 h-2" />
-                        <span>HỢP GU</span>
+                    {/* Item Hint Badges (Requirement 5: ✨ Gợi ý, 💗 Hợp gu, 💰 Hợp ngân sách) */}
+                    {badgeInfo.badgeLabel && !isDisabled && (
+                      <div className="absolute top-1 left-1 bg-gradient-to-r from-[#D87C9B] to-[#E91E63] text-white text-[7.5px] font-black px-1.5 py-0.5 rounded-md flex items-center gap-0.5 shadow-2xs z-10">
+                        <span>{badgeInfo.badgeEmoji}</span>
+                        <span>{badgeInfo.badgeLabel}</span>
                       </div>
                     )}
 
