@@ -302,6 +302,18 @@ export default function App() {
   const [shopMode, setShopMode] = useState<'shop_view' | 'styling_mode'>('shop_view');
   const [customerAnimState, setCustomerAnimState] = useState<'entering' | 'arrived' | 'exiting'>('arrived');
   const animTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const shopTopRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToTopShop = () => {
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      if (shopTopRef.current) {
+        shopTopRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 50);
+  };
 
   // Current active customer & waiting queue
   const [currentCustomer, setCurrentCustomer] = useState<Customer | null>(null);
@@ -770,6 +782,7 @@ export default function App() {
 
       setCurrentCustomer(nextCust);
       setCustomerAnimState('entering');
+      scrollToTopShop();
 
       animTimerRef.current = setTimeout(() => {
         setCustomerAnimState('arrived');
@@ -1312,6 +1325,7 @@ export default function App() {
     setFittingResult(null);
     setShopMode('shop_view');
     setCustomerAnimState('exiting');
+    scrollToTopShop();
     if (animTimerRef.current) clearTimeout(animTimerRef.current);
     animTimerRef.current = setTimeout(() => {
       advanceToNextCustomer('served');
@@ -1912,7 +1926,7 @@ export default function App() {
                   /* 2-SCREEN GAMEPLAY LOOP */
                   shopMode === 'shop_view' ? (
                     /* MÀN HÌNH 1: MÀN HÌNH CỬA HÀNG */
-                    <div className="space-y-3 animate-fade-in">
+                    <div className="space-y-3 animate-fade-in" ref={shopTopRef}>
                       {/* Boutique Shop Scene & Characters with Entrance/Exit Animation */}
                       <ShopArea
                         currentCustomer={currentCustomer}
@@ -1991,6 +2005,7 @@ export default function App() {
                           onClick={() => {
                             playTapSound();
                             setShopMode('shop_view');
+                            scrollToTopShop();
                           }}
                           className="flex items-center gap-1 text-[11px] font-extrabold text-[#D87C9B] hover:text-[#c96c8a] bg-[#FFF0F5] px-3 py-1.5 rounded-xl border border-[#F4C7D9] active:scale-95 transition-all cursor-pointer"
                         >
