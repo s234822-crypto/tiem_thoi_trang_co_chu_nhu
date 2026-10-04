@@ -6,6 +6,7 @@ import { Sparkles, Play, BookOpen, Star, Heart } from 'lucide-react';
 interface StartScreenProps {
   onStartGame: () => void;
   onOpenGuide: () => void;
+  onOpenChangelog?: () => void;
   hasSavedGame: boolean;
   equippedAvatar?: string;
 }
@@ -13,6 +14,7 @@ interface StartScreenProps {
 export const StartScreen: React.FC<StartScreenProps> = ({
   onStartGame,
   onOpenGuide,
+  onOpenChangelog,
   hasSavedGame,
   equippedAvatar = OWNER_PORTRAIT_DEFAULT,
 }) => {
@@ -65,25 +67,39 @@ export const StartScreen: React.FC<StartScreenProps> = ({
       </div>
 
       {/* Action Buttons & Version */}
-      <div className="space-y-2.5 w-full max-w-xs mx-auto z-10 pb-2">
+      <div className="space-y-2 w-full max-w-xs mx-auto z-10 pb-2">
         <button
           onClick={onStartGame}
-          className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#D87C9B] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-sm font-extrabold shadow-md hover:shadow-lg active:scale-98 transition-all flex items-center justify-center gap-2"
+          className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#D87C9B] to-[#c96c8a] hover:from-[#c96c8a] hover:to-[#b65b79] text-white text-sm font-extrabold shadow-md hover:shadow-lg active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <Play className="w-4 h-4 fill-white" />
           <span>{hasSavedGame ? 'TIẾP TỤC CHƠI' : 'VÀO GAME'}</span>
         </button>
 
-        <button
-          onClick={onOpenGuide}
-          className="w-full h-11 rounded-2xl bg-white/90 hover:bg-white text-[#6F554A] border border-[#F2E1CF] hover:border-[#D87C9B] text-xs font-bold shadow-xs active:scale-98 transition-all flex items-center justify-center gap-1.5"
-        >
-          <BookOpen className="w-3.5 h-3.5 text-[#D87C9B]" />
-          <span>HƯỚNG DẪN</span>
-        </button>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={onOpenGuide}
+            className="w-full h-10 rounded-2xl bg-white/90 hover:bg-white text-[#6F554A] border border-[#F2E1CF] hover:border-[#D87C9B] text-xs font-bold shadow-xs active:scale-98 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-[#D87C9B]" />
+            <span>HƯỚNG DẪN</span>
+          </button>
 
-        <div className="text-[10px] text-[#8D6E63] font-semibold tracking-wider pt-1">
-          Phiên bản 1.0.0 · Design by Ho Dai Vi
+          {onOpenChangelog && (
+            <button
+              onClick={onOpenChangelog}
+              className="w-full h-10 rounded-2xl bg-gradient-to-r from-pink-50 to-rose-50 hover:bg-pink-100 text-[#D87C9B] border border-pink-200 hover:border-pink-400 text-xs font-bold shadow-xs active:scale-98 transition-all flex items-center justify-center gap-1 cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#D87C9B]" />
+              <span>CẬP NHẬT</span>
+            </button>
+          )}
+        </div>
+
+        <div className="text-[10px] text-[#8D6E63] font-bold tracking-wider pt-1 flex items-center justify-center gap-1">
+          <span>Phiên bản v1.0.1</span>
+          <span>·</span>
+          <span>Design by Ho Dai Vi</span>
         </div>
       </div>
     </div>

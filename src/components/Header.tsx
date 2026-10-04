@@ -33,6 +33,7 @@ interface HeaderProps {
   onOpenStory: () => void;
   onOpenGuide: () => void;
   onOpenDebug: () => void;
+  onOpenChangelog?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -51,6 +52,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenStory,
   onOpenGuide,
   onOpenDebug,
+  onOpenChangelog,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -266,6 +268,23 @@ export const Header: React.FC<HeaderProps> = ({
               <Settings className="w-4 h-4 text-[#8D6E63]" />
               <span>Bảng Debug</span>
             </button>
+
+            {/* Patch Notes / Changelog v1.0.1 */}
+            {onOpenChangelog && (
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onOpenChangelog();
+                }}
+                className="flex items-center gap-1.5 p-2 rounded-xl bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200 hover:border-pink-400 text-[#D87C9B] font-extrabold shadow-2xs active:scale-98 transition-all col-span-2 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-[#D87C9B]" />
+                <span>Nhật ký Cập nhật v1.0.1</span>
+                <span className="ml-auto px-1.5 py-0.5 rounded-full bg-[#D87C9B] text-white text-[9px] font-black">
+                  v1.0.1
+                </span>
+              </button>
+            )}
           </div>
 
           <div className="flex items-center justify-between pt-2 border-t border-[#F2E1CF]/70">

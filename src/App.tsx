@@ -54,6 +54,7 @@ import { FittingModal } from './components/FittingModal';
 import { CustomerDetailModal } from './components/CustomerDetailModal';
 import { StartScreen } from './components/StartScreen';
 import { GuideModal } from './components/GuideModal';
+import { ChangelogModal } from './components/ChangelogModal';
 import { DebugPanel } from './components/DebugPanel';
 import { InventoryModal } from './components/InventoryModal';
 import { RestockModal } from './components/RestockModal';
@@ -307,6 +308,7 @@ export default function App() {
   } | null>(null);
   const [daySummary, setDaySummary] = useState<DaySummaryData | null>(null);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [isChangelogOpen, setIsChangelogOpen] = useState(false);
   const [isDebugOpen, setIsDebugOpen] = useState(false);
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
   const [isMissionsOpen, setIsMissionsOpen] = useState(false);
@@ -1742,6 +1744,7 @@ export default function App() {
               }
             }}
             onOpenGuide={() => setIsGuideOpen(true)}
+            onOpenChangelog={() => setIsChangelogOpen(true)}
             hasSavedGame={stats.day > 1 || stats.customersServedToday > 0}
             equippedAvatar={ownerAvatar}
           />
@@ -1764,6 +1767,7 @@ export default function App() {
               onOpenStory={() => setIsStoryArchiveOpen(true)}
               onOpenGuide={() => setIsGuideOpen(true)}
               onOpenDebug={() => setIsDebugOpen(true)}
+              onOpenChangelog={() => setIsChangelogOpen(true)}
             />
 
             {/* Main Tab Content Switching */}
@@ -2182,6 +2186,12 @@ export default function App() {
 
       {/* Guide Modal */}
       {isGuideOpen && <GuideModal onClose={() => setIsGuideOpen(false)} />}
+
+      {/* Patch Notes / Changelog Modal v1.0.1 */}
+      <ChangelogModal
+        isOpen={isChangelogOpen}
+        onClose={() => setIsChangelogOpen(false)}
+      />
 
       {/* Developer Debug Panel */}
       {isDebugOpen && (
