@@ -50,11 +50,10 @@ export const ChangelogModal: React.FC<ChangelogModalProps> = ({ isOpen, onClose 
         <div className="flex items-center gap-1.5 px-3 py-2 bg-[#FFF7F1] border-b border-[#F2E1CF]/70 shrink-0">
           <button
             onClick={() => setSelectedVersion('v1.0.2')}
-            className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-              selectedVersion === 'v1.0.2'
+            className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-1.5 cursor-pointer ${selectedVersion === 'v1.0.2'
                 ? 'bg-gradient-to-r from-[#D87C9B] to-[#c96c8a] text-white shadow-xs'
                 : 'bg-white text-[#8D6E63] border border-[#F2E1CF] hover:border-[#D87C9B]'
-            }`}
+              }`}
           >
             <span>v1.0.2 — Mới nhất</span>
             {selectedVersion === 'v1.0.2' && <span className="w-2 h-2 rounded-full bg-yellow-300 animate-ping" />}
@@ -62,13 +61,12 @@ export const ChangelogModal: React.FC<ChangelogModalProps> = ({ isOpen, onClose 
 
           <button
             onClick={() => setSelectedVersion('v1.0.1')}
-            className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              selectedVersion === 'v1.0.1'
+            className={`py-1.5 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${selectedVersion === 'v1.0.1'
                 ? 'bg-[#6F554A] text-white shadow-xs font-black'
                 : 'bg-white text-[#8D6E63] border border-[#F2E1CF] hover:border-[#6F554A]'
-            }`}
+              }`}
           >
-            <span>v1.0.1 — Lịch sử</span>
+            <span>v1.0.1</span>
           </button>
         </div>
 
