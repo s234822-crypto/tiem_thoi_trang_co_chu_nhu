@@ -21,14 +21,14 @@ interface CatalogBrowserProps {
 
 // Category tab config with GameIcon mapping
 const CATEGORY_TABS = [
-  { id: 'suggested', label: 'Gợi ý',    isSpecial: true },
-  { id: 'all',       label: 'Tất cả',   isSpecial: false },
-  { id: 'tops',      label: 'Áo',       isSpecial: false },
-  { id: 'bottoms',   label: 'Quần',     isSpecial: false },
-  { id: 'skirts',    label: 'Chân váy', isSpecial: false },
-  { id: 'dresses',   label: 'Đầm',      isSpecial: false },
-  { id: 'shoes',     label: 'Giày',     isSpecial: false },
-  { id: 'bags',      label: 'Túi',      isSpecial: false },
+  { id: 'suggested', label: 'Gợi ý', isSpecial: true },
+  { id: 'all', label: 'Tất cả', isSpecial: false },
+  { id: 'tops', label: 'Áo', isSpecial: false },
+  { id: 'bottoms', label: 'Quần', isSpecial: false },
+  { id: 'skirts', label: 'Chân váy', isSpecial: false },
+  { id: 'dresses', label: 'Đầm', isSpecial: false },
+  { id: 'shoes', label: 'Giày', isSpecial: false },
+  { id: 'bags', label: 'Túi', isSpecial: false },
   { id: 'accessories', label: 'Phụ kiện', isSpecial: false },
 ];
 
@@ -47,11 +47,11 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
 }) => {
   const [internalCategory, setInternalCategory] = useState<string>('suggested');
   const [selectedSubCategory, setSelectedSubCategory] = useState<string>('all');
-  const [selectedStyle, setSelectedStyle]       = useState<string>('all');
-  const [selectedColor, setSelectedColor]       = useState<string>('all');
-  const [selectedRarity, setSelectedRarity]     = useState<string>('all');
-  const [searchQuery, setSearchQuery]           = useState<string>('');
-  const [isFilterOpen, setIsFilterOpen]         = useState<boolean>(false);
+  const [selectedStyle, setSelectedStyle] = useState<string>('all');
+  const [selectedColor, setSelectedColor] = useState<string>('all');
+  const [selectedRarity, setSelectedRarity] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
 
   const selectedCategory = propCategory || internalCategory;
 
@@ -61,7 +61,7 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
     onSelectCategory?.(cat);
   };
 
-  const outfitItems      = getOutfitItems(outfit);
+  const outfitItems = getOutfitItems(outfit);
   const outfitProductIds = useMemo(() => new Set(outfitItems.map((i) => i.id)), [outfitItems]);
   const recommendedProducts = useMemo(
     () => getRecommendedProducts(currentCustomer, products, playerLevel),
@@ -97,21 +97,21 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
 
     return products.filter((p) => {
       // Category
-      if (selectedCategory === 'tops'    && p.category !== 'tops')    return false;
+      if (selectedCategory === 'tops' && p.category !== 'tops') return false;
       if (selectedCategory === 'bottoms' && p.category !== 'bottoms') return false;
-      if (selectedCategory === 'skirts'  && p.category !== 'skirts')  return false;
+      if (selectedCategory === 'skirts' && p.category !== 'skirts') return false;
       if (selectedCategory === 'dresses' && p.category !== 'dresses') return false;
-      if (selectedCategory === 'shoes'   && p.category !== 'shoes')   return false;
-      if (selectedCategory === 'bags'    && p.category !== 'bags')    return false;
+      if (selectedCategory === 'shoes' && p.category !== 'shoes') return false;
+      if (selectedCategory === 'bags' && p.category !== 'bags') return false;
       if (selectedCategory === 'accessories' && p.category !== 'accessories' && p.category !== 'jackets') return false;
 
       // Sub-category filter
       if (selectedSubCategory !== 'all' && p.subCategory !== selectedSubCategory) return false;
 
       // Sub-filters
-      if (selectedStyle  !== 'all' && !p.styleTags.includes(selectedStyle as StyleTag))       return false;
-      if (selectedColor  !== 'all' && !p.colors.includes(selectedColor as FashionColor))      return false;
-      if (selectedRarity !== 'all' && p.rarity !== selectedRarity as Rarity)                  return false;
+      if (selectedStyle !== 'all' && !p.styleTags.includes(selectedStyle as StyleTag)) return false;
+      if (selectedColor !== 'all' && !p.colors.includes(selectedColor as FashionColor)) return false;
+      if (selectedRarity !== 'all' && p.rarity !== selectedRarity as Rarity) return false;
 
       // Search
       if (searchQuery.trim() !== '') {
@@ -151,18 +151,17 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
               className="h-6 px-2 rounded-md text-[10px] font-black bg-gradient-to-r from-amber-500 to-pink-500 text-white shadow-2xs active:scale-95 transition-all flex items-center gap-1"
             >
               <Zap className="w-2.5 h-2.5 fill-current text-yellow-200" />
-              <span>⚡ Phối nhanh</span>
+              <span> Phối nhanh</span>
             </button>
           )}
 
           {selectedCategory !== 'suggested' && (
             <button
               onClick={() => setIsFilterOpen((p) => !p)}
-              className={`relative h-6 px-2 rounded-md text-[10px] font-bold border transition-all flex items-center gap-1 ${
-                activeFilterCount > 0
+              className={`relative h-6 px-2 rounded-md text-[10px] font-bold border transition-all flex items-center gap-1 ${activeFilterCount > 0
                   ? 'bg-[#FFF0F5] border-[#D87C9B] text-[#D87C9B]'
                   : 'bg-white border-[#F2E1CF] text-[#6F554A]'
-              }`}
+                }`}
             >
               <Filter className="w-2.5 h-2.5" />
               <span>Lọc</span>
@@ -203,9 +202,8 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
             <div className="flex gap-1 overflow-x-auto no-scrollbar pb-0.5">
               {['all', 'casual', 'cute', 'korean', 'minimal', 'elegant', 'office', 'streetwear', 'y2k', 'vintage', 'soft_girl', 'preppy', 'chic'].map((st) => (
                 <button key={st} onClick={() => setSelectedStyle(st)}
-                  className={`h-5 px-1.5 rounded-full text-[9px] font-bold whitespace-nowrap shrink-0 transition-all ${
-                    selectedStyle === st ? 'bg-[#D87C9B] text-white' : 'bg-white text-[#6F554A] border border-[#F2E1CF]'
-                  }`}>
+                  className={`h-5 px-1.5 rounded-full text-[9px] font-bold whitespace-nowrap shrink-0 transition-all ${selectedStyle === st ? 'bg-[#D87C9B] text-white' : 'bg-white text-[#6F554A] border border-[#F2E1CF]'
+                    }`}>
                   {st === 'all' ? 'Tất cả' : STYLE_LABELS[st] || st}
                 </button>
               ))}
@@ -236,11 +234,10 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
             <div className="flex gap-1">
               {['all', ...RARITY_ORDER].map((r) => (
                 <button key={r} onClick={() => setSelectedRarity(r)}
-                  className={`h-5 px-1.5 rounded-full text-[9px] font-bold whitespace-nowrap shrink-0 transition-all ${
-                    selectedRarity === r
+                  className={`h-5 px-1.5 rounded-full text-[9px] font-bold whitespace-nowrap shrink-0 transition-all ${selectedRarity === r
                       ? 'bg-[#D87C9B] text-white'
                       : 'bg-white text-[#6F554A] border border-[#F2E1CF]'
-                  }`}
+                    }`}
                   style={selectedRarity === r ? {} : r !== 'all' ? { borderColor: RARITY_LABELS[r]?.border } : {}}>
                   {r === 'all' ? 'Tất cả' : RARITY_LABELS[r]?.name || r}
                 </button>
@@ -265,24 +262,31 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
             <button
               key={cat.id}
               onClick={() => handleCategoryChange(cat.id)}
-              className={`h-7 px-2.5 rounded-full text-[10.5px] font-bold whitespace-nowrap transition-all flex items-center gap-1 shrink-0 ${
-                isActive
+              className={`h-7 px-2.5 rounded-full text-[10.5px] font-bold whitespace-nowrap transition-all flex items-center gap-1 shrink-0 ${isActive
                   ? isSuggested
                     ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-xs font-black'
                     : 'bg-[#D87C9B] text-white shadow-xs font-black'
                   : isSuggested
-                  ? 'bg-amber-50 text-amber-800 border border-amber-300'
-                  : 'bg-white text-[#6F554A] border border-[#F2E1CF]'
-              }`}
+                    ? 'bg-amber-50 text-amber-800 border border-amber-300'
+                    : 'bg-white text-[#6F554A] border border-[#F2E1CF]'
+                }`}
             >
               {isSuggested ? (
-                <><span>⭐</span><span>{cat.label}</span><span className="w-1.5 h-1.5 rounded-full bg-amber-200 animate-ping" /></>
-              ) : cat.id !== 'all' ? (
-                <GameIcon name={cat.id as any} size={14} className={isActive ? '' : 'opacity-60'} />
+                <>
+                  <span>⭐</span>
+                  <span>{cat.label}</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-200 animate-ping" />
+                </>
               ) : (
-                <span>✨</span>
+                <>
+                  {cat.id !== 'all' ? (
+                    <GameIcon name={cat.id as any} size={14} className={isActive ? '' : 'opacity-60'} />
+                  ) : (
+                    <span>✨</span>
+                  )}
+                  <span>{cat.label}</span>
+                </>
               )}
-              <span>{cat.label}</span>
             </button>
           );
         })}
@@ -293,11 +297,10 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
         <div className="flex items-center gap-1 px-2.5 py-1.5 overflow-x-auto no-scrollbar border-b border-[#F2E1CF]/40 bg-white/70 shrink-0">
           <button
             onClick={() => setSelectedSubCategory('all')}
-            className={`h-5.5 px-2 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${
-              selectedSubCategory === 'all'
+            className={`h-5.5 px-2 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${selectedSubCategory === 'all'
                 ? 'bg-[#6F554A] text-white shadow-2xs font-black'
                 : 'bg-[#FFF5EE] text-[#6F554A] border border-[#F2E1CF]'
-            }`}
+              }`}
           >
             Tất cả
           </button>
@@ -305,11 +308,10 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
             <button
               key={sub.id}
               onClick={() => setSelectedSubCategory(sub.id)}
-              className={`h-5.5 px-2.5 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${
-                selectedSubCategory === sub.id
+              className={`h-5.5 px-2.5 rounded-full text-[9.5px] font-bold whitespace-nowrap shrink-0 transition-all ${selectedSubCategory === sub.id
                   ? 'bg-[#D87C9B] text-white shadow-2xs font-black'
                   : 'bg-white text-[#6F554A] border border-[#F2E1CF] hover:border-[#D87C9B]'
-              }`}
+                }`}
             >
               {sub.label}
             </button>
@@ -405,24 +407,23 @@ export const CatalogBrowser: React.FC<CatalogBrowserProps> = ({
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {displayedProducts.map((prod) => {
-              const isSelected    = outfitProductIds.has(prod.id);
-              const isLocked      = prod.unlockLevel > playerLevel;
-              const isOutOfStock  = prod.stock <= 0;
-              const isDisabled    = isLocked || isOutOfStock;
-              const rarityInfo    = RARITY_LABELS[prod.rarity];
-              const badgeInfo     = getItemBadgeInfo(prod, currentCustomer, recommendedProducts);
+              const isSelected = outfitProductIds.has(prod.id);
+              const isLocked = prod.unlockLevel > playerLevel;
+              const isOutOfStock = prod.stock <= 0;
+              const isDisabled = isLocked || isOutOfStock;
+              const rarityInfo = RARITY_LABELS[prod.rarity];
+              const badgeInfo = getItemBadgeInfo(prod, currentCustomer, recommendedProducts);
 
               return (
                 <div
                   key={prod.id}
                   onClick={() => { if (!isDisabled) onToggleProduct(prod); }}
-                  className={`relative flex flex-col p-2 rounded-xl border transition-all min-h-[118px] ${
-                    isSelected
+                  className={`relative flex flex-col p-2 rounded-xl border transition-all min-h-[118px] ${isSelected
                       ? 'border-2 border-[#D87C9B] bg-[#FFF0F5] shadow-xs ring-2 ring-[#D87C9B]/20'
                       : isDisabled
-                      ? 'opacity-50 border-slate-200 bg-slate-50 cursor-not-allowed'
-                      : 'border-[#F2E1CF] bg-white hover:border-[#D87C9B] shadow-2xs cursor-pointer active:scale-[0.98]'
-                  }`}
+                        ? 'opacity-50 border-slate-200 bg-slate-50 cursor-not-allowed'
+                        : 'border-[#F2E1CF] bg-white hover:border-[#D87C9B] shadow-2xs cursor-pointer active:scale-[0.98]'
+                    }`}
                   style={!isDisabled && !isSelected && rarityInfo ? { borderColor: rarityInfo.border } : {}}
                 >
                   {/* Rarity badge + stock */}
