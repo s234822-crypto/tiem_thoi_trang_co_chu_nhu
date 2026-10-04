@@ -538,8 +538,8 @@ export const INITIAL_PRODUCTS: Product[] = [
   // BAGS — TÚI XÁCH (Level 1–12)
   // ══════════════════════════════════════════
 
-  { id: 'baguette-shoulder-bag', name: 'Túi Kẹp Nách Baguette Y2K', category: 'bags', subCategory: 'mini_bag',
-    image: '/assets/outfits/bags/mini-bag.png',
+  { id: 'baguette-shoulder-bag', name: 'Túi Kẹp Nách Baguette Y2K', category: 'bags', subCategory: 'baguette_bag',
+    image: '/assets/outfits/bags/baguette-bag.png',
     styleTags: ['y2k', 'cute', 'korean'], colors: ['pink', 'white', 'black'],
     occasions: ['coffee', 'shopping', 'date'], cost: 380000, price: 850000,
     stock: 5, maxStock: 10, unlockLevel: 3, rarity: 'common',
@@ -1024,8 +1024,8 @@ export const INITIAL_PRODUCTS: Product[] = [
     stock: 5, maxStock: 10, unlockLevel: 3, rarity: 'uncommon',
     description: 'Đứng form vuông vắn.', accentColor: '#D87C9B' },
 
-  { id: 'bags-leather-bag', name: 'Túi Da Thật Đeo Chéo', category: 'bags', subCategory: 'leather_bag',
-    image: '/assets/outfits/bags/leather-bag.png',
+  { id: 'bags-leather-bag', name: 'Túi Saddle Bán Nguyệt Da', category: 'bags', subCategory: 'saddle_bag',
+    image: '/assets/outfits/bags/saddle-bag.png',
     styleTags: ['chic', 'luxury'], colors: ['brown', 'black'],
     occasions: ['work', 'travel'], cost: 950000, price: 2050000,
     stock: 5, maxStock: 10, unlockLevel: 4, rarity: 'rare',
@@ -1072,6 +1072,20 @@ export const INITIAL_PRODUCTS: Product[] = [
     occasions: ['party', 'formal'], cost: 1100000, price: 2400000,
     stock: 5, maxStock: 10, unlockLevel: 5, rarity: 'luxury',
     description: 'Đính ngọc trai thủ công.', accentColor: '#D87C9B' },
+
+  { id: 'bags-heart-bag', name: 'Túi Trái Tim Nổi Bật', category: 'bags', subCategory: 'heart_bag',
+    image: '/assets/outfits/bags/heart-bag.png',
+    styleTags: ['cute', 'party', 'feminine'], colors: ['red', 'gold'],
+    occasions: ['date', 'party'], cost: 750000, price: 1650000,
+    stock: 5, maxStock: 10, unlockLevel: 4, rarity: 'rare',
+    description: 'Dáng trái tim đỏ nổi bật phối móc khóa trái tim vàng xinh xắn.', accentColor: '#EF5350' },
+
+  { id: 'bags-chain-shoulder-bag', name: 'Túi Dây Xích Sang Trọng', category: 'bags', subCategory: 'chain_shoulder_bag',
+    image: '/assets/outfits/bags/chain-shoulder-bag.png',
+    styleTags: ['luxury', 'chic', 'elegant'], colors: ['black', 'gold'],
+    occasions: ['party', 'formal', 'date'], cost: 1050000, price: 2300000,
+    stock: 4, maxStock: 10, unlockLevel: 6, rarity: 'luxury',
+    description: 'Dáng kẹp nách sang trọng với quai dây xích mạ vàng kiêu sa.', accentColor: '#FFD54F' },
 
   { id: 'accessories-sunglasses', name: 'Kính Râm Mắt Mèo UV400', category: 'accessories', subCategory: 'sunglasses',
     image: '/assets/outfits/accessories/sunglasses.png',
