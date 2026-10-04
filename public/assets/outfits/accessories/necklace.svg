@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+    <defs>
+      <filter id="soft-shadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#3E3431" flood-opacity="0.18"/>
+      </filter>
+      <linearGradient id="gloss-overlay" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.45"/>
+        <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="pink-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFB6C1"/>
+        <stop offset="100%" stop-color="#E91E63"/>
+      </linearGradient>
+      <linearGradient id="purple-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#E1BEE7"/>
+        <stop offset="100%" stop-color="#8E24AA"/>
+      </linearGradient>
+      <linearGradient id="blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#B3E5FC"/>
+        <stop offset="100%" stop-color="#1E88E5"/>
+      </linearGradient>
+      <linearGradient id="yellow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFF9C4"/>
+        <stop offset="100%" stop-color="#FBC02D"/>
+      </linearGradient>
+      <linearGradient id="green-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#C8E6C9"/>
+        <stop offset="100%" stop-color="#43A047"/>
+      </linearGradient>
+      <linearGradient id="cream-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFF8E7"/>
+        <stop offset="100%" stop-color="#FFE0B2"/>
+      </linearGradient>
+      <linearGradient id="denim-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#7986CB"/>
+        <stop offset="100%" stop-color="#303F9F"/>
+      </linearGradient>
+      <linearGradient id="leather-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#424242"/>
+        <stop offset="100%" stop-color="#111111"/>
+      </linearGradient>
+      <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFE082"/>
+        <stop offset="100%" stop-color="#FFB300"/>
+      </linearGradient>
+    </defs>
+    <g filter="url(#soft-shadow)">
+      
+    <path d="M150 140 C150 340 362 340 362 140" fill="none" stroke="url(#gold-grad)" stroke-width="10"/>
+    <circle cx="256" cy="320" r="20" fill="url(#pink-grad)" stroke="#3E3431" stroke-width="4"/>
+  
+    </g>
+  </svg>

@@ -77,8 +77,8 @@ import { TodayGoalsCard } from './components/TodayGoalsCard';
 import { ActiveTab, BottomNav } from './components/BottomNav';
 import { Smartphone, CheckCircle2, AlertTriangle, Info, XCircle, Zap, Sun, Package, Wrench, Palette, Shirt, Sparkles, ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 
-const CURRENT_SAVE_VERSION = 5;
-const SAVE_KEY_V5 = 'fashionShopSave_v5';
+const CURRENT_SAVE_VERSION = 19;
+const SAVE_KEY_V19 = 'fashionShopSave_v19';
 
 const DEFAULT_PERMANENT_STATS: PermanentStats = {
   totalCustomersServed: 0,
@@ -99,11 +99,25 @@ export default function App() {
   const [gameState, setGameState] = useState<'START' | 'PLAYING'>('START');
   const [activeTab, setActiveTab] = useState<ActiveTab>('shop');
 
-  // Load Saved State with Version Migration (v5 <- v4 <- v3 <- v2)
+  // Load Saved State with Version Migration (v12 <- v11 <- v10 <- v9 <- v8 <- v7 <- v6 <- v5 <- v4 <- v3 <- v2)
   const loadSavedData = () => {
     try {
       const saved =
-        localStorage.getItem(SAVE_KEY_V5) ||
+        localStorage.getItem(SAVE_KEY_V19) ||
+        localStorage.getItem('fashionShopSave_v18') ||
+        localStorage.getItem('fashionShopSave_v17') ||
+        localStorage.getItem('fashionShopSave_v16') ||
+        localStorage.getItem('fashionShopSave_v15') ||
+        localStorage.getItem('fashionShopSave_v14') ||
+        localStorage.getItem('fashionShopSave_v13') ||
+        localStorage.getItem('fashionShopSave_v12') ||
+        localStorage.getItem('fashionShopSave_v11') ||
+        localStorage.getItem('fashionShopSave_v10') ||
+        localStorage.getItem('fashionShopSave_v9') ||
+        localStorage.getItem('fashionShopSave_v8') ||
+        localStorage.getItem('fashionShopSave_v7') ||
+        localStorage.getItem('fashionShopSave_v6') ||
+        localStorage.getItem('fashionShopSave_v5') ||
         localStorage.getItem('fashionShopSave_v4') ||
         localStorage.getItem('fashionShopSave_v3') ||
         localStorage.getItem('fashionShopSave_v2');
@@ -166,37 +180,35 @@ export default function App() {
     };
   });
 
-  // Products Database
+  // Products Database — Whitelist master sync with INITIAL_PRODUCTS
   const [products, setProducts] = useState<Product[]>(() => {
     if (parsedData?.products && Array.isArray(parsedData.products)) {
       const initialMap = new Map(INITIAL_PRODUCTS.map((p) => [p.id, p]));
-      const savedMap   = new Map(parsedData.products.map((p: Product) => [p.id, p]));
+      const mergedProducts: Product[] = [];
+      const processedIds = new Set<string>();
 
-      // Merge latest definitions (images, subCategories, tags) into saved state items
-      const mergedSaved = parsedData.products
-        .map((savedProd: Product) => {
-          const initProd = initialMap.get(savedProd.id);
-          if (initProd) {
-            return {
-              ...initProd,
-              ...savedProd,
-              name: initProd.name || savedProd.name,
-              image: initProd.image || savedProd.image,
-              category: initProd.category,
-              subCategory: initProd.subCategory,
-              styleTags: initProd.styleTags || savedProd.styleTags,
-              colors: initProd.colors || savedProd.colors,
-              occasions: initProd.occasions || savedProd.occasions,
-              maxStock: savedProd.maxStock || initProd.maxStock || 10,
-            };
-          }
-          return savedProd;
-        })
-        .filter((prod: Product) => prod && prod.subCategory in SUBCATEGORY_LABELS);
+      // Keep user's stock and maxStock for whitelisted items, but strictly update all attributes from master INITIAL_PRODUCTS
+      for (const savedProd of parsedData.products) {
+        if (!savedProd || !savedProd.id) continue;
+        const masterProd = initialMap.get(savedProd.id);
+        if (masterProd && !processedIds.has(masterProd.id)) {
+          processedIds.add(masterProd.id);
+          mergedProducts.push({
+            ...masterProd,
+            stock: typeof savedProd.stock === 'number' ? savedProd.stock : masterProd.stock,
+            maxStock: Math.max(savedProd.maxStock || 10, masterProd.maxStock || 10),
+          });
+        }
+      }
 
-      // Append any newly added products from INITIAL_PRODUCTS missing in save file
-      const newProducts = INITIAL_PRODUCTS.filter((initP) => !savedMap.has(initP.id));
-      return [...mergedSaved, ...newProducts];
+      // Add any whitelisted products missing from saved file
+      for (const masterProd of INITIAL_PRODUCTS) {
+        if (!processedIds.has(masterProd.id)) {
+          mergedProducts.push(masterProd);
+        }
+      }
+
+      return mergedProducts;
     }
     return INITIAL_PRODUCTS;
   });
@@ -349,7 +361,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(
-        SAVE_KEY_V5,
+        SAVE_KEY_V11,
         JSON.stringify({
           version: CURRENT_SAVE_VERSION,
           stats,

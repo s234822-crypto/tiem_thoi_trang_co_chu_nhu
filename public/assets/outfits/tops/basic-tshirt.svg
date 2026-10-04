@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <filter id="sticker-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="6" flood-color="#2C221E" flood-opacity="0.25"/>
+    </filter>
+    <linearGradient id="red-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4D4D"/>
+      <stop offset="70%" stop-color="#ED192D"/>
+      <stop offset="100%" stop-color="#B30012"/>
+    </linearGradient>
+    <linearGradient id="white-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#F0F2F8"/>
+      <stop offset="100%" stop-color="#D8DEF0"/>
+    </linearGradient>
+    <linearGradient id="pink-top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF99CC"/>
+      <stop offset="70%" stop-color="#FF55A0"/>
+      <stop offset="100%" stop-color="#D81B70"/>
+    </linearGradient>
+    <linearGradient id="yellow-top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF366"/>
+      <stop offset="70%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#E6A100"/>
+    </linearGradient>
+    <linearGradient id="cream-blouse" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF0"/>
+      <stop offset="70%" stop-color="#FFF3D6"/>
+      <stop offset="100%" stop-color="#E6D2A8"/>
+    </linearGradient>
+    <linearGradient id="blue-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66D9FF"/>
+      <stop offset="70%" stop-color="#1AC6FF"/>
+      <stop offset="100%" stop-color="#0099E6"/>
+    </linearGradient>
+    <linearGradient id="green-polo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4DDF78"/>
+      <stop offset="70%" stop-color="#12C74B"/>
+      <stop offset="100%" stop-color="#0B8E33"/>
+    </linearGradient>
+    <linearGradient id="purple-sweater" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B84DFF"/>
+      <stop offset="70%" stop-color="#8C1AF5"/>
+      <stop offset="100%" stop-color="#5E00B8"/>
+    </linearGradient>
+    <linearGradient id="denim-jeans" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8AA5F8"/>
+      <stop offset="60%" stop-color="#4F75E8"/>
+      <stop offset="100%" stop-color="#2848B8"/>
+    </linearGradient>
+    <linearGradient id="dark-leather" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#555560"/>
+      <stop offset="70%" stop-color="#2D2D35"/>
+      <stop offset="100%" stop-color="#15151A"/>
+    </linearGradient>
+    <linearGradient id="gold-metal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2A3"/>
+      <stop offset="70%" stop-color="#FFD034"/>
+      <stop offset="100%" stop-color="#D49900"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#sticker-shadow)">
+    
+      <path d="M120 140 C160 120 200 90 256 90 C312 90 352 120 392 140 L450 190 C420 230 380 260 360 250 L330 220 L330 420 Q256 440 182 420 L182 220 L152 250 C132 260 92 230 62 190 Z" fill="url(#red-shirt)" stroke="#2C221E" stroke-width="12" stroke-linejoin="round"/>
+      <path d="M200 95 C220 145 292 145 312 95" fill="url(#yellow-top)" stroke="#2C221E" stroke-width="10"/>
+      <path d="M182 220 C220 280 220 360 182 420 M330 220 C292 280 292 360 330 420" fill="none" stroke="#2C221E" stroke-width="6" opacity="0.4"/>
+      <path d="M220 160 C256 180 292 160 330 140" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+    
+  </g>
+</svg>
