@@ -6,7 +6,8 @@ interface ChangelogModalProps {
   onClose: () => void;
 }
 
-export const GAME_VERSION = 'v1.0.2';
+import { GAME_VERSION } from '../constants/version';
+export { GAME_VERSION };
 
 export const ChangelogModal: React.FC<ChangelogModalProps> = ({ isOpen, onClose }) => {
   const [selectedVersion, setSelectedVersion] = useState<'v1.0.2' | 'v1.0.1'>('v1.0.2');

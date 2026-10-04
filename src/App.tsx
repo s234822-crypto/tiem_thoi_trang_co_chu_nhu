@@ -77,6 +77,8 @@ import { TodayGoalsCard } from './components/TodayGoalsCard';
 import { ActiveTab, BottomNav } from './components/BottomNav';
 import { Smartphone, CheckCircle2, AlertTriangle, Info, XCircle, Zap, Sun, Package, Wrench, Palette, Shirt, Sparkles, ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 
+import { GAME_VERSION } from './constants/version';
+
 const CURRENT_SAVE_VERSION = 19;
 const SAVE_KEY_V19 = 'fashionShopSave_v19';
 
@@ -373,11 +375,13 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(
-        SAVE_KEY_V11,
+        SAVE_KEY_V19,
         JSON.stringify({
           version: CURRENT_SAVE_VERSION,
+          gameVersion: GAME_VERSION,
           stats,
-          products,
+          // Save only user inventory stock & maxStock so product catalog is always driven by current build
+          products: products.map((p) => ({ id: p.id, stock: p.stock, maxStock: p.maxStock })),
           upgrades,
           decors,
           missions,
@@ -1644,10 +1648,10 @@ export default function App() {
   };
 
   const handleConfirmReset = () => {
-    localStorage.removeItem(SAVE_KEY_V5);
-    localStorage.removeItem('fashionShopSave_v4');
-    localStorage.removeItem('fashionShopSave_v3');
-    localStorage.removeItem('fashionShopSave_v2');
+    localStorage.removeItem(SAVE_KEY_V19);
+    for (let i = 1; i < 20; i++) {
+      localStorage.removeItem(`fashionShopSave_v${i}`);
+    }
     localStorage.removeItem('fashionShop_tutorialCompleted');
     window.location.reload();
   };
